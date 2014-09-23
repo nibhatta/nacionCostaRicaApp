@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Gustavo Matarrita on 19/09/2014.
  */
-public class Module {
+public class Module implements Item{
     private String type;
     private int order;
     private List<Content> contents;

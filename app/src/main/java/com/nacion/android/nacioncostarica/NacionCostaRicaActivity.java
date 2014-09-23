@@ -2,16 +2,26 @@ package com.nacion.android.nacioncostarica;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.nacion.android.nacioncostarica.main.MainPresenter;
+import com.nacion.android.nacioncostarica.main.MainPresenterImpl;
+import com.nacion.android.nacioncostarica.main.MainView;
 
-public class NacionCostaRicaActivity extends Activity {
+public class NacionCostaRicaActivity extends Activity implements MainView{
+
+    private ViewPager mainViewPager;
+    private MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nacion_costa_rica);
+
+        mainViewPager = (ViewPager)findViewById(R.id.mainViewPager);
+        presenter = new MainPresenterImpl(this);
     }
 
     @Override
