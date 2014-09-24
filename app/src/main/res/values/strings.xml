@@ -6,5 +6,8 @@
     <string name="action_settings">Settings</string>
 
     <string name="item_module_title">Aficionados ticos acompañaron a Celso Borges en juego del AIK</string>
-    <string name="item_article_title">Aficionados ticos acompañaron a Celso Borges en juego del AIK</string>
+    <string name="item_article_title">9:30 A.M.</string>
+    <string name="item_article_summary">Aficionados ticos acompañaron a Celso Borges en juego del AIK</string>
+    <string name="item_video_time">9:30 A.M.</string>
+    <string name="item_video_title">Aficionados ticos acompañaron a Celso Borges en juego del AIK</string>
 </resources>

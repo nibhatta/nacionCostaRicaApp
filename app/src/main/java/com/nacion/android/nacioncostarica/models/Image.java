@@ -1,9 +1,11 @@
 package com.nacion.android.nacioncostarica.models;
 
+import com.nacion.android.nacioncostarica.constants.NacionConstants;
+
 /**
  * Created by Gustavo Matarrita on 19/09/2014.
  */
-public class Image {
+public class Image{
     private String phoneUrl;
     private String tabPortraitUrl;
     private String tabLandscapeUrl;
@@ -39,5 +41,14 @@ public class Image {
 
     public void setCaption(String caption) {
         this.caption = caption;
+    }
+
+    public static Image createDummyImageCore(){
+        String url = NacionConstants.URL;
+        Image image = new Image();
+        image.phoneUrl = url;
+        image.tabPortraitUrl = url;
+        image.tabLandscapeUrl = url;
+        return image;
     }
 }
