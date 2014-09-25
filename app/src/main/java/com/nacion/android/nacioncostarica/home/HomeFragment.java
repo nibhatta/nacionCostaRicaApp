@@ -13,6 +13,7 @@ import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.home.listAdapter.HomeListAdapter;
 import com.nacion.android.nacioncostarica.models.Board;
 import com.nacion.android.nacioncostarica.models.Content;
+import com.nacion.android.nacioncostarica.models.ContentItemList;
 import com.nacion.android.nacioncostarica.models.Item;
 import com.nacion.android.nacioncostarica.models.Module;
 import com.nacion.android.nacioncostarica.models.Site;
@@ -58,7 +59,7 @@ public class HomeFragment extends Fragment implements HomeView, NacionFragment {
         return rootView;
     }
 
-    private List<Content> getContents(){
+    private List<ContentItemList> getContents(){
         Board board = Board.createDummyBoardCore();
         return board.getAllContents();
     }

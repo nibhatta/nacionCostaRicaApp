@@ -7,12 +7,7 @@ import java.util.List;
 /**
  * Created by Gustavo Matarrita on 19/09/2014.
  */
-public class Content{
-    private int id;
-    private String title;
-    private Date date;
-    private Image image;
-    private Module module;
+public class Content extends ContentItemList{
 
     public int getId() {
         return id;
@@ -44,14 +39,6 @@ public class Content{
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Module getModule() {
-        return module;
-    }
-
-    public void setModule(Module module) {
-        this.module = module;
     }
 
     public static Content createDummyContentCore(int argId, Module argModule){

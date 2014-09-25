@@ -9,6 +9,12 @@ import java.util.List;
  * Created by Gustavo Matarrita on 19/09/2014.
  */
 public class Module{
+    private List<String> galleryModules = new ArrayList<String>(){
+        {
+            add(NacionConstants.MODULE_THREE);
+            add(NacionConstants.MODULE_FIVE);
+        }
+    };
     private String type;
     private int order;
     private List<Content> contents;
@@ -45,7 +51,23 @@ public class Module{
         if(type.equals(NacionConstants.MODULE_TWO)){
             code = NacionConstants.MODULE_CODE_TWO;
         }
+        if(type.equals(NacionConstants.MODULE_THREE)){
+            code = NacionConstants.MODULE_CODE_THREE;
+        }
+        if(type.equals(NacionConstants.MODULE_FOURTH)){
+            code = NacionConstants.MODULE_CODE_FOURTH;
+        }
+        if(type.equals(NacionConstants.MODULE_FIVE)){
+            code = NacionConstants.MODULE_CODE_FIVE;
+        }
+        if(type.equals(NacionConstants.MODULE_SIX)){
+            code = NacionConstants.MODULE_CODE_SIX;
+        }
         return code;
+    }
+
+    public boolean isAGallery(){
+        return galleryModules.contains(type);
     }
 
     public static Module createDummyModuleCore(String argType, int argContents){

@@ -6,9 +6,18 @@ package com.nacion.android.nacioncostarica.constants;
 public class NacionConstants {
     public final static int HOME_FRAGMENT_INDEX = 0;
     public final static String URL = "http://www.nacion.com/deportes/legionarios/Keylor-Navas-controla-balon-Elche_LNCIMA20140923_0137_29.jpg";
+
     public final static String MODULE_ONE = "destacado";
     public final static String MODULE_TWO = "listado";
+    public final static String MODULE_THREE = "videoGallery";
+    public final static String MODULE_FOURTH = "weather";
+    public final static String MODULE_FIVE = "imageGallery";
+    public final static String MODULE_SIX = "moreNews";
 
     public final static int MODULE_CODE_ONE = 0;
     public final static int MODULE_CODE_TWO = 1;
+    public final static int MODULE_CODE_THREE = 2;
+    public final static int MODULE_CODE_FOURTH = 3;
+    public final static int MODULE_CODE_FIVE = 4;
+    public final static int MODULE_CODE_SIX = 5;
 }

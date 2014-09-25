@@ -1,5 +1,7 @@
 package com.nacion.android.nacioncostarica.models;
 
+import com.nacion.android.nacioncostarica.constants.NacionConstants;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,18 +32,38 @@ public class Board{
         Board board = new Board();
         board.id = 1;
         board.modules = new ArrayList<Module>();
-        board.modules.add(Module.createDummyModuleCore("destacado", 1));
-        board.modules.add(Module.createDummyModuleCore("listado", 5));
+        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_ONE, 1));
+        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_TWO, 5));
+        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_THREE, 4));
+        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_TWO, 5));
+        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_FOURTH, 1));
+        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_FIVE, 4));
+        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_SIX, 1));
         return board;
     }
 
-    public List<Content> getAllContents(){
-        List<Content> contents = new ArrayList<Content>();
+    public List<ContentItemList> getAllContents(){
+        List<ContentItemList> contents = new ArrayList<ContentItemList>();
         for(Module module : modules){
-            for(Content content : module.getContents()){
-                contents.add(content);
+            if(module.isAGallery()){
+                contents.add(createContentGallery(module));
+            }else{
+                addSingleRowContent(module, contents);
             }
         }
         return contents;
+    }
+
+    private void addSingleRowContent(Module argModule, List<ContentItemList> argContents){
+        for(Content content : argModule.getContents()){
+            argContents.add(content);
+        }
+    }
+
+    private ContentGallery createContentGallery(Module argModule){
+        ContentGallery gallery = new ContentGallery();
+        gallery.setModule(argModule);
+        gallery.setContents(argModule.getContents());
+        return gallery;
     }
 }

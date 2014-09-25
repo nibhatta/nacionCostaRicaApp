@@ -1,11 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/item_video_height">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/videoGalleryViewPager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content">
 
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/videoLayout">
+
+            <ImageView
+                android:id="@+id/moduleImageView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/video_height"
+                android:src="@drawable/module"
+                android:scaleType="fitXY"/>
+
+            <TextView
+                android:id="@+id/timeVideoTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_video_time"
+                android:textSize="@dimen/title_size"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"
+                android:padding="5dp"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@+id/videoLayout"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/videoTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_video_title"
+                android:textSize="@dimen/title_size"
+
+                android:textStyle="bold"
+                android:gravity="center"
+                android:padding="20dp"/>
+
+            <TextView
+                android:id="@+id/videoImageTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TODO Add buttons."
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+    </RelativeLayout>
+
+</FrameLayout>
