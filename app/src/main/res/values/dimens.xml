@@ -5,13 +5,15 @@
 
     <dimen name="item_module_height">210dp</dimen>
     <dimen name="item_article_height">130dp</dimen>
-    <dimen name="item_video_height">320dp</dimen>
+    <dimen name="item_video_height">350dp</dimen>
     <dimen name="item_weather_height">130dp</dimen>
     <dimen name="item_more_news_height">150dp</dimen>
     <dimen name="video_height">200dp</dimen>
 
     <dimen name="title_size">16dp</dimen>
+    <dimen name="title_size_tablet">24dp</dimen>
     <dimen name="title_article_size">10dp</dimen>
     <dimen name="summary_article_size">14dp</dimen>
 
+    <dimen name="actionbar_height">50dp</dimen>
 </resources>

@@ -20,4 +20,7 @@ public class NacionConstants {
     public final static int MODULE_CODE_FOURTH = 3;
     public final static int MODULE_CODE_FIVE = 4;
     public final static int MODULE_CODE_SIX = 5;
+
+    public final static int SECTION_DISABLE = 0;
+    public final static int SECTION_ENABLE = 1;
 }

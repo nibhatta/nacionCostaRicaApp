@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/moduleLastHourTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ÚLTIMA ACTUALIZACIÓN 10:00 AM LUNES 18 DE AGOSTO DE 2014"
+        android:textSize="@dimen/title_size_tablet"
+        android:textAllCaps="true"
+        android:layout_gravity="center"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_alignParentBottom="true"/>
+
+    <ImageView
+        android:id="@+id/moduleImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/module"/>
+
+    <TextView
+        android:id="@+id/moduleDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MUNDO 9:30 A.M."
+        android:textSize="@dimen/title_size_tablet"
+        android:textAllCaps="true"/>
+
+    <TextView
+        android:id="@+id/moduleTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_module_title"
+        android:textSize="@dimen/title_size_tablet"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/moduleDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_module_description"
+        android:textSize="@dimen/title_size_tablet"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <include
+            android:id="@+id/moduleNews1"
+            layout="@layout/item_news_module"/>
+        <include
+            android:id="@+id/moduleNews2"
+            layout="@layout/item_news_module"/>
+        <include
+            android:id="@+id/moduleNews3"
+            layout="@layout/item_news_module"/>
+        <include
+            android:id="@+id/moduleNews4"
+            layout="@layout/item_news_module"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_alignParentBottom="true"/>
+
+</LinearLayout>
