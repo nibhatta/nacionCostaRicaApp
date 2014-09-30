@@ -2,36 +2,37 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/actionbar_height"
-    android:background="@android:color/darker_gray">
+    android:layout_height="@dimen/actionbar_height">
 
     <ImageButton
         android:id="@+id/sectionsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/icon_height_action"
+        android:layout_height="@dimen/icon_width_action"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:background="@null"
         android:src="@drawable/ic_launcher"
+        android:scaleType="fitXY"
+        android:layout_marginLeft="@dimen/margin_separate"
         />
 
-    <TextView
-        android:id="@+id/title_text"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:text="@string/title_home"/>
+        android:src="@drawable/logo_nacion"
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/image_padding_for_tittles"/>
 
     <ImageButton
         android:id="@+id/settingsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/icon_height_action"
+        android:layout_height="@dimen/icon_width_action"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@null"
-        android:src="@drawable/ic_launcher"
+        android:scaleType="fitXY"
+        android:src="@drawable/settings_inactive"
+        android:layout_marginRight="@dimen/margin_separate"
         />
 
 </RelativeLayout>

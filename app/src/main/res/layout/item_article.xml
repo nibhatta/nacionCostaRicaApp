@@ -2,38 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_article_height"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingLeft="@dimen/padding_separate"
+    android:paddingRight="@dimen/padding_separate">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="1"
         android:orientation="horizontal"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp">
+        android:paddingBottom="@dimen/padding_separate"
+        android:paddingTop="@dimen/padding_separate">
 
         <ImageView
             android:id="@+id/articleImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/module"
-            android:layout_weight="0.60"/>
+            android:src="@drawable/picture_size02"
+            android:scaleType="fitXY"
+            android:layout_weight="0.40"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.40"
+            android:layout_weight="0.60"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <TextView
                 android:id="@+id/articleTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/item_article_title"
-                android:textSize="@dimen/title_article_size"
-                android:textStyle="bold"/>
+                android:text="@string/dummy_text_date"
+                android:textSize="@dimen/title_article_size"/>
 
             <TextView
                 android:id="@+id/articleSummaryTextView"
@@ -42,7 +43,7 @@
                 android:text="@string/item_article_summary"
                 android:textSize="@dimen/summary_article_size"
                 android:textStyle="bold"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="@dimen/margin_separate"/>
 
         </LinearLayout>
 
@@ -50,7 +51,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@android:color/darker_gray"
         android:layout_alignParentBottom="true"/>
 

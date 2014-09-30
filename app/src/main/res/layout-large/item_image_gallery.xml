@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_video_height">
+    android:layout_height="@dimen/item_video_height"
+    android:background="@android:color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -10,21 +11,20 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/videoLayout">
+            android:id="@+id/videoLayout"
+            android:gravity="center">
 
-            <ImageView
-                android:id="@+id/moduleImageView"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/imageGalleryViewPager"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/video_height"
-                android:src="@drawable/module"
-                android:scaleType="fitXY"/>
+                android:layout_height="200dp"
+                android:background="@android:color/black"/>
 
             <TextView
                 android:id="@+id/timeVideoTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/item_video_time"
-                android:textSize="@dimen/title_size"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:layout_alignParentTop="true"
@@ -44,20 +44,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/item_video_title"
-                android:textSize="@dimen/title_size"
-
                 android:textStyle="bold"
                 android:gravity="center"
                 android:padding="20dp"/>
 
-            <TextView
-                android:id="@+id/videoImageTextView"
+            <Gallery
+                android:id="@+id/imageGallery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TODO Add buttons."
-                android:textSize="@dimen/title_size"
-                android:textStyle="bold"
-                android:gravity="center"/>
+                android:background="@android:color/white"/>
 
         </LinearLayout>
 

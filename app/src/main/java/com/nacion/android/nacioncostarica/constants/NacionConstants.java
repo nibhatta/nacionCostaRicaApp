@@ -13,6 +13,10 @@ public class NacionConstants {
     public final static String MODULE_FOURTH = "weather";
     public final static String MODULE_FIVE = "imageGallery";
     public final static String MODULE_SIX = "moreNews";
+    public final static String MODULE_SEVEN = "listadoAd";
+    public final static String MODULE_EIGHT = "salud";
+    public final static String MODULE_NINE = "ad";
+    public final static String MODULE_TEN = "entretenimiento";
 
     public final static int MODULE_CODE_ONE = 0;
     public final static int MODULE_CODE_TWO = 1;
@@ -20,6 +24,7 @@ public class NacionConstants {
     public final static int MODULE_CODE_FOURTH = 3;
     public final static int MODULE_CODE_FIVE = 4;
     public final static int MODULE_CODE_SIX = 5;
+    public final static int MODULE_CODE_SEVEN = 6;
 
     public final static int SECTION_DISABLE = 0;
     public final static int SECTION_ENABLE = 1;

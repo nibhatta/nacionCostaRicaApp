@@ -1,91 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="500dp"
-    android:background="@android:color/holo_blue_dark">
+    android:layout_height="@dimen/video_height_component_large">
 
-    <TextView
-        android:id="@+id/videoTitleGalleryTextView"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/videoGalleryViewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/item_video_time"
-        android:textSize="@dimen/title_size"
-        android:textStyle="bold"
-    />
-
-    <LinearLayout
-        android:layout_below="@+id/videoTitleGalleryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="0"
-            android:padding="10dp">
-
-            <VideoView
-                android:id="@+id/galleryVideoView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/videoDateTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/item_video_time"
-                android:textSize="@dimen/title_size"
-                android:layout_below="@+id/galleryVideoView"
-                android:textStyle="bold"
-                android:padding="5dp"/>
-
-            <TextView
-                android:id="@+id/videoTitleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/item_video_time"
-                android:textSize="@dimen/title_size"
-                android:textStyle="bold"
-                android:layout_below="@+id/videoDateTextView"
-                android:padding="5dp"/>
-
-        </LinearLayout>
-
-        <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_weight="0"
-            android:stretchColumns="*"
-            android:shrinkColumns="*">
-
-            <TableRow>
-                <include layout="@layout/item_video_cell"/>
-                <include layout="@layout/item_video_cell"/>
-            </TableRow>
-
-            <TableRow>
-                <include layout="@layout/item_video_cell"/>
-                <include layout="@layout/item_video_cell"/>
-            </TableRow>
-
-        </TableLayout>
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/videoButtonTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/item_video_title"
-        android:textSize="@dimen/title_size"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:padding="20dp"
-        android:layout_alignParentBottom="true"/>
+        android:layout_height="@dimen/video_height_component_large"
+        />
 
 </RelativeLayout>

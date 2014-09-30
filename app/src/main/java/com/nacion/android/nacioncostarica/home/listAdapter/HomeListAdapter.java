@@ -18,7 +18,9 @@ import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.GalleryImageAdapter;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.GalleryImagePagerAdapter;
+import com.nacion.android.nacioncostarica.home.galleryAdapter.GalleryVideoPagerAdapter;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.ImageFragment;
+import com.nacion.android.nacioncostarica.home.galleryAdapter.VideoFragment;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
 
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ import java.util.List;
  * Created by Gustavo Matarrita on 22/09/2014.
  */
 public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements HomeListView {
-    private static final int VIEWS_TYPE_COUNT = 6;
+    private static final int VIEWS_TYPE_COUNT = 7;
     private HomeListPresenter presenter;
     private LayoutInflater inflater;
     private Context mContext;
@@ -66,36 +68,33 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
                     break;
                 case NacionConstants.MODULE_CODE_THREE:
                     convertView = inflater.inflate(R.layout.item_video_gallery, null);
+                    holder.viewPager = (ViewPager)convertView.findViewById(R.id.videoGalleryViewPager);
+                    GalleryVideoPagerAdapter videoPagerAdapter = new GalleryVideoPagerAdapter(fragmentManager, getVideoFragmentsArray());
+                    if(holder.viewPager.getAdapter() == null) {
+                        holder.viewPager.setAdapter(videoPagerAdapter);
+                        holder.viewPager.setOffscreenPageLimit(4);
+                    }
                     break;
                 case NacionConstants.MODULE_CODE_FOURTH:
                     convertView = inflater.inflate(R.layout.item_weather, null);
                     break;
                 case NacionConstants.MODULE_CODE_FIVE:
 
-                    convertView = inflater.inflate(R.layout.item_image_gallery_new, null);
+                    convertView = inflater.inflate(R.layout.item_image_gallery, null);
 
                     holder.viewPager = (ViewPager)convertView.findViewById(R.id.imageGalleryViewPager);
-
-
-
-
-                    /*
-                    selectedImage=(ImageView)convertView.findViewById(R.id.currentImageView);
-                    Gallery gallery = (Gallery)convertView.findViewById(R.id.imageGallery);
-                    gallery.setSpacing(1);
-                    gallery.setAdapter(new GalleryImageAdapter(mContext));
-
-                    gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                            Toast.makeText(mContext, "Your selected position = " + position, Toast.LENGTH_SHORT).show();
-                            // show the selected Image
-                            selectedImage.setImageResource(mImageIds[position]);
-                        }
-                    });*/
+                    GalleryImagePagerAdapter pagerAdapter = new GalleryImagePagerAdapter(fragmentManager, getFragmentsArray());
+                    if(holder.viewPager.getAdapter() == null) {
+                        holder.viewPager.setAdapter(pagerAdapter);
+                        holder.viewPager.setOffscreenPageLimit(4);
+                    }
 
                     break;
                 case NacionConstants.MODULE_CODE_SIX:
                     convertView = inflater.inflate(R.layout.item_more_news, null);
+                    break;
+
+                case NacionConstants.MODULE_CODE_SEVEN:
                     break;
             }
             convertView.setTag(holder);
@@ -104,9 +103,7 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
         }
 
         if(codeType == NacionConstants.MODULE_CODE_FIVE){
-            GalleryImagePagerAdapter pagerAdapter = new GalleryImagePagerAdapter(fragmentManager, getFragmentsArray());
-            holder.viewPager.setAdapter(pagerAdapter);
-            holder.viewPager.setOffscreenPageLimit(4);
+
         }
 
 
@@ -123,10 +120,18 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
         return fragments;
     }
 
+    private List<NacionFragment> getVideoFragmentsArray(){
+        List<NacionFragment> fragments = new ArrayList<NacionFragment>();
+        fragments.add(new VideoFragment().getInstance(0));
+        fragments.add(new VideoFragment().getInstance(1));
+        fragments.add(new VideoFragment().getInstance(2));
+        fragments.add(new VideoFragment().getInstance(3));
+        return fragments;
+    }
+
 
     private class ViewHolder{
         ViewPager viewPager;
-
 
     }
 

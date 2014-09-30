@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/video_height_component_large"
+    tools:context="com.nacion.android.nacioncostarica.home.galleryAdapter.VideoFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/video_color_component">
+
+    <TextView
+        android:id="@+id/videoTitleGalleryTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="VIDEOS"
+        android:textSize="@dimen/title_text_large"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:layout_marginLeft="@dimen/margin_separate"
+        />
+
+    <LinearLayout
+        android:layout_below="@+id/videoTitleGalleryTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:src="@drawable/picture_size01"
+                android:scaleType="fitXY"/>
+
+            <TextView
+                android:id="@+id/videoDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy_text_date"
+                android:layout_below="@+id/galleryVideoView"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/videoTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy_text_summary"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:layout_below="@+id/videoDateTextView"
+                android:padding="5dp"/>
+
+        </LinearLayout>
+
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:stretchColumns="*"
+            android:shrinkColumns="*">
+
+            <TableRow
+                >
+                <include
+                    layout="@layout/item_video_cell"/>
+                <include layout="@layout/item_video_cell"/>
+            </TableRow>
+
+            <TableRow
+                >
+                <include layout="@layout/item_video_cell"/>
+                <include layout="@layout/item_video_cell"/>
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/videoButtonTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TODO // Add buttons"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="20dp"
+        android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+</FrameLayout>
