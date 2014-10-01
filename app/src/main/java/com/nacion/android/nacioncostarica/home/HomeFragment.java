@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.nacion.android.nacioncostarica.NacionFragment;
@@ -29,21 +30,28 @@ public class HomeFragment extends Fragment implements HomeView, NacionFragment {
     private HomePresenter presenter;
     private static HomeFragment singleton;
     private int fragmentIndex;
-    private HomeListAdapter homeListAdapter;
+    private ArrayAdapter<ContentItemList> homeListAdapter;
     private ListView homeListView;
-    private FragmentManager fragmentManager;
 
-    public static HomeFragment getInstance(FragmentManager argFragmentManager){
+    public static HomeFragment getInstance(ArrayAdapter<ContentItemList> homeListAdapter){
         if(singleton == null){
             singleton = new HomeFragment();
             singleton.setFragmentIndex(NacionConstants.HOME_FRAGMENT_INDEX);
-            singleton.fragmentManager = argFragmentManager;
+            singleton.homeListAdapter = homeListAdapter;
         }
         return singleton;
     }
 
     public HomeFragment(){
         presenter = new HomePresenterImpl(this);
+    }
+
+    public ArrayAdapter<ContentItemList> getHomeListAdapter() {
+        return homeListAdapter;
+    }
+
+    public void setHomeListAdapter(ArrayAdapter<ContentItemList> homeListAdapter) {
+        this.homeListAdapter = homeListAdapter;
     }
 
     @Override
@@ -54,17 +62,11 @@ public class HomeFragment extends Fragment implements HomeView, NacionFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-
-        homeListAdapter = new HomeListAdapter(getActivity(), getContents(), fragmentManager);
         homeListView = (ListView)rootView.findViewById(R.id.homeListView);
-        homeListView.setAdapter(homeListAdapter);
-
+        if(homeListAdapter != null) {
+            homeListView.setAdapter(homeListAdapter);
+        }
         return rootView;
-    }
-
-    private List<ContentItemList> getContents(){
-        Board board = Board.createDummyBoardCore();
-        return board.getAllContents();
     }
 
     @Override

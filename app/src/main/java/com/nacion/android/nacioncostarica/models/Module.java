@@ -45,24 +45,7 @@ public class Module{
 
     public int getTypeCode(){
         int code = 0;
-        if(type.equals(NacionConstants.MODULE_ONE)){
-            code = NacionConstants.MODULE_CODE_ONE;
-        }
-        if(type.equals(NacionConstants.MODULE_TWO)){
-            code = NacionConstants.MODULE_CODE_TWO;
-        }
-        if(type.equals(NacionConstants.MODULE_THREE)){
-            code = NacionConstants.MODULE_CODE_THREE;
-        }
-        if(type.equals(NacionConstants.MODULE_FOURTH)){
-            code = NacionConstants.MODULE_CODE_FOURTH;
-        }
-        if(type.equals(NacionConstants.MODULE_FIVE)){
-            code = NacionConstants.MODULE_CODE_FIVE;
-        }
-        if(type.equals(NacionConstants.MODULE_SIX)){
-            code = NacionConstants.MODULE_CODE_SIX;
-        }
+        code = NacionConstants.MODULES.get(type);
         return code;
     }
 

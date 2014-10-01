@@ -24,9 +24,13 @@ import android.widget.PopupWindow;
 import com.nacion.android.nacioncostarica.holders.Section;
 import com.nacion.android.nacioncostarica.holders.Setting;
 import com.nacion.android.nacioncostarica.home.HomeFragment;
+import com.nacion.android.nacioncostarica.home.listAdapter.HomeListAdapter;
+import com.nacion.android.nacioncostarica.home.listAdapter.HomeListForTabletAdapter;
 import com.nacion.android.nacioncostarica.main.MainPresenter;
 import com.nacion.android.nacioncostarica.main.MainPresenterImpl;
 import com.nacion.android.nacioncostarica.main.MainView;
+import com.nacion.android.nacioncostarica.models.Board;
+import com.nacion.android.nacioncostarica.models.ContentItemList;
 import com.nacion.android.nacioncostarica.popups.SectionPopupListAdapter;
 import com.nacion.android.nacioncostarica.popups.SettingPopupListAdapter;
 
@@ -114,7 +118,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
 
         ActionBar actionBar = getActionBar();
         if(actionBar != null) {
-            actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setCustomView(customView);
             actionBar.setDisplayShowCustomEnabled(true);
@@ -195,8 +199,23 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     }
 
     private void setFragmentsArray(){
+        Context context = getApplicationContext();
+        ArrayAdapter<ContentItemList> homeListAdapter = isTablet(context) ?
+                new HomeListForTabletAdapter(context, getContentsForTablet(), mainFragmentManager) :
+                new HomeListAdapter(context, getContentsForPhone(), mainFragmentManager);
+
         fragments = new ArrayList<NacionFragment>();
-        fragments.add(HomeFragment.getInstance(mainFragmentManager));
+        fragments.add(HomeFragment.getInstance(homeListAdapter));
+    }
+
+    private List<ContentItemList> getContentsForPhone(){
+        Board board = Board.createDummyBoardCoreForPhone();
+        return board.getAllContents();
+    }
+
+    private List<ContentItemList> getContentsForTablet(){
+        Board board = Board.createDummyBoardCoreForTablet();
+        return board.getAllContents();
     }
 
     private class CoverPagerAdapter extends FragmentPagerAdapter{

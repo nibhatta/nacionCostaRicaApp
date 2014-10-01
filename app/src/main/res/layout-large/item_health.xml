@@ -1,7 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/health_height"
+    android:background="@color/health_color_component"
+    android:padding="@dimen/padding_separate">
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/heathItemTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ENFOQUE SALUD"
+        android:textColor="@android:color/white"/>
+
+    <ImageView
+        android:id="@+id/heathItemImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/picture_size02"
+        android:layout_below="@+id/heathItemTextView"
+        android:layout_marginLeft="@dimen/margin_separate"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/heathItemImageView"
+        android:background="@android:color/white"
+        android:padding="@dimen/padding_separate">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_text_date"
+            android:textSize="@dimen/font_section_large"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_text_title"
+            android:textSize="@dimen/font_title_large"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_text_summary"
+            android:textSize="@dimen/font_summary_large"
+            android:layout_marginTop="@dimen/margin_separate"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

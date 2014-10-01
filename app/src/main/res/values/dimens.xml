@@ -42,14 +42,45 @@
     <dimen name="icon_width_action">35dp</dimen>
 
 
+    <!-- Start - Fonts on large screen -->
+    <dimen name="font_section_large">12dp</dimen>
+    <dimen name="font_title_large">24dp</dimen>
+    <dimen name="font_summary_large">12dp</dimen>
+    <dimen name="font_subtitle_large">18dp</dimen>
+    <!-- End -->
 
-    <dimen name="image_width_article">146dp</dimen>
-    <dimen name="image_height_article">96dp</dimen>
 
     <dimen name="image_width_video">192dp</dimen>
     <dimen name="image_height_video">96dp</dimen>
 
     <!-- Start - Video component on large screen -->
     <dimen name="video_height_component_large">450dp</dimen>
+    <!-- End -->
+
+    <!-- Start - Articles and ad component on large screen -->
+    <dimen name="article_ad_height">540dp</dimen>
+    <!-- End -->
+
+    <!-- Start - Articles component on large screen -->
+    <dimen name="article_height">250dp</dimen>
+    <dimen name="article_width">400dp</dimen>
+
+    <dimen name="image_width_article">146dp</dimen>
+    <dimen name="image_height_article">96dp</dimen>
+    <!-- End -->
+
+    <!-- Start - Health component on large screen -->
+    <dimen name="health_height">200dp</dimen>
+    <!-- End -->
+
+    <!-- Start - Entertainment component on large screen -->
+    <dimen name="entertainment_height">345dp</dimen>
+    <dimen name="entertainment_cell_width">50dp</dimen>
+    <dimen name="entertainment_cell_height">150dp</dimen>
+    <dimen name="entertainment_image_width">300dp</dimen>
+    <!-- End -->
+
+    <!-- Start - Special data component on large screen -->
+    <dimen name="special_data_height">250dp</dimen>
     <!-- End -->
 </resources>

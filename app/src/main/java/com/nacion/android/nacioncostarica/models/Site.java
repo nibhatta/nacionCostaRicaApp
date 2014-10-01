@@ -44,10 +44,17 @@ public class Site{
         this.videoGallery = videoGallery;
     }
 
-    public static Site createDummyCoverCore(){
+    public static Site createDummyCoverCoreForPhone(){
         Site cover = new Site();
         cover.boards = new ArrayList<Board>();
-        cover.boards.add(Board.createDummyBoardCore());
+        cover.boards.add(Board.createDummyBoardCoreForPhone());
+        return cover;
+    }
+
+    public static Site createDummyCoverCoreForTablet(){
+        Site cover = new Site();
+        cover.boards = new ArrayList<Board>();
+        cover.boards.add(Board.createDummyBoardCoreForTablet());
         return cover;
     }
 }

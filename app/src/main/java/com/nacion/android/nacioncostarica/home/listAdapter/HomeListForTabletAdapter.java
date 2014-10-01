@@ -1,22 +1,16 @@
 package com.nacion.android.nacioncostarica.home.listAdapter;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Gallery;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.nacion.android.nacioncostarica.NacionFragment;
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
-import com.nacion.android.nacioncostarica.home.galleryAdapter.GalleryImageAdapter;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.GalleryImagePagerAdapter;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.GalleryVideoPagerAdapter;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.ImageFragment;
@@ -29,8 +23,8 @@ import java.util.List;
 /**
  * Created by Gustavo Matarrita on 22/09/2014.
  */
-public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements HomeListView {
-    private static final int VIEWS_TYPE_COUNT = 6;
+public class HomeListForTabletAdapter extends ArrayAdapter<ContentItemList> implements HomeListView {
+    private static final int VIEWS_TYPE_COUNT = 11;
     private HomeListPresenter presenter;
     private LayoutInflater inflater;
     private Context mContext;
@@ -44,7 +38,7 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
             R.drawable.ic_launcher
     };
 
-    public HomeListAdapter(Context context, List<ContentItemList> argContents, FragmentManager argFragmentManager) {
+    public HomeListForTabletAdapter(Context context, List<ContentItemList> argContents, FragmentManager argFragmentManager) {
         super(context, R.layout.item_module, argContents);
         mContext = context;
         presenter = new HomeListPresenterImpl(this);
@@ -92,6 +86,26 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
                     break;
                 case NacionConstants.MODULE_CODE_SIX:
                     convertView = inflater.inflate(R.layout.item_more_news, null);
+                    break;
+
+                case NacionConstants.MODULE_CODE_SEVEN:
+                    convertView = inflater.inflate(R.layout.item_articles_ad, null);
+                    break;
+
+                case NacionConstants.MODULE_CODE_EIGHT:
+                    convertView = inflater.inflate(R.layout.item_health, null);
+                    break;
+
+                case NacionConstants.MODULE_CODE_NINE:
+                    convertView = inflater.inflate(R.layout.item_ad, null);
+                    break;
+
+                case NacionConstants.MODULE_CODE_TEN:
+                    convertView = inflater.inflate(R.layout.item_entertainment, null);
+                    break;
+
+                case NacionConstants.MODULE_CODE_ELEVEN:
+                    convertView = inflater.inflate(R.layout.item_special_data, null);
                     break;
             }
             convertView.setTag(holder);
