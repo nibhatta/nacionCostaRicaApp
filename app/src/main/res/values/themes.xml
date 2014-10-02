@@ -4,7 +4,7 @@
     <style name="NacionCostaRicaAppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="android:colorBackground">@android:color/white</item>
-        <item name="android:icon">@android:color/transparent</item>
+        <item name="android:icon">@drawable/menu_inactive</item>
     </style>
 
 </resources>

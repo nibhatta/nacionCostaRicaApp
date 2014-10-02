@@ -28,18 +28,18 @@ import java.util.List;
 public class HomeFragment extends Fragment implements HomeView, NacionFragment {
 
     private HomePresenter presenter;
-    private static HomeFragment singleton;
+    private HomeFragment instance;
     private int fragmentIndex;
     private ArrayAdapter<ContentItemList> homeListAdapter;
     private ListView homeListView;
 
-    public static HomeFragment getInstance(ArrayAdapter<ContentItemList> homeListAdapter){
-        if(singleton == null){
-            singleton = new HomeFragment();
-            singleton.setFragmentIndex(NacionConstants.HOME_FRAGMENT_INDEX);
-            singleton.homeListAdapter = homeListAdapter;
+    public HomeFragment getInstance(ArrayAdapter<ContentItemList> homeListAdapter, int argIndex){
+        if(instance == null){
+            instance = new HomeFragment();
+            instance.setFragmentIndex(argIndex);
+            instance.homeListAdapter = homeListAdapter;
         }
-        return singleton;
+        return instance;
     }
 
     public HomeFragment(){

@@ -4,8 +4,10 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -13,8 +15,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -39,7 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NacionCostaRicaActivity extends FragmentActivity implements MainView{
-    private final static int TABS_COUNT = 1;
+    private final static int TABS_COUNT = 4;
 
     private ViewPager mainViewPager;
     private MainPresenter presenter;
@@ -52,22 +57,18 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     private PopupWindow settingsPopupWindow;
 
     private FragmentManager mainFragmentManager;
+    private ActionBarDrawerToggle drawerToggle;
+    private DrawerLayout drawerLayout;
 
-    /*
-    String[] menu;
-    DrawerLayout dLayout;
-    ListView dList;
-    ArrayAdapter<String> adapter;
-    */
+    private ListView leftList;
+    private ListView rightList;
+    private float lastTranslate = 0.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nacion_costa_rica);
         addOurCustomViewToActionBar();
-
-
-
 
         presenter = new MainPresenterImpl(this);
 
@@ -80,7 +81,86 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         mainViewPager = (ViewPager)findViewById(R.id.mainViewPager);
         mainViewPager.setAdapter(coverPagerAdapter);
         mainViewPager.setOffscreenPageLimit(TABS_COUNT);
+        setMainViewPagerOtherEvents();
+
+        String[] menu = new String[]{"Home","Android","Windows","Linux","Raspberry Pi","WordPress","Videos","Contact Us"};
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        leftList = (ListView) findViewById(R.id.left_drawer);
+        rightList = (ListView) findViewById(R.id.right_drawer);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
+        leftList.setAdapter(adapter);
+        rightList.setAdapter(adapter);
+
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_launcher, R.string.dummy_text_date, R.string.dummy_text_title){
+            public void onDrawerSlide(View drawerView, float slideOffset){
+                int moveDirection = drawerView.equals(leftList) ? 1 : -1;
+                float moveWidth = drawerView.equals(leftList) ? (leftList.getWidth() * slideOffset) : (rightList.getWidth() * slideOffset);
+                float moveFactor = moveDirection * moveWidth;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+                    mainViewPager.setTranslationX(moveFactor);
+                }else{
+                    TranslateAnimation anim = new TranslateAnimation(lastTranslate, moveFactor, 0.0f, 0.0f);
+                    anim.setDuration(0);
+                    anim.setFillAfter(true);
+                    mainViewPager.startAnimation(anim);
+                    lastTranslate = moveFactor;
+                }
+            }
+        };
+
+        drawerLayout.setDrawerListener(drawerToggle);
     }
+
+    private void setMainViewPagerOtherEvents() {
+        mainViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.i(NacionCostaRicaActivity.class.getName(), "*****>> onPageScrolled - position: " + position);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.i(NacionCostaRicaActivity.class.getName(), "*****>> onPageSelected - position: " + position);
+            }
+
+            private Fragment searchFragmentToDisplay(int argPosition){
+                Fragment find = null;
+                for(NacionFragment fragment : fragments){
+                    if(fragment.getFragmentIndex() == argPosition){
+                        find = (Fragment)fragment;
+                    }
+                }
+                return find;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
+
+    @Override
+    public void showRightDrawLayout() {
+        if(drawerLayout != null && rightList != null){
+            if(drawerLayout.isDrawerOpen(leftList)){
+                drawerLayout.closeDrawer(leftList);
+            }
+            drawerLayout.openDrawer(rightList);
+        }
+    }
+
+    @Override
+    public void showLeftDrawLayout() {
+        if(drawerLayout != null && leftList != null){
+            if(drawerLayout.isDrawerOpen(rightList)){
+                drawerLayout.closeDrawer(rightList);
+            }
+            drawerLayout.openDrawer(leftList);
+        }
+    }
+
 
     private void addOurCustomViewToActionBar(){
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -88,41 +168,33 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         //titleTextView = (TextView) customView.findViewById(R.id.title_text);
         //titleTextView.setText(R.string.title_section1);
 
-
-        sectionsImageButton = (ImageButton) customView.findViewById(R.id.sectionsButton);
-        sectionsImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (sectionsPopupWindow == null) {
-                    initiateSectionsPopupWindow(sectionsPopupWindow, R.layout.custom_sections_popup_window, false);
-                }else{
-                    sectionsPopupWindow.dismiss();
-                    sectionsPopupWindow = null;
-                }
-            }
-        });
-
         settingsImageButton = (ImageButton) customView.findViewById(R.id.settingsButton);
         settingsImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (settingsPopupWindow == null) {
-                    initiateSettingsPopupWindow(settingsPopupWindow, R.layout.custom_settings_popup_window, true);
-                }else{
-                    settingsPopupWindow.dismiss();
-                    settingsPopupWindow = null;
-                }
+                presenter.onClickSettingsButton();
             }
         });
-
 
         ActionBar actionBar = getActionBar();
         if(actionBar != null) {
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setCustomView(customView);
             actionBar.setDisplayShowCustomEnabled(true);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            presenter.onClickHomeButton();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("deprecation")
@@ -205,7 +277,10 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
                 new HomeListAdapter(context, getContentsForPhone(), mainFragmentManager);
 
         fragments = new ArrayList<NacionFragment>();
-        fragments.add(HomeFragment.getInstance(homeListAdapter));
+        fragments.add(new HomeFragment().getInstance(homeListAdapter, 0));
+        fragments.add(new HomeFragment().getInstance(homeListAdapter, 1));
+        fragments.add(new HomeFragment().getInstance(homeListAdapter, 2));
+        fragments.add(new HomeFragment().getInstance(homeListAdapter, 3));
     }
 
     private List<ContentItemList> getContentsForPhone(){
@@ -234,6 +309,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
             for(NacionFragment fragment : fragments){
                 if(fragment.getFragmentIndex() == argPosition){
                     find = (Fragment)fragment;
+                    break;
                 }
             }
             return find;

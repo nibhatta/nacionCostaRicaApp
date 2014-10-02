@@ -9,4 +9,14 @@ public class MainPresenterImpl implements MainPresenter{
     public MainPresenterImpl(MainView mainView) {
         this.mainView = mainView;
     }
+
+    @Override
+    public void onClickHomeButton() {
+        mainView.showLeftDrawLayout();
+    }
+
+    @Override
+    public void onClickSettingsButton(){
+        mainView.showRightDrawLayout();
+    }
 }

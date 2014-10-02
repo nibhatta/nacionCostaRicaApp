@@ -4,18 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/actionbar_height">
 
-    <ImageButton
-        android:id="@+id/sectionsButton"
-        android:layout_width="@dimen/icon_height_action"
-        android:layout_height="@dimen/icon_width_action"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:background="@null"
-        android:src="@drawable/ic_launcher"
-        android:scaleType="fitXY"
-        android:layout_marginLeft="@dimen/margin_separate"
-        />
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

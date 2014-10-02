@@ -9,6 +9,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/NacionCostaRicaAppTheme"
+        android:supportsRtl="true"
         >
         <activity
             android:name=".NacionCostaRicaActivity"
