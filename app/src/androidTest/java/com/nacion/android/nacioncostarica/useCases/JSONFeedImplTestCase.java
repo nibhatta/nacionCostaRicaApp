@@ -27,9 +27,8 @@ public class JSONFeedImplTestCase extends AndroidTestCase {
     }
 
     public void testCaseReadJSONFeedExpectedSuccess(){
-        String urlToTest = "http://api.geonames.org/postalCodeSearchJSON?postalcode=89118";
+        String urlToTest = "http://192.168.205.34/perfilformulario/appNativoNacion.json";
         String json = jsonFeed.readJSONFeed(urlToTest);
         assertTrue(json != null && !json.isEmpty());
-        System.out.println(json);
     }
 }

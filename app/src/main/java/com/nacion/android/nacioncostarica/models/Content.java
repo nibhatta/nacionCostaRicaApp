@@ -33,19 +33,19 @@ public class Content extends ContentItemList{
         this.title = title;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTimestamp(Date date) {
+        this.timestamp = date;
     }
 
     public static Content createDummyContentCore(int argId, Module argModule){
         Content content = new Content();
         content.id = argId;
         content.title = "Title";
-        content.date = new Date();
+        content.timestamp = new Date();
         content.module = argModule;
         content.image = Image.createDummyImageCore();
         return content;

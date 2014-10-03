@@ -1,23 +1,58 @@
 package com.nacion.android.nacioncostarica.models;
 
+import android.util.Log;
+
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by Gustavo Matarrita on 19/09/2014.
  */
 public class Module{
+
     private List<String> galleryModules = new ArrayList<String>(){
         {
             add(NacionConstants.MODULE_THREE);
             add(NacionConstants.MODULE_FIVE);
         }
     };
+
     private String type;
     private int order;
+    private int count;
+    private ContentModule contentModule;
     private List<Content> contents;
+
+    public ContentModule getContentModule() {
+        return contentModule;
+    }
+
+    public void setContentModule(ContentModule contentModule) {
+        this.contentModule = contentModule;
+    }
+
+    public List<String> getGalleryModules() {
+        return galleryModules;
+    }
+
+    public void setGalleryModules(List<String> galleryModules) {
+        this.galleryModules = galleryModules;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public String getType() {
         return type;
@@ -66,5 +101,28 @@ public class Module{
             contents.add(Content.createDummyContentCore(i, argModule));
         }
         return contents;
+    }
+
+    public List<Module> buildModuleListFromJSONObject(JSONArray argModules){
+        List<Module> modules = new ArrayList<Module>();
+        int size = argModules.length();
+        try {
+            for (int i = 0; i < size; i++) {
+                JSONObject jsonModule = argModules.getJSONObject(i);
+                Module module = buildModuleFromJSONObject(jsonModule);
+                modules.add(module);
+            }
+        }catch(JSONException e){
+            Log.d(Module.class.getName(), e.getLocalizedMessage());
+        }
+        return modules;
+    }
+
+    public Module buildModuleFromJSONObject(JSONObject argJSONModule) throws JSONException{
+        Module module = new Module();
+        module.setType(argJSONModule.getString("type"));
+        module.setOrder(argJSONModule.getInt("order"));
+        module.setCount(argJSONModule.getInt("count"));
+        return module;
     }
 }

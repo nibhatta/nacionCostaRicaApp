@@ -36,9 +36,6 @@ import com.nacion.android.nacioncostarica.main.MainPresenterImpl;
 import com.nacion.android.nacioncostarica.main.MainView;
 import com.nacion.android.nacioncostarica.models.Board;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
-import com.nacion.android.nacioncostarica.popups.SectionPopupListAdapter;
-import com.nacion.android.nacioncostarica.popups.SettingPopupListAdapter;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -205,9 +202,11 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
             LayoutInflater inflater = LayoutInflater.from(this);
             View layout = inflater.inflate(argLayout, null);
 
+            /*
             SectionPopupListAdapter popupListAdapter = new SectionPopupListAdapter(getApplicationContext(), getSections());
             ListView listView = (ListView)layout.findViewById(R.id.sectionListView);
             listView.setAdapter(popupListAdapter);
+            */
 
             //setShareOptionsEvents(layout);
 
@@ -235,9 +234,11 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
             LayoutInflater inflater = LayoutInflater.from(this);
             View layout = inflater.inflate(argLayout, null);
 
+            /*
             SettingPopupListAdapter popupListAdapter = new SettingPopupListAdapter(getApplicationContext(), Setting.createDummySettingList());
             ListView listView = (ListView)layout.findViewById(R.id.settingsListView);
             listView.setAdapter(popupListAdapter);
+            */
 
             //setShareOptionsEvents(layout);
 
