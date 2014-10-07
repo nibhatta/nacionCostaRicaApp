@@ -90,7 +90,7 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
                     }
 
                     break;
-                case NacionConstants.MODULE_CODE_SIX:
+                case NacionConstants.MODULE_CODE_EIGHT:
                     convertView = inflater.inflate(R.layout.item_more_news, null);
                     break;
             }

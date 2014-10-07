@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by Gustavo Matarrita on 22/09/2014.
@@ -21,9 +20,8 @@ public class Site{
     private Date timestamp;
     private Map<String, String> boardNames;
     private List<Board> boards;
-    private List<Article> articles;
-    private ImageGallery imageGallery;
-    private VideoGallery videoGallery;
+    private Map<Integer, Article> articles;
+    private Map<Integer, Gallery> galleries;
 
     public Date getTimestamp() {
         return timestamp;
@@ -49,28 +47,20 @@ public class Site{
         this.boards = boards;
     }
 
-    public List<Article> getArticles() {
+    public Map<Integer, Article> getArticles() {
         return articles;
     }
 
-    public void setArticles(List<Article> articles) {
+    public void setArticles(Map<Integer, Article> articles) {
         this.articles = articles;
     }
 
-    public ImageGallery getImageGallery() {
-        return imageGallery;
+    public Map<Integer, Gallery> getGalleries() {
+        return galleries;
     }
 
-    public void setImageGallery(ImageGallery imageGallery) {
-        this.imageGallery = imageGallery;
-    }
-
-    public VideoGallery getVideoGallery() {
-        return videoGallery;
-    }
-
-    public void setVideoGallery(VideoGallery videoGallery) {
-        this.videoGallery = videoGallery;
+    public void setGalleries(Map<Integer, Gallery> galleries) {
+        this.galleries = galleries;
     }
 
     public static Site createDummyCoverCoreForPhone(){
@@ -90,21 +80,26 @@ public class Site{
     public Site buildSiteFromJSONObject(JSONObject argJSONObject) {
         Site site = new Site();
         try{
-            String timestamp = argJSONObject.getString("timestamp");
+            int timestamp = argJSONObject.getInt("timestamp");
             String boardNames = argJSONObject.getString("boardNames");
             JSONArray boards = argJSONObject.getJSONArray("boards");
-            site.timestamp = convertStringToTimestamp(timestamp);
-            site.boardNames = createBoardNamesMap(boardNames);
-            site.boards = new Board().buildBoardListFromJSONObject(boards);
+            JSONArray articles = argJSONObject.getJSONArray("articles");
+            JSONArray galleries = argJSONObject.getJSONArray("galleries");
+
+            site.setTimestamp(new Date(timestamp));
+            site.setBoardNames(createBoardNamesMap(boardNames));
+            site.setBoards(new Board().buildBoardListFromJSONObject(boards));
+
+            Map<Integer, Article> articleMap = new Article().buildArticlesMapFromJSONObject(articles);
+            site.setArticles(articleMap);
+
+            Map<Integer, Gallery> galleryMap = new Gallery().buildGalleriesMapFromJSONObject(galleries);
+            site.setGalleries(galleryMap);
+
         }catch(JSONException e){
             Log.d(Site.class.getName(), e.getLocalizedMessage());
         }
         return site;
-    }
-
-    private Date convertStringToTimestamp(String argTimestampString){
-        int timestamp = Integer.parseInt(argTimestampString);
-        return new Date(timestamp);
     }
 
     private Map<String, String> createBoardNamesMap(String argBoardNames) throws JSONException{
@@ -117,4 +112,7 @@ public class Site{
         }
         return boardNames;
     }
+
+
+
 }

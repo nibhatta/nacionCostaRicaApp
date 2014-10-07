@@ -17,6 +17,7 @@ import java.util.Set;
  * Created by Gustavo Matarrita on 19/09/2014.
  */
 public class Board{
+
     private int id;
     private List<Module> modules;
 
@@ -73,6 +74,22 @@ public class Board{
     public List<ContentItemList> getAllContents(){
         List<ContentItemList> contents = new ArrayList<ContentItemList>();
         for(Module module : modules){
+            if(module.isAGallery()){
+                contents.add(createContentGallery(module));
+            }else{
+                addSingleRowContent(module, contents);
+            }
+        }
+        return contents;
+    }
+
+    public List<ContentItemList> getAllContentsForPhone(){
+        List<ContentItemList> contents = new ArrayList<ContentItemList>();
+        for(Module module : modules){
+            if(!module.isContentToDisplayOnPhone()){
+                continue;
+            }
+
             if(module.isAGallery()){
                 contents.add(createContentGallery(module));
             }else{

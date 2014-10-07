@@ -17,10 +17,21 @@ import java.util.List;
  */
 public class Module{
 
-    private List<String> galleryModules = new ArrayList<String>(){
+    private static final List<String> GALLERY_MODULES = new ArrayList<String>(){
         {
             add(NacionConstants.MODULE_THREE);
             add(NacionConstants.MODULE_FIVE);
+        }
+    };
+
+    private final static List<String> CONTENTS_FOR_PHONE = new ArrayList<String>(){
+        {
+            add(NacionConstants.MODULE_ONE);
+            add(NacionConstants.MODULE_TWO);
+            add(NacionConstants.MODULE_THREE);
+            add(NacionConstants.MODULE_FOURTH);
+            add(NacionConstants.MODULE_FIVE);
+            add(NacionConstants.MODULE_EIGHT);
         }
     };
 
@@ -36,14 +47,6 @@ public class Module{
 
     public void setContentModule(ContentModule contentModule) {
         this.contentModule = contentModule;
-    }
-
-    public List<String> getGalleryModules() {
-        return galleryModules;
-    }
-
-    public void setGalleryModules(List<String> galleryModules) {
-        this.galleryModules = galleryModules;
     }
 
     public int getCount() {
@@ -85,7 +88,11 @@ public class Module{
     }
 
     public boolean isAGallery(){
-        return galleryModules.contains(type);
+        return GALLERY_MODULES.contains(type);
+    }
+
+    public boolean isContentToDisplayOnPhone(){
+        return CONTENTS_FOR_PHONE.contains(type);
     }
 
     public static Module createDummyModuleCore(String argType, int argContents){
@@ -122,7 +129,26 @@ public class Module{
         Module module = new Module();
         module.setType(argJSONModule.getString("type"));
         module.setOrder(argJSONModule.getInt("order"));
-        module.setCount(argJSONModule.getInt("count"));
+
+        String countTag = "count";
+        if(argJSONModule.has(countTag)) {
+            module.setCount(argJSONModule.getInt(countTag));
+        }
+
+        String contentsTag = "contents";
+        if(argJSONModule.has(contentsTag)) {
+            JSONObject contentModuleJSON = argJSONModule.getJSONObject(contentsTag);
+            ContentModule contentModule = new ContentModule().buildContentModuleFromJSONObject(contentModuleJSON);
+            module.setContentModule(contentModule);
+        }
+
+        String listTag = "list";
+        if(argJSONModule.has(listTag)){
+            JSONArray jsonArray = argJSONModule.getJSONArray(listTag);
+            List<Content> contents = new Content().buildContentListFromJSONObject(jsonArray, module);
+            module.setContents(contents);
+        }
+
         return module;
     }
 }

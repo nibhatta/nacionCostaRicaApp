@@ -1,5 +1,11 @@
 package com.nacion.android.nacioncostarica.models;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,38 +15,6 @@ import java.util.List;
  */
 public class Content extends ContentItemList{
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Date date) {
-        this.timestamp = date;
-    }
-
     public static Content createDummyContentCore(int argId, Module argModule){
         Content content = new Content();
         content.id = argId;
@@ -48,6 +22,32 @@ public class Content extends ContentItemList{
         content.timestamp = new Date();
         content.module = argModule;
         content.image = Image.createDummyImageCore();
+        return content;
+    }
+
+    public List<Content> buildContentListFromJSONObject(JSONArray argJSONArray, Module argModule){
+        List<Content> contents = new ArrayList<Content>();
+        int size = argJSONArray.length();
+        try {
+            for (int i = 0; i < size; i++) {
+                JSONObject jsonContent = argJSONArray.getJSONObject(i);
+                Content content = buildContentFromJSONObject(jsonContent);
+                content.setModule(argModule);
+                contents.add(content);
+            }
+        }catch(JSONException e){
+            Log.d(Content.class.getName(), e.getLocalizedMessage());
+        }
+        return contents;
+    }
+
+    public Content buildContentFromJSONObject(JSONObject argJSONContent) throws JSONException{
+        Content content = new Content();
+        content.setId(argJSONContent.getInt("id"));
+        content.setTitle(argJSONContent.getString("title"));
+        JSONObject jsonImage = argJSONContent.getJSONObject("image");
+        Image image = new Image().buildImageFromJSONObject(jsonImage);
+        content.setImage(image);
         return content;
     }
 }

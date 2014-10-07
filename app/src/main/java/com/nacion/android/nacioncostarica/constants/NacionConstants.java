@@ -10,17 +10,17 @@ public class NacionConstants {
     public final static int HOME_FRAGMENT_INDEX = 0;
     public final static String URL = "http://www.nacion.com/deportes/legionarios/Keylor-Navas-controla-balon-Elche_LNCIMA20140923_0137_29.jpg";
 
-    public final static String MODULE_ONE = "destacado";
-    public final static String MODULE_TWO = "listado";
-    public final static String MODULE_THREE = "videoGallery";
-    public final static String MODULE_FOURTH = "weather";
-    public final static String MODULE_FIVE = "imageGallery";
-    public final static String MODULE_SIX = "moreNews";
-    public final static String MODULE_SEVEN = "listadoAd";
-    public final static String MODULE_EIGHT = "salud";
-    public final static String MODULE_NINE = "ad";
-    public final static String MODULE_TEN = "entretenimiento";
-    public final static String MODULE_ELEVEN = "specialData";
+    public final static String MODULE_ONE = "highlight";
+    public final static String MODULE_TWO = "grid";
+    public final static String MODULE_THREE = "multimedia";
+    public final static String MODULE_FOURTH = "break";
+    public final static String MODULE_FIVE = "list";
+    public final static String MODULE_SIX = "BlockB";
+    public final static String MODULE_SEVEN = "SpecialData";
+    public final static String MODULE_EIGHT = "more";
+    public final static String MODULE_NINE = "lastMinute";
+    public final static String MODULE_TEN = "";
+    public final static String MODULE_ELEVEN = "";
 
     public final static int MODULE_CODE_ONE = 0;
     public final static int MODULE_CODE_TWO = 1;
