@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Gustavo Matarrita on 19/09/2014.
@@ -75,7 +74,7 @@ public class Board{
         List<ContentItemList> contents = new ArrayList<ContentItemList>();
         for(Module module : modules){
             if(module.isAGallery()){
-                contents.add(createContentGallery(module));
+                addComplexRowContent(module, contents);
             }else{
                 addSingleRowContent(module, contents);
             }
@@ -83,15 +82,14 @@ public class Board{
         return contents;
     }
 
-    public List<ContentItemList> getAllContentsForPhone(){
+    public List<ContentItemList> getAllContentsForPhoneDevice(){
         List<ContentItemList> contents = new ArrayList<ContentItemList>();
         for(Module module : modules){
             if(!module.isContentToDisplayOnPhone()){
                 continue;
             }
-
             if(module.isAGallery()){
-                contents.add(createContentGallery(module));
+                addComplexRowContent(module, contents);
             }else{
                 addSingleRowContent(module, contents);
             }
@@ -100,16 +98,27 @@ public class Board{
     }
 
     private void addSingleRowContent(Module argModule, List<ContentItemList> argContents){
-        for(Content content : argModule.getContents()){
-            argContents.add(content);
+        if(moduleHasListItem(argModule)){
+            for (Content content : argModule.getContents()) {
+                argContents.add(content);
+            }
+        }else {
+            argContents.add(argModule.getContentModule());
         }
     }
 
-    private ContentGallery createContentGallery(Module argModule){
-        ContentGallery gallery = new ContentGallery();
-        gallery.setModule(argModule);
-        gallery.setContents(argModule.getContents());
-        return gallery;
+    private boolean moduleHasListItem(Module argModule){
+        return(argModule.getContents() != null && !argModule.getContents().isEmpty());
+    }
+
+    private void addComplexRowContent(Module argModule, List<ContentItemList> argContents){
+        argContents.add(createContentComplex(argModule));
+    }
+
+    private ContentComplex createContentComplex(Module argModule){
+        ContentComplex complex = new ContentComplex();
+        complex.setModule(argModule);
+        return complex;
     }
 
     public List<Board> buildBoardListFromJSONObject(JSONArray argBoards){

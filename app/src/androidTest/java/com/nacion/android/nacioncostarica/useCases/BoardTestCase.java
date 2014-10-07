@@ -14,6 +14,7 @@ import com.nacion.android.nacioncostarica.models.Module;
 import com.nacion.android.nacioncostarica.models.Site;
 import com.nacion.android.nacioncostarica.models.Weight;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,13 +43,14 @@ public class BoardTestCase extends AndroidTestCase {
         assertTrue(json != null && !json.isEmpty());
         Site site = jsonReader.createObjectsFromJSONString(json);
         for(Board board : site.getBoards()){
-            List<ContentItemList> contentForPhone = board.getAllContentsForPhone();
+            List<ContentItemList> contentForPhone = board.getAllContentsForPhoneDevice();
             validateContentForPhone(contentForPhone);
         }
     }
 
     private void validateContentForPhone(List<ContentItemList> argContentForPhone){
         for(ContentItemList item:argContentForPhone){
+            assertNotNull(item.getModule());
             assertTrue(item.getModule().isContentToDisplayOnPhone());
         }
     }

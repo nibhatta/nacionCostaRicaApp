@@ -14,13 +14,31 @@ public class ContentModule extends ContentItemList{
     public ContentModule buildContentModuleFromJSONObject(JSONObject argContentModuleJSON){
         ContentModule contentModule = new ContentModule();
         try {
-            contentModule.setId(argContentModuleJSON.getInt("id"));
-            contentModule.setTitle(argContentModuleJSON.getString("title"));
-            contentModule.setSummary(argContentModuleJSON.getString("summary"));
-            contentModule.setSection(argContentModuleJSON.getString("section"));
+            String tagId = "id";
+            if(argContentModuleJSON.has(tagId)) {
+                contentModule.setId(argContentModuleJSON.getInt(tagId));
+            }
 
-            int timestampInt = argContentModuleJSON.getInt("timestamp");
-            contentModule.setTimestamp(new Date(timestampInt));
+            String tagTitle = "title";
+            if(argContentModuleJSON.has(tagTitle)) {
+                contentModule.setTitle(argContentModuleJSON.getString(tagTitle));
+            }
+
+            String tagSummary = "summary";
+            if(argContentModuleJSON.has(tagSummary)) {
+                contentModule.setSummary(argContentModuleJSON.getString(tagSummary));
+            }
+
+            String tagSection = "section";
+            if(argContentModuleJSON.has(tagSection)) {
+                contentModule.setSection(argContentModuleJSON.getString(tagSection));
+            }
+
+            String tagTimestamp = "timestamp";
+            if(argContentModuleJSON.has(tagTimestamp)) {
+                int timestampInt = argContentModuleJSON.getInt(tagTimestamp);
+                contentModule.setTimestamp(new Date(timestampInt));
+            }
 
         }catch (JSONException e){
             Log.d(ContentModule.class.getName(), e.getLocalizedMessage());

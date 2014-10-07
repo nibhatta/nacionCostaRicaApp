@@ -27,7 +27,6 @@ public abstract class ContentItemList{
     protected boolean isEvolution;
     protected Image image;
     protected Module module;
-    protected List<Content> contents;
 
     public int getId() {
         return id;
@@ -83,13 +82,5 @@ public abstract class ContentItemList{
 
     public void setModule(Module module) {
         this.module = module;
-    }
-
-    public void setContents(List<Content> argContents){
-        contents = argContents;
-    }
-
-    public List<Content> getContents(){
-        return contents;
     }
 }

@@ -19,8 +19,10 @@ public class Module{
 
     private static final List<String> GALLERY_MODULES = new ArrayList<String>(){
         {
+            add(NacionConstants.MODULE_ONE);
             add(NacionConstants.MODULE_THREE);
             add(NacionConstants.MODULE_FIVE);
+            add(NacionConstants.MODULE_EIGHT);
         }
     };
 
@@ -139,6 +141,7 @@ public class Module{
         if(argJSONModule.has(contentsTag)) {
             JSONObject contentModuleJSON = argJSONModule.getJSONObject(contentsTag);
             ContentModule contentModule = new ContentModule().buildContentModuleFromJSONObject(contentModuleJSON);
+            contentModule.setModule(module);
             module.setContentModule(contentModule);
         }
 
