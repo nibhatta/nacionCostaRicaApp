@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -26,6 +27,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
+import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.holders.Section;
 import com.nacion.android.nacioncostarica.holders.Setting;
 import com.nacion.android.nacioncostarica.home.HomeFragment;
@@ -36,8 +38,14 @@ import com.nacion.android.nacioncostarica.main.MainPresenterImpl;
 import com.nacion.android.nacioncostarica.main.MainView;
 import com.nacion.android.nacioncostarica.models.Board;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
+import com.nacion.android.nacioncostarica.models.Site;
+import com.nacion.android.nacioncostarica.useCases.JSONFeed;
+import com.nacion.android.nacioncostarica.useCases.JSONFeedImpl;
+import com.nacion.android.nacioncostarica.useCases.JSONReader;
+import com.nacion.android.nacioncostarica.useCases.JSONReaderImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NacionCostaRicaActivity extends FragmentActivity implements MainView{
@@ -50,8 +58,6 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
 
     private ImageButton sectionsImageButton;
     private ImageButton settingsImageButton;
-    private PopupWindow sectionsPopupWindow;
-    private PopupWindow settingsPopupWindow;
 
     private FragmentManager mainFragmentManager;
     private ActionBarDrawerToggle drawerToggle;
@@ -60,6 +66,9 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     private ListView leftList;
     private ListView rightList;
     private float lastTranslate = 0.0f;
+
+    private JSONReader jsonReader = new JSONReaderImpl();;
+    private JSONFeed jsonFeed = new JSONFeedImpl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +79,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         presenter = new MainPresenterImpl(this);
 
         mainFragmentManager = getSupportFragmentManager();
-
-        setFragmentsArray();
+        presenter.run();
 
         coverPagerAdapter = new CoverPagerAdapter(mainFragmentManager);
 
@@ -271,7 +279,8 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
-    private void setFragmentsArray(){
+    @Override
+    public void updateViewFromModel() {
         Context context = getApplicationContext();
         ArrayAdapter<ContentItemList> homeListAdapter = isTablet(context) ?
                 new HomeListForTabletAdapter(context, getContentsForTablet(), mainFragmentManager) :
@@ -279,14 +288,20 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
 
         fragments = new ArrayList<NacionFragment>();
         fragments.add(new HomeFragment().getInstance(homeListAdapter, 0));
+        /*
         fragments.add(new HomeFragment().getInstance(homeListAdapter, 1));
         fragments.add(new HomeFragment().getInstance(homeListAdapter, 2));
         fragments.add(new HomeFragment().getInstance(homeListAdapter, 3));
+        */
     }
 
     private List<ContentItemList> getContentsForPhone(){
-        Board board = Board.createDummyBoardCoreForPhone();
-        return board.getAllContents();
+        List<ContentItemList> list = Collections.emptyList();
+        for(Board board:presenter.getSite().getBoards()){
+            list = board.getAllContentsForPhoneDevice();
+            break;
+        }
+        return list;
     }
 
     private List<ContentItemList> getContentsForTablet(){
@@ -319,6 +334,20 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         @Override
         public int getCount() {
             return TABS_COUNT;
+        }
+    }
+
+    private class ReadJSONFeedTask extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... urls) {
+            return jsonFeed.readJSONFeed(urls[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            Site site = jsonReader.createObjectsFromJSONString(json);
+            presenter.setSite(site);
+            presenter.run();
         }
     }
 }

@@ -8,4 +8,5 @@ import android.widget.ListView;
 public interface MainView {
     public void showRightDrawLayout();
     public void showLeftDrawLayout();
+    public void updateViewFromModel();
 }
