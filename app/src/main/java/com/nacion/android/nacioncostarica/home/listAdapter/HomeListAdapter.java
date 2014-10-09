@@ -1,9 +1,11 @@
 package com.nacion.android.nacioncostarica.home.listAdapter;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nacion.android.nacioncostarica.NacionFragment;
@@ -21,6 +24,9 @@ import com.nacion.android.nacioncostarica.home.galleryAdapter.GalleryImagePagerA
 import com.nacion.android.nacioncostarica.home.galleryAdapter.GalleryVideoPagerAdapter;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.ImageFragment;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.VideoFragment;
+import com.nacion.android.nacioncostarica.home.galleryListener.GalleryOnPageChangeListener;
+import com.nacion.android.nacioncostarica.home.holders.HomeViewHolder;
+import com.nacion.android.nacioncostarica.models.Content;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
 
 import java.util.ArrayList;
@@ -30,7 +36,7 @@ import java.util.List;
  * Created by Gustavo Matarrita on 22/09/2014.
  */
 public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements HomeListView {
-    private static final int VIEWS_TYPE_COUNT = 6;
+    private static final int VIEWS_TYPE_COUNT = 8;
     private HomeListPresenter presenter;
     private LayoutInflater inflater;
     private Context mContext;
@@ -56,23 +62,37 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
     public View getView(int position, View convertView, ViewGroup parent) {
         ContentItemList itemList = getItem(position);
         int codeType = getItemViewType(position);
-        ViewHolder holder;
+        HomeViewHolder holder;
         if(convertView == null){
-            holder = new ViewHolder();
+            holder = new HomeViewHolder();
             switch(codeType){
                 case NacionConstants.MODULE_CODE_ONE:
                     convertView = inflater.inflate(R.layout.item_module, null);
+                    holder.setViewHolderComponentsReferencesForHighlightView(convertView);
                     break;
                 case NacionConstants.MODULE_CODE_TWO:
                     convertView = inflater.inflate(R.layout.item_article, null);
+                    holder.setViewHolderComponentsReferencesForArticleView(convertView);
                     break;
                 case NacionConstants.MODULE_CODE_THREE:
                     convertView = inflater.inflate(R.layout.item_video_gallery, null);
                     holder.viewPager = (ViewPager)convertView.findViewById(R.id.videoGalleryViewPager);
-                    GalleryVideoPagerAdapter videoPagerAdapter = new GalleryVideoPagerAdapter(fragmentManager, getVideoFragmentsArray());
+
+                    List<Content> contents = itemList.getModule().getContents();
+                    int size = contents.size();
+
+                    List<NacionFragment> fragments = getVideoFragmentsArray(contents);
+
+                    GalleryOnPageChangeListener listener = new GalleryOnPageChangeListener(fragments);
+                    listener.setTitleViewPager((TextView)convertView.findViewById(R.id.videoTitleTextView));
+
+                    GalleryVideoPagerAdapter videoPagerAdapter = new GalleryVideoPagerAdapter(fragmentManager, fragments);
+                    videoPagerAdapter.setTabsCount(size);
+
                     if(holder.viewPager.getAdapter() == null) {
                         holder.viewPager.setAdapter(videoPagerAdapter);
-                        holder.viewPager.setOffscreenPageLimit(4);
+                        holder.viewPager.setOnPageChangeListener(listener);
+                        holder.viewPager.setOffscreenPageLimit(size);
                     }
                     break;
                 case NacionConstants.MODULE_CODE_FOURTH:
@@ -83,11 +103,15 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
                     convertView = inflater.inflate(R.layout.item_image_gallery, null);
 
                     holder.viewPager = (ViewPager)convertView.findViewById(R.id.imageGalleryViewPager);
-                    GalleryImagePagerAdapter pagerAdapter = new GalleryImagePagerAdapter(fragmentManager, getFragmentsArray());
+                    /*
+                    fragments = getFragmentsArray();
+
+                    GalleryImagePagerAdapter pagerAdapter = new GalleryImagePagerAdapter(fragmentManager, fragments);
                     if(holder.viewPager.getAdapter() == null) {
                         holder.viewPager.setAdapter(pagerAdapter);
+                        holder.viewPager.setOnPageChangeListener();
                         holder.viewPager.setOffscreenPageLimit(4);
-                    }
+                    }*/
 
                     break;
                 case NacionConstants.MODULE_CODE_EIGHT:
@@ -96,16 +120,35 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
             }
             convertView.setTag(holder);
         }else{
-            holder = (ViewHolder)convertView.getTag();
+            holder = (HomeViewHolder)convertView.getTag();
         }
 
-        if(codeType == NacionConstants.MODULE_CODE_FIVE){
-
-        }
-
-
+        setHolderViewValuesByCodeType(holder, itemList, codeType);
 
         return convertView;
+    }
+
+    private void setHolderViewValuesByCodeType(HomeViewHolder argHolder, ContentItemList argItem, int argCodeType){
+        switch(argCodeType){
+            case NacionConstants.MODULE_CODE_ONE:
+                argHolder.setViewHolderValuesForHighlightView(argItem);
+                break;
+            case NacionConstants.MODULE_CODE_TWO:
+                argHolder.setViewHolderValuesForArticleView(argItem);
+                break;
+            case NacionConstants.MODULE_CODE_THREE:
+
+                break;
+            case NacionConstants.MODULE_CODE_FOURTH:
+
+                break;
+            case NacionConstants.MODULE_CODE_FIVE:
+
+                break;
+            case NacionConstants.MODULE_CODE_EIGHT:
+
+                break;
+        }
     }
 
     private List<NacionFragment> getFragmentsArray(){
@@ -117,19 +160,16 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
         return fragments;
     }
 
-    private List<NacionFragment> getVideoFragmentsArray(){
+    private List<NacionFragment> getVideoFragmentsArray(List<Content> argContents){
         List<NacionFragment> fragments = new ArrayList<NacionFragment>();
-        fragments.add(new VideoFragment().getInstance(0));
-        fragments.add(new VideoFragment().getInstance(1));
-        fragments.add(new VideoFragment().getInstance(2));
-        fragments.add(new VideoFragment().getInstance(3));
+        int index = 0;
+        for(Content content : argContents){
+            VideoFragment videoFragment = new VideoFragment().getInstance(index, content.getImage().getPhoneUrl());
+            videoFragment.setTitle(content.getTitle());
+            fragments.add(videoFragment);
+            index++;
+        }
         return fragments;
-    }
-
-
-    private class ViewHolder{
-        ViewPager viewPager;
-
     }
 
     @Override

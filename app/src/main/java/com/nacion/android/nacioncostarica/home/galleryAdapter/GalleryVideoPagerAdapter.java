@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.NacionFragment;
 
@@ -15,11 +17,16 @@ import java.util.List;
 
 public class GalleryVideoPagerAdapter extends FragmentPagerAdapter {
     private List<NacionFragment> fragments;
-    private static int TABS_COUNT = 4;
+    private int tabsCount;
 
     public GalleryVideoPagerAdapter(FragmentManager argManager, List<NacionFragment> argFragments){
         super(argManager);
         fragments = argFragments;
+    }
+
+    @Override
+    public void startUpdate(ViewGroup container) {
+        super.startUpdate(container);
     }
 
     @Override
@@ -41,6 +48,14 @@ public class GalleryVideoPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return TABS_COUNT;
+        return tabsCount;
+    }
+
+    public int getTabsCount() {
+        return tabsCount;
+    }
+
+    public void setTabsCount(int tabsCount) {
+        this.tabsCount = tabsCount;
     }
 }

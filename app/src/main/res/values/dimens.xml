@@ -57,8 +57,16 @@
     <dimen name="video_height_component_large">450dp</dimen>
     <!-- End -->
 
+    <!-- Start - Articles on phone screen -->
+    <dimen name="article_ad_height_on_phone">540dp</dimen>
+    <dimen name="article_image_width_on_phone">125dp</dimen>
+    <dimen name="article_image_height_on_phone">75dp</dimen>
+    <!-- End -->
+
     <!-- Start - Articles and ad component on large screen -->
     <dimen name="article_ad_height">540dp</dimen>
+    <dimen name="article_image_width">125dp</dimen>
+    <dimen name="article_image_height">75dp</dimen>
     <!-- End -->
 
     <!-- Start - Articles component on large screen -->

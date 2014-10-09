@@ -8,7 +8,10 @@ import java.util.Map;
  */
 public class NacionConstants {
     public final static int HOME_FRAGMENT_INDEX = 0;
-    public final static String JSON_URL = "http://192.168.205.34/perfilformulario/appNativoNacion.json";
+    //public final static String JSON_URL = "http://192.168.205.34/perfilformulario/appNativoNacion.json";
+    public final static String EMPTY_STRING = "";
+    public final static String JSON_URL = "http://media.nacion.com/secure/apps/lanacion/tools/appNativoNacion.json";
+
     public final static String URL = "http://www.nacion.com/deportes/legionarios/Keylor-Navas-controla-balon-Elche_LNCIMA20140923_0137_29.jpg";
 
     public final static String MODULE_ONE = "highlight";

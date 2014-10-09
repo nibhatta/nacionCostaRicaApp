@@ -63,4 +63,14 @@ public class ImageFragment extends Fragment implements HomeView, NacionFragment 
     public void setFragmentIndex(int argIndex) {
         fragmentIndex = argIndex;
     }
+
+    @Override
+    public String getTitle() {
+        return null;
+    }
+
+    @Override
+    public void setTitle(String title) {
+
+    }
 }

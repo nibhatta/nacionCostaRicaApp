@@ -133,10 +133,12 @@ public class HomeListForTabletAdapter extends ArrayAdapter<ContentItemList> impl
 
     private List<NacionFragment> getVideoFragmentsArray(){
         List<NacionFragment> fragments = new ArrayList<NacionFragment>();
+        /*
         fragments.add(new VideoFragment().getInstance(0));
         fragments.add(new VideoFragment().getInstance(1));
         fragments.add(new VideoFragment().getInstance(2));
         fragments.add(new VideoFragment().getInstance(3));
+        */
         return fragments;
     }
 

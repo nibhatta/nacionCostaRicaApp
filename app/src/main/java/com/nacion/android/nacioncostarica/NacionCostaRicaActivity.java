@@ -26,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.holders.Section;
@@ -49,24 +50,21 @@ import java.util.Collections;
 import java.util.List;
 
 public class NacionCostaRicaActivity extends FragmentActivity implements MainView{
-    private final static int TABS_COUNT = 4;
-
+    private static int tabsCount;
     private ViewPager mainViewPager;
     private MainPresenter presenter;
     private List<NacionFragment> fragments;
     private CoverPagerAdapter coverPagerAdapter;
-
     private ImageButton sectionsImageButton;
     private ImageButton settingsImageButton;
-
     private FragmentManager mainFragmentManager;
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
-
+    private ProgressBar progressBar;
     private ListView leftList;
     private ListView rightList;
     private float lastTranslate = 0.0f;
-
+    private ReadJSONFeedTask jsonAsyncTask;
     private JSONReader jsonReader = new JSONReaderImpl();;
     private JSONFeed jsonFeed = new JSONFeedImpl();
 
@@ -75,19 +73,38 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nacion_costa_rica);
         addOurCustomViewToActionBar();
-
+        createDrawerLayout();
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         presenter = new MainPresenterImpl(this);
-
         mainFragmentManager = getSupportFragmentManager();
-        presenter.run();
+    }
 
-        coverPagerAdapter = new CoverPagerAdapter(mainFragmentManager);
+    private void addOurCustomViewToActionBar(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View customView = inflater.inflate(R.layout.custom_actionbar, null);
+        //titleTextView = (TextView) customView.findViewById(R.id.title_text);
+        //titleTextView.setText(R.string.title_section1);
 
-        mainViewPager = (ViewPager)findViewById(R.id.mainViewPager);
-        mainViewPager.setAdapter(coverPagerAdapter);
-        mainViewPager.setOffscreenPageLimit(TABS_COUNT);
-        setMainViewPagerOtherEvents();
+        settingsImageButton = (ImageButton) customView.findViewById(R.id.settingsButton);
+        settingsImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.onClickSettingsButton();
+            }
+        });
 
+        ActionBar actionBar = getActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setCustomView(customView);
+            actionBar.setDisplayShowCustomEnabled(true);
+        }
+    }
+
+    private void createDrawerLayout(){
         String[] menu = new String[]{"Home","Android","Windows","Linux","Raspberry Pi","WordPress","Videos","Contact Us"};
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -118,6 +135,27 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         drawerLayout.setDrawerListener(drawerToggle);
     }
 
+    private List<Section> getSections(){
+        List<Section> sections = new ArrayList<Section>();
+        for(int i=0; i<10; i++){
+            Section section = Section.createDummySectionCore(i < 5 ? true : false);
+            sections.add(section);
+        }
+        return sections;
+    }
+
+    private static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    private void createCoverPagerAdapter(){
+        coverPagerAdapter = new CoverPagerAdapter(mainFragmentManager);
+        mainViewPager = (ViewPager)findViewById(R.id.mainViewPager);
+        mainViewPager.setAdapter(coverPagerAdapter);
+        mainViewPager.setOffscreenPageLimit(tabsCount);
+        setMainViewPagerOtherEvents();
+    }
+
     private void setMainViewPagerOtherEvents() {
         mainViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -146,167 +184,38 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         });
     }
 
-    @Override
-    public void showRightDrawLayout() {
-        if(drawerLayout != null && rightList != null){
-            if(drawerLayout.isDrawerOpen(leftList)){
-                drawerLayout.closeDrawer(leftList);
-            }
-            drawerLayout.openDrawer(rightList);
-        }
-    }
-
-    @Override
-    public void showLeftDrawLayout() {
-        if(drawerLayout != null && leftList != null){
-            if(drawerLayout.isDrawerOpen(rightList)){
-                drawerLayout.closeDrawer(rightList);
-            }
-            drawerLayout.openDrawer(leftList);
-        }
-    }
-
-
-    private void addOurCustomViewToActionBar(){
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View customView = inflater.inflate(R.layout.custom_actionbar, null);
-        //titleTextView = (TextView) customView.findViewById(R.id.title_text);
-        //titleTextView.setText(R.string.title_section1);
-
-        settingsImageButton = (ImageButton) customView.findViewById(R.id.settingsButton);
-        settingsImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.onClickSettingsButton();
-            }
-        });
-
-        ActionBar actionBar = getActionBar();
-        if(actionBar != null) {
-            actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(false);
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setCustomView(customView);
-            actionBar.setDisplayShowCustomEnabled(true);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            presenter.onClickHomeButton();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("deprecation")
-    private PopupWindow initiateSectionsPopupWindow(PopupWindow argPopupWindow, int argLayout, boolean argRight) {
-        try {
-            int x = argRight ? 100 : 0;
-
-            LayoutInflater inflater = LayoutInflater.from(this);
-            View layout = inflater.inflate(argLayout, null);
-
-            /*
-            SectionPopupListAdapter popupListAdapter = new SectionPopupListAdapter(getApplicationContext(), getSections());
-            ListView listView = (ListView)layout.findViewById(R.id.sectionListView);
-            listView.setAdapter(popupListAdapter);
-            */
-
-            //setShareOptionsEvents(layout);
-
-            argPopupWindow = new PopupWindow(layout, 400, FrameLayout.LayoutParams.MATCH_PARENT,true);
-            argPopupWindow.setOutsideTouchable(true);
-            argPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-
-            if(isTablet(getApplicationContext())) {
-                argPopupWindow.showAsDropDown(sectionsImageButton, x, 0);
-            }else{
-                argPopupWindow.showAsDropDown(sectionsImageButton, x, -100);
-            }
-
-        } catch (Exception e) {
-            Log.e(NacionCostaRicaActivity.class.getName(), e.getLocalizedMessage());
-        }
-        return argPopupWindow;
-    }
-
-    @SuppressWarnings("deprecation")
-    private PopupWindow initiateSettingsPopupWindow(PopupWindow argPopupWindow, int argLayout, boolean argRight) {
-        try {
-            int x = argRight ? 100 : 0;
-
-            LayoutInflater inflater = LayoutInflater.from(this);
-            View layout = inflater.inflate(argLayout, null);
-
-            /*
-            SettingPopupListAdapter popupListAdapter = new SettingPopupListAdapter(getApplicationContext(), Setting.createDummySettingList());
-            ListView listView = (ListView)layout.findViewById(R.id.settingsListView);
-            listView.setAdapter(popupListAdapter);
-            */
-
-            //setShareOptionsEvents(layout);
-
-            argPopupWindow = new PopupWindow(layout, 400, FrameLayout.LayoutParams.MATCH_PARENT,true);
-            argPopupWindow.setOutsideTouchable(true);
-            argPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-
-            if(isTablet(getApplicationContext())) {
-                argPopupWindow.showAsDropDown(sectionsImageButton, x, 0);
-            }else{
-                argPopupWindow.showAsDropDown(sectionsImageButton, x, -100);
-            }
-
-        } catch (Exception e) {
-            Log.e(NacionCostaRicaActivity.class.getName(), e.getLocalizedMessage());
-        }
-        return argPopupWindow;
-    }
-
-    private List<Section> getSections(){
-        List<Section> sections = new ArrayList<Section>();
-        for(int i=0; i<10; i++){
-            Section section = Section.createDummySectionCore(i < 5 ? true : false);
-            sections.add(section);
-        }
-        return sections;
-    }
-
-    private static boolean isTablet(Context context) {
-        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-    }
-
-    @Override
-    public void updateViewFromModel() {
+    private void setSectionsFragmentForPhone(){
         Context context = getApplicationContext();
-        ArrayAdapter<ContentItemList> homeListAdapter = isTablet(context) ?
-                new HomeListForTabletAdapter(context, getContentsForTablet(), mainFragmentManager) :
-                new HomeListAdapter(context, getContentsForPhone(), mainFragmentManager);
-
+        int index = 0;
         fragments = new ArrayList<NacionFragment>();
-        fragments.add(new HomeFragment().getInstance(homeListAdapter, 0));
-        /*
-        fragments.add(new HomeFragment().getInstance(homeListAdapter, 1));
-        fragments.add(new HomeFragment().getInstance(homeListAdapter, 2));
-        fragments.add(new HomeFragment().getInstance(homeListAdapter, 3));
-        */
-    }
-
-    private List<ContentItemList> getContentsForPhone(){
-        List<ContentItemList> list = Collections.emptyList();
         for(Board board:presenter.getSite().getBoards()){
-            list = board.getAllContentsForPhoneDevice();
-            break;
+            List<ContentItemList> items = board.getAllContentsForPhoneDevice();
+            ArrayAdapter<ContentItemList> homeListAdapter = new HomeListAdapter(context, items, mainFragmentManager);
+            fragments.add(new HomeFragment().getInstance(homeListAdapter, index));
+            index++;
         }
-        return list;
+        setTabsCount(fragments.size());
     }
 
     private List<ContentItemList> getContentsForTablet(){
-        Board board = Board.createDummyBoardCoreForTablet();
-        return board.getAllContents();
+        return null;
+    }
+
+    private void startAsyncTask(){
+        cancelAsyncTask();
+        jsonAsyncTask = new ReadJSONFeedTask();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+            jsonAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, NacionConstants.JSON_URL);
+        }else{
+            jsonAsyncTask.execute(NacionConstants.JSON_URL);
+        }
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void cancelAsyncTask(){
+        if(jsonAsyncTask != null && jsonAsyncTask.getStatus() != ReadJSONFeedTask.Status.FINISHED){
+            jsonAsyncTask.cancel(true);
+        }
     }
 
     private class CoverPagerAdapter extends FragmentPagerAdapter{
@@ -333,7 +242,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
 
         @Override
         public int getCount() {
-            return TABS_COUNT;
+            return getTabsCount();
         }
     }
 
@@ -349,5 +258,71 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
             presenter.setSite(site);
             presenter.run();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cancelAsyncTask();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startAsyncTask();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startAsyncTask();
+    }
+
+    @Override
+    public void updateViewFromModel() {
+        Context context = getApplicationContext();
+        if(!isTablet(context)){
+            setSectionsFragmentForPhone();
+        }
+        createCoverPagerAdapter();
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showRightDrawLayout() {
+        if(drawerLayout != null && rightList != null){
+            if(drawerLayout.isDrawerOpen(leftList)){
+                drawerLayout.closeDrawer(leftList);
+            }
+            drawerLayout.openDrawer(rightList);
+        }
+    }
+
+    @Override
+    public void showLeftDrawLayout() {
+        if(drawerLayout != null && leftList != null){
+            if(drawerLayout.isDrawerOpen(rightList)){
+                drawerLayout.closeDrawer(rightList);
+            }
+            drawerLayout.openDrawer(leftList);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            presenter.onClickHomeButton();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public static int getTabsCount() {
+        return tabsCount;
+    }
+
+    public static void setTabsCount(int tabsCount) {
+        NacionCostaRicaActivity.tabsCount = tabsCount;
     }
 }

@@ -63,20 +63,6 @@ public class Site{
         this.galleries = galleries;
     }
 
-    public static Site createDummyCoverCoreForPhone(){
-        Site cover = new Site();
-        cover.boards = new ArrayList<Board>();
-        cover.boards.add(Board.createDummyBoardCoreForPhone());
-        return cover;
-    }
-
-    public static Site createDummyCoverCoreForTablet(){
-        Site cover = new Site();
-        cover.boards = new ArrayList<Board>();
-        cover.boards.add(Board.createDummyBoardCoreForTablet());
-        return cover;
-    }
-
     public Site buildSiteFromJSONObject(JSONObject argJSONObject) {
         Site site = new Site();
         try{

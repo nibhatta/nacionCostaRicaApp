@@ -97,21 +97,6 @@ public class Module{
         return CONTENTS_FOR_PHONE.contains(type);
     }
 
-    public static Module createDummyModuleCore(String argType, int argContents){
-        Module module = new Module();
-        module.type = argType;
-        module.contents = createDummyContentList(argContents, module);
-        return module;
-    }
-
-    public static List<Content> createDummyContentList(int argContents, Module argModule){
-        List<Content> contents = new ArrayList<Content>();
-        for(int i=1; i<=argContents; i++) {
-            contents.add(Content.createDummyContentCore(i, argModule));
-        }
-        return contents;
-    }
-
     public List<Module> buildModuleListFromJSONObject(JSONArray argModules){
         List<Module> modules = new ArrayList<Module>();
         int size = argModules.length();

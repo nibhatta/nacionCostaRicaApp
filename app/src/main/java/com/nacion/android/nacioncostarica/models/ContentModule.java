@@ -40,6 +40,13 @@ public class ContentModule extends ContentItemList{
                 contentModule.setTimestamp(new Date(timestampInt));
             }
 
+            String tagImage = "image";
+            if(argContentModuleJSON.has(tagImage)) {
+                JSONObject jsonImage = argContentModuleJSON.getJSONObject(tagImage);
+                Image image = new Image().buildImageFromJSONObject(jsonImage);
+                contentModule.setImage(image);
+            }
+
         }catch (JSONException e){
             Log.d(ContentModule.class.getName(), e.getLocalizedMessage());
         }

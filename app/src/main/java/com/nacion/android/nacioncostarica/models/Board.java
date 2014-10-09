@@ -36,40 +36,6 @@ public class Board{
         this.modules = modules;
     }
 
-    public static Board createDummyBoardCoreForPhone(){
-        Board board = new Board();
-        board.id = 1;
-        board.modules = new ArrayList<Module>();
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_ONE, 1));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_TWO, 5));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_THREE, 4));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_TWO, 5));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_FOURTH, 1));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_FIVE, 4));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_SIX, 1));
-        return board;
-    }
-
-    public static Board createDummyBoardCoreForTablet(){
-        Board board = new Board();
-        board.id = 1;
-        board.modules = new ArrayList<Module>();
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_ONE, 1));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_TWO, 1));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_THREE, 4));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_TWO, 1));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_FOURTH, 1));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_SEVEN, 1));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_EIGHT, 1));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_TWO, 1));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_NINE, 1));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_TEN, 1));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_ELEVEN, 1));
-        board.modules.add(Module.createDummyModuleCore(NacionConstants.MODULE_SIX, 1));
-
-        return board;
-    }
-
     public List<ContentItemList> getAllContents(){
         List<ContentItemList> contents = new ArrayList<ContentItemList>();
         for(Module module : modules){

@@ -15,16 +15,6 @@ import java.util.List;
  */
 public class Content extends ContentItemList{
 
-    public static Content createDummyContentCore(int argId, Module argModule){
-        Content content = new Content();
-        content.id = argId;
-        content.title = "Title";
-        content.timestamp = new Date();
-        content.module = argModule;
-        content.image = Image.createDummyImageCore();
-        return content;
-    }
-
     public List<Content> buildContentListFromJSONObject(JSONArray argJSONArray, Module argModule){
         List<Content> contents = new ArrayList<Content>();
         int size = argJSONArray.length();
@@ -45,6 +35,23 @@ public class Content extends ContentItemList{
         Content content = new Content();
         content.setId(argJSONContent.getInt("id"));
         content.setTitle(argJSONContent.getString("title"));
+
+        String tagSection = "section";
+        if(argJSONContent.has(tagSection)){
+            content.setSection(argJSONContent.getString(tagSection));
+        }
+
+        String tagTimestamp = "timestamp";
+        if(argJSONContent.has(tagTimestamp)) {
+            int timestampInt = argJSONContent.getInt(tagTimestamp);
+            content.setTimestamp(new Date(timestampInt));
+        }
+
+        String tagSummary = "summary";
+        if(argJSONContent.has(tagSummary)){
+            content.setSummary(argJSONContent.getString(tagSummary));
+        }
+
         JSONObject jsonImage = argJSONContent.getJSONObject("image");
         Image image = new Image().buildImageFromJSONObject(jsonImage);
         content.setImage(image);

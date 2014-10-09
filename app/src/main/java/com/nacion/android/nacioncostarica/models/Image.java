@@ -61,14 +61,6 @@ public class Image{
         this.caption = caption;
     }
 
-    public static Image createDummyImageCore(){
-        String url = NacionConstants.URL;
-        Image image = new Image();
-        image.phoneUrl = url;
-
-        return image;
-    }
-
     public List<Image> buildImageListFromJSONObject(JSONArray argJSONImages){
         List<Image> images = new ArrayList<Image>();
         int size = argJSONImages.length();
@@ -87,7 +79,10 @@ public class Image{
     public Image buildImageFromJSONObject(JSONObject argJSONImage){
         Image image = new Image();
         try{
-            image.setPhoneUrl(argJSONImage.getString("phone"));
+            String tabPhone = "phone";
+            if(argJSONImage.has(tabPhone)) {
+                image.setPhoneUrl(argJSONImage.getString(tabPhone));
+            }
 
             String tabTag = "tab";
             if(argJSONImage.has(tabTag)) {
