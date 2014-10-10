@@ -26,6 +26,7 @@ import com.nacion.android.nacioncostarica.home.galleryAdapter.ImageFragment;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.VideoFragment;
 import com.nacion.android.nacioncostarica.home.galleryListener.GalleryOnPageChangeListener;
 import com.nacion.android.nacioncostarica.home.holders.HomeViewHolder;
+import com.nacion.android.nacioncostarica.main.MainView;
 import com.nacion.android.nacioncostarica.models.Content;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
 
@@ -39,7 +40,7 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
     private static final int VIEWS_TYPE_COUNT = 8;
     private HomeListPresenter presenter;
     private LayoutInflater inflater;
-    private Context mContext;
+    private Context context;
     private ViewPager viewPager;
     private FragmentManager fragmentManager;
 
@@ -52,10 +53,18 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
 
     public HomeListAdapter(Context context, List<ContentItemList> argContents, FragmentManager argFragmentManager) {
         super(context, R.layout.item_module, argContents);
-        mContext = context;
-        presenter = new HomeListPresenterImpl(this);
+        this.context = context;
+
         inflater = LayoutInflater.from(context);
         fragmentManager = argFragmentManager;
+    }
+
+    public HomeListPresenter getPresenter() {
+        return presenter;
+    }
+
+    public void setPresenter(HomeListPresenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
@@ -64,7 +73,7 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
         int codeType = getItemViewType(position);
         HomeViewHolder holder;
         if(convertView == null){
-            holder = new HomeViewHolder();
+            holder = new HomeViewHolder(presenter);
             switch(codeType){
                 case NacionConstants.MODULE_CODE_ONE:
                     convertView = inflater.inflate(R.layout.item_module, null);
@@ -76,24 +85,7 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
                     break;
                 case NacionConstants.MODULE_CODE_THREE:
                     convertView = inflater.inflate(R.layout.item_video_gallery, null);
-                    holder.viewPager = (ViewPager)convertView.findViewById(R.id.videoGalleryViewPager);
-
-                    List<Content> contents = itemList.getModule().getContents();
-                    int size = contents.size();
-
-                    List<NacionFragment> fragments = getVideoFragmentsArray(contents);
-
-                    GalleryOnPageChangeListener listener = new GalleryOnPageChangeListener(fragments);
-                    listener.setTitleViewPager((TextView)convertView.findViewById(R.id.videoTitleTextView));
-
-                    GalleryVideoPagerAdapter videoPagerAdapter = new GalleryVideoPagerAdapter(fragmentManager, fragments);
-                    videoPagerAdapter.setTabsCount(size);
-
-                    if(holder.viewPager.getAdapter() == null) {
-                        holder.viewPager.setAdapter(videoPagerAdapter);
-                        holder.viewPager.setOnPageChangeListener(listener);
-                        holder.viewPager.setOffscreenPageLimit(size);
-                    }
+                    holder.setViewHolderComponentsReferencesForVideoGalleryView(convertView, itemList, fragmentManager);
                     break;
                 case NacionConstants.MODULE_CODE_FOURTH:
                     convertView = inflater.inflate(R.layout.item_weather, null);
@@ -102,7 +94,7 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
 
                     convertView = inflater.inflate(R.layout.item_image_gallery, null);
 
-                    holder.viewPager = (ViewPager)convertView.findViewById(R.id.imageGalleryViewPager);
+                    //holder.viewPager = (ViewPager)convertView.findViewById(R.id.imageGalleryViewPager);
                     /*
                     fragments = getFragmentsArray();
 
@@ -137,7 +129,7 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
                 argHolder.setViewHolderValuesForArticleView(argItem);
                 break;
             case NacionConstants.MODULE_CODE_THREE:
-
+                argHolder.setViewHolderValuesForVideoGalleryView();
                 break;
             case NacionConstants.MODULE_CODE_FOURTH:
 

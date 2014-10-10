@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference;
  * Created by Gustavo Matarrita on 08/10/2014.
  */
 public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
-    private final WeakReference imageViewReference;
+    private WeakReference imageViewReference;
 
     public ImageDownloaderTask(ImageView argImageView){
         imageViewReference = new WeakReference(argImageView);
@@ -23,6 +23,7 @@ public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected Bitmap doInBackground(String... argUrl) {
+        Log.d(ImageDownloaderTask.class.getName(), "=====> Start download image in background!!!");
         Bitmap bitmap = null;
         try {
             bitmap = FTPLoader.downloadPhotoFromURL(argUrl[0]);
@@ -41,6 +42,9 @@ public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
         }
         if(imageViewReference != null){
             ImageView imageView = (ImageView)imageViewReference.get();
+            if(imageView != null){
+                Log.d(ImageDownloaderTask.class.getName(), "=====> Weak reference was deleted for the garbage collector.");
+            }
             if(argBitmap != null && imageView != null){
                 imageView.setImageBitmap(argBitmap);
             }

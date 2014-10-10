@@ -7,5 +7,8 @@ public interface NacionFragment {
     void setFragmentIndex(int argIndex);
     int getFragmentIndex();
     String getTitle();
-    void setTitle(String title);
+    void setTitle(String argTitle);
+    String getSection();
+    void setSection(String argSection);
+    void reloadImage();
 }

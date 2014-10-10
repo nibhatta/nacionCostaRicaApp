@@ -39,10 +39,6 @@ public class ImageFragment extends Fragment implements HomeView, NacionFragment 
         return singleton;
     }
 
-    public ImageFragment(){
-        presenter = new HomePresenterImpl(this);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +67,21 @@ public class ImageFragment extends Fragment implements HomeView, NacionFragment 
 
     @Override
     public void setTitle(String title) {
+
+    }
+
+    @Override
+    public String getSection() {
+        return null;
+    }
+
+    @Override
+    public void setSection(String argSection) {
+
+    }
+
+    @Override
+    public void reloadImage() {
 
     }
 }

@@ -4,32 +4,11 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NacionCostaRicaActivity">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:layout_centerInParent="true"
-            android:id="@+id/progressBar" />
-
-        <WebView
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/webViewAdvertisement">
-        </WebView>
-
-    </RelativeLayout>
+    tools:context=".activities.ContentActivity">
 
     <!-- The main content view -->
-    <android.support.v4.view.ViewPager
-        android:id="@+id/mainViewPager"
+    <ListView
+        android:id="@+id/contentListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -53,6 +32,10 @@
         android:dividerHeight="0dp"
         android:background="#111"/>
 
-
-
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:id="@+id/progressBar" />
 </android.support.v4.widget.DrawerLayout>

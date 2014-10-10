@@ -11,8 +11,7 @@ public class NacionConstants {
     //public final static String JSON_URL = "http://192.168.205.34/perfilformulario/appNativoNacion.json";
     public final static String EMPTY_STRING = "";
     public final static String JSON_URL = "http://media.nacion.com/secure/apps/lanacion/tools/appNativoNacion.json";
-
-    public final static String URL = "http://www.nacion.com/deportes/legionarios/Keylor-Navas-controla-balon-Elche_LNCIMA20140923_0137_29.jpg";
+    public final static String ADVERTISEMENT_URL = "http://www.aldia.cr/gnfactory/especiales/2014/brasil2014/futbolAlDia/appPublicidad.html";
 
     public final static String MODULE_ONE = "highlight";
     public final static String MODULE_TWO = "grid";

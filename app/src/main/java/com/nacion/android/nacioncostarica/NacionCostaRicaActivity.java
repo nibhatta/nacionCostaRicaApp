@@ -2,6 +2,7 @@ package com.nacion.android.nacioncostarica;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
@@ -21,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -28,12 +30,14 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 
+import com.nacion.android.nacioncostarica.activities.ContentActivity;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.holders.Section;
 import com.nacion.android.nacioncostarica.holders.Setting;
 import com.nacion.android.nacioncostarica.home.HomeFragment;
 import com.nacion.android.nacioncostarica.home.listAdapter.HomeListAdapter;
 import com.nacion.android.nacioncostarica.home.listAdapter.HomeListForTabletAdapter;
+import com.nacion.android.nacioncostarica.home.listAdapter.HomeListPresenterImpl;
 import com.nacion.android.nacioncostarica.main.MainPresenter;
 import com.nacion.android.nacioncostarica.main.MainPresenterImpl;
 import com.nacion.android.nacioncostarica.main.MainView;
@@ -52,6 +56,7 @@ import java.util.List;
 public class NacionCostaRicaActivity extends FragmentActivity implements MainView{
     private static int tabsCount;
     private ViewPager mainViewPager;
+    private WebView webView;
     private MainPresenter presenter;
     private List<NacionFragment> fragments;
     private CoverPagerAdapter coverPagerAdapter;
@@ -65,21 +70,28 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     private ListView rightList;
     private float lastTranslate = 0.0f;
     private ReadJSONFeedTask jsonAsyncTask;
-    private JSONReader jsonReader = new JSONReaderImpl();;
+    private JSONReader jsonReader = new JSONReaderImpl();
     private JSONFeed jsonFeed = new JSONFeedImpl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nacion_costa_rica);
-        addOurCustomViewToActionBar();
+        createOurCustomViewToActionBar();
         createDrawerLayout();
+        createWebView();
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         presenter = new MainPresenterImpl(this);
         mainFragmentManager = getSupportFragmentManager();
     }
 
-    private void addOurCustomViewToActionBar(){
+    private void createWebView(){
+        webView = (WebView) findViewById(R.id.webViewAdvertisement);
+        webView.loadUrl(NacionConstants.ADVERTISEMENT_URL);
+        webView.getSettings().setJavaScriptEnabled(true);
+    }
+
+    private void createOurCustomViewToActionBar(){
         LayoutInflater inflater = LayoutInflater.from(this);
         View customView = inflater.inflate(R.layout.custom_actionbar, null);
         //titleTextView = (TextView) customView.findViewById(R.id.title_text);
@@ -89,7 +101,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         settingsImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.onClickSettingsButton();
+                showRightDrawLayout();
             }
         });
 
@@ -98,7 +110,6 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setCustomView(customView);
             actionBar.setDisplayShowCustomEnabled(true);
         }
@@ -190,7 +201,8 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         fragments = new ArrayList<NacionFragment>();
         for(Board board:presenter.getSite().getBoards()){
             List<ContentItemList> items = board.getAllContentsForPhoneDevice();
-            ArrayAdapter<ContentItemList> homeListAdapter = new HomeListAdapter(context, items, mainFragmentManager);
+            HomeListAdapter homeListAdapter = new HomeListAdapter(context, items, mainFragmentManager);
+            homeListAdapter.setPresenter(new HomeListPresenterImpl(this));
             fragments.add(new HomeFragment().getInstance(homeListAdapter, index));
             index++;
         }
@@ -289,6 +301,14 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     }
 
     @Override
+    public void showContentActivityFromViewHolder(String argSectionTitle, int argArticleId){
+        Intent intent = new Intent(NacionCostaRicaActivity.this, ContentActivity.class);
+        intent.putExtra("argSectionTitle", argSectionTitle);
+        intent.putExtra("argArticleId", argArticleId);
+        startActivity(intent);
+    }
+
+    @Override
     public void showRightDrawLayout() {
         if(drawerLayout != null && rightList != null){
             if(drawerLayout.isDrawerOpen(leftList)){
@@ -312,7 +332,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            presenter.onClickHomeButton();
+            showLeftDrawLayout();
             return true;
         }
         return super.onOptionsItemSelected(item);

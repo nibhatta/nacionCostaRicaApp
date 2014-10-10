@@ -1,5 +1,6 @@
 package com.nacion.android.nacioncostarica.home;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import com.nacion.android.nacioncostarica.NacionFragment;
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.home.listAdapter.HomeListAdapter;
+import com.nacion.android.nacioncostarica.main.MainView;
 import com.nacion.android.nacioncostarica.models.Board;
 import com.nacion.android.nacioncostarica.models.Content;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
@@ -26,8 +28,6 @@ import java.util.List;
  * Created by Gustavo Matarrita on 22/09/2014.
  */
 public class HomeFragment extends Fragment implements HomeView, NacionFragment {
-
-    private HomePresenter presenter;
     private HomeFragment instance;
     private int fragmentIndex;
     private ArrayAdapter<ContentItemList> homeListAdapter;
@@ -40,10 +40,6 @@ public class HomeFragment extends Fragment implements HomeView, NacionFragment {
             instance.homeListAdapter = homeListAdapter;
         }
         return instance;
-    }
-
-    public HomeFragment(){
-        presenter = new HomePresenterImpl(this);
     }
 
     public ArrayAdapter<ContentItemList> getHomeListAdapter() {
@@ -86,6 +82,21 @@ public class HomeFragment extends Fragment implements HomeView, NacionFragment {
 
     @Override
     public void setTitle(String title) {
+
+    }
+
+    @Override
+    public String getSection() {
+        return null;
+    }
+
+    @Override
+    public void setSection(String argSection) {
+
+    }
+
+    @Override
+    public void reloadImage() {
 
     }
 }

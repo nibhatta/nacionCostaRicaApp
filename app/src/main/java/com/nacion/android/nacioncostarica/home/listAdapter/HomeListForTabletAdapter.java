@@ -41,7 +41,6 @@ public class HomeListForTabletAdapter extends ArrayAdapter<ContentItemList> impl
     public HomeListForTabletAdapter(Context context, List<ContentItemList> argContents, FragmentManager argFragmentManager) {
         super(context, R.layout.item_module, argContents);
         mContext = context;
-        presenter = new HomeListPresenterImpl(this);
         inflater = LayoutInflater.from(context);
         fragmentManager = argFragmentManager;
     }

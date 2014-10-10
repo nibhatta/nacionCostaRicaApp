@@ -8,7 +8,6 @@
         android:id="@+id/moduleImageView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/image_module_height"
-        android:src="@drawable/picture_size01"
         android:scaleType="fitXY"/>
 
     <LinearLayout

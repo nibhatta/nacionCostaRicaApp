@@ -27,14 +27,4 @@ public class MainPresenterImpl implements MainPresenter{
     public void run() {
         mainView.updateViewFromModel();
     }
-
-    @Override
-    public void onClickHomeButton() {
-        mainView.showLeftDrawLayout();
-    }
-
-    @Override
-    public void onClickSettingsButton(){
-        mainView.showRightDrawLayout();
-    }
 }

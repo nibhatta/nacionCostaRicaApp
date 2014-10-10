@@ -1,8 +1,10 @@
 package com.nacion.android.nacioncostarica.home.galleryAdapter;
 
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -15,7 +17,7 @@ import java.util.List;
  * Created by Gustavo Matarrita on 26/09/2014.
  */
 
-public class GalleryVideoPagerAdapter extends FragmentPagerAdapter {
+public class GalleryVideoPagerAdapter extends FragmentStatePagerAdapter {
     private List<NacionFragment> fragments;
     private int tabsCount;
 
@@ -49,6 +51,11 @@ public class GalleryVideoPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return tabsCount;
+    }
+
+    @Override
+    public Parcelable saveState() {
+        return null;
     }
 
     public int getTabsCount() {

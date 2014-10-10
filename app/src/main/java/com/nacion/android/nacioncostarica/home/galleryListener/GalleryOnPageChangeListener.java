@@ -15,6 +15,7 @@ import java.util.List;
 public class GalleryOnPageChangeListener implements ViewPager.OnPageChangeListener {
     private List<NacionFragment> fragments;
     private TextView titleViewPager;
+    private TextView sectionViewPager;
 
     public GalleryOnPageChangeListener(List<NacionFragment> argFragments){
         fragments = argFragments;
@@ -34,7 +35,9 @@ public class GalleryOnPageChangeListener implements ViewPager.OnPageChangeListen
     private void changeViewPagerComponents(int argPosition){
         for(NacionFragment fragment : fragments){
             if(fragment.getFragmentIndex() == argPosition){
+                //fragment.reloadImage();
                 titleViewPager.setText(fragment.getTitle());
+                sectionViewPager.setText(fragment.getSection());
                 break;
             }
         }
@@ -58,5 +61,13 @@ public class GalleryOnPageChangeListener implements ViewPager.OnPageChangeListen
 
     public void setTitleViewPager(TextView titleViewPager) {
         this.titleViewPager = titleViewPager;
+    }
+
+    public TextView getSectionViewPager() {
+        return sectionViewPager;
+    }
+
+    public void setSectionViewPager(TextView sectionViewPager) {
+        this.sectionViewPager = sectionViewPager;
     }
 }

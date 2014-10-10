@@ -19,7 +19,7 @@
                 android:background="@android:color/black"/>
 
             <TextView
-                android:id="@+id/timeVideoTextView"
+                android:id="@+id/sectionVideoTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/item_video_time"
