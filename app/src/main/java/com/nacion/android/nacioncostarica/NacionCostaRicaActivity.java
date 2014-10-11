@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,26 +16,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 
-import com.nacion.android.nacioncostarica.activities.ContentActivity;
+import com.nacion.android.nacioncostarica.content.ContentActivity;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.holders.Section;
-import com.nacion.android.nacioncostarica.holders.Setting;
 import com.nacion.android.nacioncostarica.home.HomeFragment;
 import com.nacion.android.nacioncostarica.home.listAdapter.HomeListAdapter;
-import com.nacion.android.nacioncostarica.home.listAdapter.HomeListForTabletAdapter;
 import com.nacion.android.nacioncostarica.home.listAdapter.HomeListPresenterImpl;
 import com.nacion.android.nacioncostarica.main.MainPresenter;
 import com.nacion.android.nacioncostarica.main.MainPresenterImpl;
@@ -48,9 +42,9 @@ import com.nacion.android.nacioncostarica.useCases.JSONFeed;
 import com.nacion.android.nacioncostarica.useCases.JSONFeedImpl;
 import com.nacion.android.nacioncostarica.useCases.JSONReader;
 import com.nacion.android.nacioncostarica.useCases.JSONReaderImpl;
+import com.nacion.android.nacioncostarica.video.VideoActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class NacionCostaRicaActivity extends FragmentActivity implements MainView{
@@ -267,8 +261,10 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         @Override
         protected void onPostExecute(String json) {
             Site site = jsonReader.createObjectsFromJSONString(json);
+            Globals globals = (Globals)getApplication();
+            globals.setSite(site);
             presenter.setSite(site);
-            presenter.run();
+            presenter.updateView();
         }
     }
 
@@ -305,6 +301,12 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         Intent intent = new Intent(NacionCostaRicaActivity.this, ContentActivity.class);
         intent.putExtra("argSectionTitle", argSectionTitle);
         intent.putExtra("argArticleId", argArticleId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showVideoActivityFromViewHolder(){
+        Intent intent = new Intent(NacionCostaRicaActivity.this, VideoActivity.class);
         startActivity(intent);
     }
 

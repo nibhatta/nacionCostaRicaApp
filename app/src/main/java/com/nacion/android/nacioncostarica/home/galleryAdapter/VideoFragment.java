@@ -63,7 +63,7 @@ public class VideoFragment extends Fragment implements HomeView, NacionFragment 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.startContextActivity(section, articleId);
+                presenter.startVideoActivity();
             }
         });
         return rootView;

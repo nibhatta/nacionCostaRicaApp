@@ -5,4 +5,5 @@ package com.nacion.android.nacioncostarica.home.listAdapter;
  */
 public interface HomeListPresenter {
     void startContextActivity(String argSectionTitle, int argArticleId);
+    void startVideoActivity();
 }

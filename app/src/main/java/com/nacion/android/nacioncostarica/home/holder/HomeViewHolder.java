@@ -1,20 +1,15 @@
-package com.nacion.android.nacioncostarica.home.holders;
+package com.nacion.android.nacioncostarica.home.holder;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nacion.android.nacioncostarica.NacionCostaRicaActivity;
 import com.nacion.android.nacioncostarica.NacionFragment;
 import com.nacion.android.nacioncostarica.R;
-import com.nacion.android.nacioncostarica.activities.ContentActivity;
 import com.nacion.android.nacioncostarica.holders.ViewHolderBase;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.GalleryVideoPagerAdapter;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.VideoFragment;
@@ -54,7 +49,7 @@ public class HomeViewHolder extends ViewHolderBase{
 
     public void setViewHolderValuesForArticleView(ContentItemList argItem){
         String url = argItem.getImage().getPhoneUrl();
-        downloadImage(url);
+        downloadImage(url, image);
         section.setText(getSectionString(argItem));
         summary.setText(argItem.getSummary());
 
@@ -77,7 +72,7 @@ public class HomeViewHolder extends ViewHolderBase{
     public void setViewHolderValuesForHighlightView(ContentItemList argItem){
         ContentModule contentModule = argItem.getModule().getContentModule();
         String url = contentModule.getImage().getPhoneUrl();
-        downloadImage(url);
+        downloadImage(url, image);
         section.setText(getSectionString(contentModule));
         title.setText(contentModule.getTitle());
 
@@ -138,14 +133,5 @@ public class HomeViewHolder extends ViewHolderBase{
         String date = getDateFormat(argItem.getTimestamp());
         String section = argItem.getSection() + date;
         return section;
-    }
-
-    private void downloadImage(String argUrl){
-        ImageDownloaderTask task = new ImageDownloaderTask(image);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, argUrl);
-        }else{
-            task.execute(argUrl);
-        }
     }
 }

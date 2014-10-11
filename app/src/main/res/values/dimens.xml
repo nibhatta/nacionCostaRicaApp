@@ -42,12 +42,26 @@
     <dimen name="icon_width_action">35dp</dimen>
 
 
-    <!-- Start - Fonts on large screen -->
-    <dimen name="font_section_large">12dp</dimen>
-    <dimen name="font_title_large">24dp</dimen>
-    <dimen name="font_summary_large">12dp</dimen>
-    <dimen name="font_subtitle_large">18dp</dimen>
-    <dimen name="font_section_title_activity">24dp</dimen>
+    <!-- Start - Fonts on tablet -->
+    <dimen name="font_author_tablet">12dp</dimen>
+    <dimen name="font_date_tablet">12dp</dimen>
+    <dimen name="font_section_tablet">12dp</dimen>
+    <dimen name="font_section_article_tablet">22dp</dimen>
+    <dimen name="font_title_tablet">24dp</dimen>
+    <dimen name="font_summary_tablet">12dp</dimen>
+    <dimen name="font_body_tablet">12dp</dimen>
+    <dimen name="font_subtitle_tablet">18dp</dimen>
+    <!-- End -->
+
+    <!-- Start - Fonts on phone -->
+    <dimen name="font_author_phone">12dp</dimen>
+    <dimen name="font_date_phone">12dp</dimen>
+    <dimen name="font_section_phone">12dp</dimen>
+    <dimen name="font_section_article_phone">22dp</dimen>
+    <dimen name="font_title_phone">24dp</dimen>
+    <dimen name="font_summary_phone">12dp</dimen>
+    <dimen name="font_body_phone">14dp</dimen>
+    <dimen name="font_subtitle_phone">18dp</dimen>
     <!-- End -->
 
     <dimen name="image_width_video">192dp</dimen>

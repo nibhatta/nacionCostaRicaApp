@@ -5,6 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:icon">@drawable/menu_inactive</item>
+        <item name="android:textColorPrimary">#000000</item>
     </style>
 
 </resources>

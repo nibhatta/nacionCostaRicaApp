@@ -9,6 +9,7 @@ import java.util.Map;
 public class NacionConstants {
     public final static int HOME_FRAGMENT_INDEX = 0;
     //public final static String JSON_URL = "http://192.168.205.34/perfilformulario/appNativoNacion.json";
+    public final static String IFRAME_FOR_TESTING ="<html><body><iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/hv2NEW0uC1o\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
     public final static String EMPTY_STRING = "";
     public final static String JSON_URL = "http://media.nacion.com/secure/apps/lanacion/tools/appNativoNacion.json";
     public final static String ADVERTISEMENT_URL = "http://www.aldia.cr/gnfactory/especiales/2014/brasil2014/futbolAlDia/appPublicidad.html";

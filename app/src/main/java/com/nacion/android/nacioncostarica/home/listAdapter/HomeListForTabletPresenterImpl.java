@@ -16,4 +16,9 @@ public class HomeListForTabletPresenterImpl implements HomeListPresenter{
     public void startContextActivity(String argSectionTitle, int argArticleId) {
         mainView.showContentActivityFromViewHolder(argSectionTitle, argArticleId);
     }
+
+    @Override
+    public void startVideoActivity() {
+        mainView.showVideoActivityFromViewHolder();
+    }
 }

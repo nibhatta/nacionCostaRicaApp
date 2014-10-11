@@ -99,6 +99,17 @@ public class Site{
         return boardNames;
     }
 
+    public List<IArticleContentItemList> getArticleContentsForPhone(int argArticleId){
+        //TODO Create a list of article content item list with the article object.
+        List<IArticleContentItemList> articleContents = new ArrayList<IArticleContentItemList>();
+        //TODO Add the type code in order.
+        Article article = getArticleById(argArticleId);
+        article.setTypeCode(0);
+        articleContents.add(article);
+        return articleContents;
+    }
 
-
+    public Article getArticleById(int argArticleId){
+        return articles.containsKey(argArticleId)? articles.get(argArticleId) : new Article();
+    }
 }

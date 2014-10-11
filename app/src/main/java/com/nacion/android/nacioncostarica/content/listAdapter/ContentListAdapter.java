@@ -1,4 +1,4 @@
-package com.nacion.android.nacioncostarica.home.listAdapter;
+package com.nacion.android.nacioncostarica.content.listAdapter;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
@@ -11,11 +11,15 @@ import android.widget.ArrayAdapter;
 import com.nacion.android.nacioncostarica.NacionFragment;
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
+import com.nacion.android.nacioncostarica.content.IContentPresenter;
+import com.nacion.android.nacioncostarica.content.holder.ArticleContentViewHolder;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.ImageFragment;
 import com.nacion.android.nacioncostarica.home.galleryAdapter.VideoFragment;
 import com.nacion.android.nacioncostarica.home.holder.HomeViewHolder;
+import com.nacion.android.nacioncostarica.home.listAdapter.HomeListPresenter;
 import com.nacion.android.nacioncostarica.models.Content;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
+import com.nacion.android.nacioncostarica.models.IArticleContentItemList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,42 +27,42 @@ import java.util.List;
 /**
  * Created by Gustavo Matarrita on 22/09/2014.
  */
-public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements HomeListView {
-    private static final int VIEWS_TYPE_COUNT = 8;
-    private HomeListPresenter presenter;
+public class ContentListAdapter extends ArrayAdapter<IArticleContentItemList> implements ContentListView {
+    private static final int VIEWS_TYPE_COUNT = 1;
+    private IContentPresenter presenter;
     private LayoutInflater inflater;
     private Context context;
     private ViewPager viewPager;
     private FragmentManager fragmentManager;
 
-    public HomeListAdapter(Context context, List<ContentItemList> argContents, FragmentManager argFragmentManager) {
-        super(context, R.layout.item_module, argContents);
+    public ContentListAdapter(Context context, List<IArticleContentItemList> argContents, FragmentManager argFragmentManager) {
+        super(context, R.layout.item_highlight_content, argContents);
         this.context = context;
-
         inflater = LayoutInflater.from(context);
         fragmentManager = argFragmentManager;
     }
 
-    public HomeListPresenter getPresenter() {
+    public IContentPresenter getPresenter() {
         return presenter;
     }
 
-    public void setPresenter(HomeListPresenter presenter) {
+    public void setPresenter(IContentPresenter presenter) {
         this.presenter = presenter;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ContentItemList itemList = getItem(position);
+        IArticleContentItemList itemList = getItem(position);
         int codeType = getItemViewType(position);
-        HomeViewHolder holder;
+        ArticleContentViewHolder holder;
         if(convertView == null){
-            holder = new HomeViewHolder(presenter);
+            holder = new ArticleContentViewHolder(presenter);
             switch(codeType){
                 case NacionConstants.MODULE_CODE_ONE:
-                    convertView = inflater.inflate(R.layout.item_module, null);
-                    holder.setViewHolderComponentsReferencesForHighlightView(convertView);
+                    convertView = inflater.inflate(R.layout.item_highlight_content, null);
+                    holder.setComponentsReferencesForHighlightView(convertView);
                     break;
+                /*
                 case NacionConstants.MODULE_CODE_TWO:
                     convertView = inflater.inflate(R.layout.item_article, null);
                     holder.setViewHolderComponentsReferencesForArticleView(convertView);
@@ -74,25 +78,16 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
 
                     convertView = inflater.inflate(R.layout.item_image_gallery, null);
 
-                    //holder.viewPager = (ViewPager)convertView.findViewById(R.id.imageGalleryViewPager);
-                    /*
-                    fragments = getFragmentsArray();
-
-                    GalleryImagePagerAdapter pagerAdapter = new GalleryImagePagerAdapter(fragmentManager, fragments);
-                    if(holder.viewPager.getAdapter() == null) {
-                        holder.viewPager.setAdapter(pagerAdapter);
-                        holder.viewPager.setOnPageChangeListener();
-                        holder.viewPager.setOffscreenPageLimit(4);
-                    }*/
 
                     break;
                 case NacionConstants.MODULE_CODE_EIGHT:
                     convertView = inflater.inflate(R.layout.item_more_news, null);
                     break;
+                */
             }
             convertView.setTag(holder);
         }else{
-            holder = (HomeViewHolder)convertView.getTag();
+            holder = (ArticleContentViewHolder)convertView.getTag();
         }
 
         setHolderViewValuesByCodeType(holder, itemList, codeType);
@@ -100,11 +95,12 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
         return convertView;
     }
 
-    private void setHolderViewValuesByCodeType(HomeViewHolder argHolder, ContentItemList argItem, int argCodeType){
+    private void setHolderViewValuesByCodeType(ArticleContentViewHolder argHolder, IArticleContentItemList argItem, int argCodeType){
         switch(argCodeType){
             case NacionConstants.MODULE_CODE_ONE:
-                argHolder.setViewHolderValuesForHighlightView(argItem);
+                argHolder.setValuesForHighlightView(argItem);
                 break;
+            /*
             case NacionConstants.MODULE_CODE_TWO:
                 argHolder.setViewHolderValuesForArticleView(argItem);
                 break;
@@ -120,6 +116,7 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
             case NacionConstants.MODULE_CODE_EIGHT:
 
                 break;
+             */
         }
     }
 
@@ -151,7 +148,7 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
 
     @Override
     public int getItemViewType(int position) {
-        ContentItemList content = getItem(position);
-        return content.getModule().getTypeCode();
+        IArticleContentItemList articleContent = getItem(position);
+        return articleContent.getTypeCode();
     }
 }

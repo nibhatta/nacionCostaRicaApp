@@ -33,21 +33,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dummy_text_date"
-            android:textSize="@dimen/font_section_large"
+            android:textSize="@dimen/font_section_tablet"
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dummy_text_title"
-            android:textSize="@dimen/font_title_large"
+            android:textSize="@dimen/font_title_tablet"
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dummy_text_summary"
-            android:textSize="@dimen/font_summary_large"
+            android:textSize="@dimen/font_summary_tablet"
             android:layout_marginTop="@dimen/margin_separate"/>
 
     </LinearLayout>

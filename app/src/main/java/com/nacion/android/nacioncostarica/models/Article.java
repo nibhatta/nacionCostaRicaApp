@@ -15,8 +15,9 @@ import java.util.Map;
 /**
  * Created by Gustavo Matarrita on 19/09/2014.
  */
-public class Article {
+public class Article implements IArticleContentItemList {
     private int id;
+    private int typeCode;
     private Image image;
     private String title;
     private String summary;
@@ -24,6 +25,12 @@ public class Article {
     private Date timestamp;
     private String body;
     private List<Weight> weights;
+
+    public boolean isAEmptyObject(){
+        return(id == 0 || image == null ||
+               title == null || summary == null ||
+               author == null || timestamp == null || body == null);
+    }
 
     public Date getTimestamp() {
         return timestamp;
@@ -89,6 +96,14 @@ public class Article {
         this.author = author;
     }
 
+    public int getTypeCode() {
+        return typeCode;
+    }
+
+    public void setTypeCode(int typeCode) {
+        this.typeCode = typeCode;
+    }
+
     public Map<Integer, Article> buildArticlesMapFromJSONObject(JSONArray argJSONArticles){
         Map<Integer, Article> articles = new HashMap<Integer, Article>();
         int size = argJSONArticles.length();
@@ -113,9 +128,9 @@ public class Article {
             JSONObject jsonArticle = argJSONArticle.getJSONObject(key);
             article.setTitle(jsonArticle.getString("title"));
             article.setSummary(jsonArticle.getString("summary"));
-            article.setAuthor(jsonArticle.getString("author"));
+            article.setAuthor(jsonArticle.getString("autor"));
 
-            int timestampInt = jsonArticle.getInt("timestamp");
+            int timestampInt = jsonArticle.getInt("datetime");
             article.setTimestamp(new Date(timestampInt));
 
             article.setBody(jsonArticle.getString("body"));

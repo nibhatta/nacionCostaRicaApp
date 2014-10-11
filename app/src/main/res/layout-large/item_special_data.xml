@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/dummy_text_title"
-            android:textSize="@dimen/font_subtitle_large"
+            android:textSize="@dimen/font_subtitle_tablet"
             android:textStyle="bold"
             android:padding="@dimen/padding_separate"/>
        
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dummy_text_title"
-                android:textSize="@dimen/font_subtitle_large"
+                android:textSize="@dimen/font_subtitle_tablet"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:layout_toRightOf="@+id/viewLeftLine"/>
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/dummy_text_title"
-            android:textSize="@dimen/font_subtitle_large"
+            android:textSize="@dimen/font_subtitle_tablet"
             android:padding="@dimen/padding_separate"
             android:textStyle="bold"/>
 

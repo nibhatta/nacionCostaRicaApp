@@ -24,7 +24,7 @@ public class MainPresenterImpl implements MainPresenter{
     }
 
     @Override
-    public void run() {
+    public void updateView() {
         mainView.updateViewFromModel();
     }
 }

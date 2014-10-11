@@ -10,4 +10,5 @@ public interface MainView {
     void showLeftDrawLayout();
     void updateViewFromModel();
     void showContentActivityFromViewHolder(String argSection, int argArticleId);
+    void showVideoActivityFromViewHolder();
 }

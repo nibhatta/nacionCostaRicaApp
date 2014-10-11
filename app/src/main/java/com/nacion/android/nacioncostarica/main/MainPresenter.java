@@ -8,5 +8,5 @@ import com.nacion.android.nacioncostarica.models.Site;
 public interface MainPresenter {
     Site getSite();
     void setSite(Site argSite);
-    void run();
+    void updateView();
 }

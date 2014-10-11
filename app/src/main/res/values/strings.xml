@@ -18,9 +18,14 @@
     <string name="item_video_time">9:30 A.M.</string>
     <string name="item_video_title">Aficionados ticos acompañaron a Celso Borges en juego del AIK</string>
 
+
+    <string name="dummy_author_photo">Albert Marín/LANACIÓN</string>
+    <string name="dummy_date_long_format">25 de Septiembre de 2014 A: 12:00 A.M.</string>
+    <string name="dummy_author_news">Albert Marín/LANACIÓN</string>
     <string name="dummy_section_title">DEPORTES</string>
     <string name="dummy_text_date">MUNDO 9:30 A.M.</string>
     <string name="dummy_text_title">Aficionados ticos acompañaron a Celso Borges en juego del AIK</string>
     <string name="dummy_text_summary">Descripción bla bla bla bla Aficionados ticos acompañaron a Celso Borges en juego del AIK</string>
+    <string name="dummy_text_body">Descripción bla bla bla bla Aficionados ticos acompañaron a Celso Borges en juego del AIK. Descripción bla bla bla bla Aficionados ticos acompañaron a Celso Borges en juego del AIK. Descripción bla bla bla bla Aficionados ticos acompañaron a Celso Borges en juego del AIK</string>
 
 </resources>
