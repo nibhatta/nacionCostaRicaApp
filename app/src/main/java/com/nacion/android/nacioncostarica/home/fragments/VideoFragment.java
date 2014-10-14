@@ -1,7 +1,5 @@
-package com.nacion.android.nacioncostarica.home.galleryAdapter;
+package com.nacion.android.nacioncostarica.home.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,17 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.MediaController;
-import android.widget.VideoView;
 
 import com.nacion.android.nacioncostarica.NacionFragment;
 import com.nacion.android.nacioncostarica.R;
-import com.nacion.android.nacioncostarica.home.HomePresenter;
-import com.nacion.android.nacioncostarica.home.HomePresenterImpl;
 import com.nacion.android.nacioncostarica.home.HomeView;
-import com.nacion.android.nacioncostarica.home.listAdapter.HomeListAdapter;
-import com.nacion.android.nacioncostarica.home.listAdapter.HomeListPresenter;
+import com.nacion.android.nacioncostarica.home.adapters.HomeListPresenter;
 import com.nacion.android.nacioncostarica.models.Content;
 import com.nacion.android.nacioncostarica.tasks.ImageDownloaderTask;
 

@@ -1,4 +1,4 @@
-package com.nacion.android.nacioncostarica.home.galleryAdapter;
+package com.nacion.android.nacioncostarica.home.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,15 +9,9 @@ import android.widget.ListView;
 
 import com.nacion.android.nacioncostarica.NacionFragment;
 import com.nacion.android.nacioncostarica.R;
-import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.home.HomePresenter;
-import com.nacion.android.nacioncostarica.home.HomePresenterImpl;
 import com.nacion.android.nacioncostarica.home.HomeView;
-import com.nacion.android.nacioncostarica.home.listAdapter.HomeListAdapter;
-import com.nacion.android.nacioncostarica.models.Board;
-import com.nacion.android.nacioncostarica.models.ContentItemList;
-
-import java.util.List;
+import com.nacion.android.nacioncostarica.home.adapters.HomeListAdapter;
 
 /**
  * Created by Gustavo Matarrita on 22/09/2014.

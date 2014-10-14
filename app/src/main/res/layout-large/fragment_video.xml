@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/video_height_component_large"
-    tools:context="com.nacion.android.nacioncostarica.home.galleryAdapter.VideoFragment">
+    tools:context="com.nacion.android.nacioncostarica.home.fragments.VideoTabletFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -36,13 +36,14 @@
             android:padding="10dp">
 
             <ImageView
+                android:id="@+id/videoGalleryImageView"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:src="@drawable/picture_size01"
                 android:scaleType="fitXY"/>
 
             <TextView
-                android:id="@+id/videoDateTextView"
+                android:id="@+id/videoSectionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dummy_text_date"
@@ -64,27 +65,26 @@
         </LinearLayout>
 
 
-        <TableLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:stretchColumns="*"
-            android:shrinkColumns="*">
+            android:padding="10dp">
 
-            <TableRow
-                >
-                <include
-                    layout="@layout/item_video_cell"/>
-                <include layout="@layout/item_video_cell"/>
-            </TableRow>
+            <GridView
+                android:id="@+id/articleGridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="2"
+                android:columnWidth="90dp"
+                android:horizontalSpacing="10dp"
+                android:verticalSpacing="10dp"
+                android:gravity="center"
+                android:stretchMode="columnWidth"
+                />
 
-            <TableRow
-                >
-                <include layout="@layout/item_video_cell"/>
-                <include layout="@layout/item_video_cell"/>
-            </TableRow>
-
-        </TableLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

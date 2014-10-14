@@ -17,11 +17,10 @@ import java.util.List;
  */
 public class Module{
 
-    private static final List<String> GALLERY_MODULES = new ArrayList<String>(){
+    private static final List<String> GALLERY_MODULES_ON_PHONE = new ArrayList<String>(){
         {
             add(NacionConstants.MODULE_ONE);
             add(NacionConstants.MODULE_THREE);
-            add(NacionConstants.MODULE_FIVE);
             add(NacionConstants.MODULE_EIGHT);
         }
     };
@@ -34,6 +33,31 @@ public class Module{
             add(NacionConstants.MODULE_FOURTH);
             add(NacionConstants.MODULE_FIVE);
             add(NacionConstants.MODULE_EIGHT);
+        }
+    };
+
+    private static final List<String> GALLERY_MODULES_ON_TABLET = new ArrayList<String>(){
+        {
+            add(NacionConstants.MODULE_ONE);
+            add(NacionConstants.MODULE_TWO);
+            add(NacionConstants.MODULE_THREE);
+            add(NacionConstants.MODULE_SEVEN);
+            add(NacionConstants.MODULE_EIGHT);
+        }
+    };
+
+    private final static List<String> CONTENTS_FOR_TABLET = new ArrayList<String>(){
+        {
+            add(NacionConstants.MODULE_ONE);
+            add(NacionConstants.MODULE_TWO);
+            add(NacionConstants.MODULE_THREE);
+            add(NacionConstants.MODULE_FOURTH);
+            add(NacionConstants.MODULE_SIX);
+            add(NacionConstants.MODULE_SEVEN);
+            add(NacionConstants.MODULE_EIGHT);
+            add(NacionConstants.MODULE_NINE);
+            add(NacionConstants.MODULE_TEN);
+            add(NacionConstants.MODULE_ELEVEN);
         }
     };
 
@@ -89,12 +113,20 @@ public class Module{
         return code;
     }
 
-    public boolean isAGallery(){
-        return GALLERY_MODULES.contains(type);
+    public boolean isAGalleryForPhoneDevice(){
+        return GALLERY_MODULES_ON_PHONE.contains(type);
+    }
+
+    public boolean isAGalleryForTabletDevice(){
+        return GALLERY_MODULES_ON_TABLET.contains(type);
     }
 
     public boolean isContentToDisplayOnPhone(){
         return CONTENTS_FOR_PHONE.contains(type);
+    }
+
+    public boolean isContentToDisplayOnTablet(){
+        return CONTENTS_FOR_TABLET.contains(type);
     }
 
     public List<Module> buildModuleListFromJSONObject(JSONArray argModules){

@@ -1,9 +1,7 @@
 package com.nacion.android.nacioncostarica.home;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +10,7 @@ import android.widget.ListView;
 
 import com.nacion.android.nacioncostarica.NacionFragment;
 import com.nacion.android.nacioncostarica.R;
-import com.nacion.android.nacioncostarica.constants.NacionConstants;
-import com.nacion.android.nacioncostarica.home.listAdapter.HomeListAdapter;
-import com.nacion.android.nacioncostarica.main.MainView;
-import com.nacion.android.nacioncostarica.models.Board;
-import com.nacion.android.nacioncostarica.models.Content;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
-import com.nacion.android.nacioncostarica.models.Item;
-import com.nacion.android.nacioncostarica.models.Module;
-import com.nacion.android.nacioncostarica.models.Site;
-
-import java.util.List;
 
 /**
  * Created by Gustavo Matarrita on 22/09/2014.

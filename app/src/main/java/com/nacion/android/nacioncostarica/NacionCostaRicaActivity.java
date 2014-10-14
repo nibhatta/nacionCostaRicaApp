@@ -30,8 +30,9 @@ import com.nacion.android.nacioncostarica.content.ContentActivity;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.holders.Section;
 import com.nacion.android.nacioncostarica.home.HomeFragment;
-import com.nacion.android.nacioncostarica.home.listAdapter.HomeListAdapter;
-import com.nacion.android.nacioncostarica.home.listAdapter.HomeListPresenterImpl;
+import com.nacion.android.nacioncostarica.home.adapters.HomeListAdapter;
+import com.nacion.android.nacioncostarica.home.adapters.HomeListForTabletAdapter;
+import com.nacion.android.nacioncostarica.home.adapters.HomeListPresenterImpl;
 import com.nacion.android.nacioncostarica.main.MainPresenter;
 import com.nacion.android.nacioncostarica.main.MainPresenterImpl;
 import com.nacion.android.nacioncostarica.main.MainView;
@@ -120,7 +121,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         leftList.setAdapter(adapter);
         rightList.setAdapter(adapter);
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_launcher, R.string.dummy_text_date, R.string.dummy_text_title){
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_launcher, 0, 0){
             public void onDrawerSlide(View drawerView, float slideOffset){
                 int moveDirection = drawerView.equals(leftList) ? 1 : -1;
                 float moveWidth = drawerView.equals(leftList) ? (leftList.getWidth() * slideOffset) : (rightList.getWidth() * slideOffset);
@@ -189,6 +190,18 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         });
     }
 
+    @Override
+    public void updateViewFromModel() {
+        Context context = getApplicationContext();
+        if(!isTablet(context)){
+            setSectionsFragmentForPhone();
+        }else{
+            setSectionsFragmentForTablet();
+        }
+        createCoverPagerAdapter();
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
     private void setSectionsFragmentForPhone(){
         Context context = getApplicationContext();
         int index = 0;
@@ -198,6 +211,20 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
             HomeListAdapter homeListAdapter = new HomeListAdapter(context, items, mainFragmentManager);
             homeListAdapter.setPresenter(new HomeListPresenterImpl(this));
             fragments.add(new HomeFragment().getInstance(homeListAdapter, index));
+            index++;
+        }
+        setTabsCount(fragments.size());
+    }
+
+    private void setSectionsFragmentForTablet(){
+        Context context = getApplicationContext();
+        int index = 0;
+        fragments = new ArrayList<NacionFragment>();
+        for(Board board:presenter.getSite().getBoards()){
+            List<ContentItemList> items = board.getAllContentsForTabletDevice();
+            HomeListForTabletAdapter homeListForTabletAdapter = new HomeListForTabletAdapter(context, items, mainFragmentManager);
+            homeListForTabletAdapter.setPresenter(new HomeListPresenterImpl(this));
+            fragments.add(new HomeFragment().getInstance(homeListForTabletAdapter, index));
             index++;
         }
         setTabsCount(fragments.size());
@@ -286,15 +313,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         startAsyncTask();
     }
 
-    @Override
-    public void updateViewFromModel() {
-        Context context = getApplicationContext();
-        if(!isTablet(context)){
-            setSectionsFragmentForPhone();
-        }
-        createCoverPagerAdapter();
-        progressBar.setVisibility(View.INVISIBLE);
-    }
+
 
     @Override
     public void showContentActivityFromViewHolder(String argSectionTitle, int argArticleId){

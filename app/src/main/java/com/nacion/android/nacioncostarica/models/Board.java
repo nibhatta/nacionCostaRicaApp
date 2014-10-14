@@ -36,10 +36,13 @@ public class Board{
         this.modules = modules;
     }
 
-    public List<ContentItemList> getAllContents(){
+    public List<ContentItemList> getAllContentsForPhoneDevice(){
         List<ContentItemList> contents = new ArrayList<ContentItemList>();
         for(Module module : modules){
-            if(module.isAGallery()){
+            if(!module.isContentToDisplayOnPhone()){
+                continue;
+            }
+            if(module.isAGalleryForPhoneDevice()){
                 addComplexRowContent(module, contents);
             }else{
                 addSingleRowContent(module, contents);
@@ -48,13 +51,13 @@ public class Board{
         return contents;
     }
 
-    public List<ContentItemList> getAllContentsForPhoneDevice(){
+    public List<ContentItemList> getAllContentsForTabletDevice(){
         List<ContentItemList> contents = new ArrayList<ContentItemList>();
         for(Module module : modules){
-            if(!module.isContentToDisplayOnPhone()){
+            if(!module.isContentToDisplayOnTablet()){
                 continue;
             }
-            if(module.isAGallery()){
+            if(module.isAGalleryForTabletDevice()){
                 addComplexRowContent(module, contents);
             }else{
                 addSingleRowContent(module, contents);

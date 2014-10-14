@@ -1,51 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="800dp">
 
-    <LinearLayout
+    <GridView
+        android:id="@+id/articleGridView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="3"
-        android:orientation="horizontal">
+        android:layout_height="800dp"
+        android:numColumns="2"
+        android:columnWidth="90dp"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:gravity="center"
+        android:stretchMode="columnWidth"
+        />
 
-        <include
-            android:id="@+id/articleNews1"
-            layout="@layout/item_article_news"/>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"
-            android:layout_weight="1"/>
-
-        <include
-            android:id="@+id/articleNews2"
-            layout="@layout/item_article_news"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="3"
-        android:orientation="horizontal">
-
-        <include
-            android:id="@+id/articleNews3"
-            layout="@layout/item_article_news"/>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/darker_gray"
-            android:layout_weight="1"/>
-
-        <include
-            android:id="@+id/articleNews4"
-            layout="@layout/item_article_news"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

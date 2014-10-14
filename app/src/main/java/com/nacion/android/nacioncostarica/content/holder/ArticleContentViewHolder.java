@@ -1,7 +1,5 @@
 package com.nacion.android.nacioncostarica.content.holder;
 
-import android.os.AsyncTask;
-import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -12,15 +10,12 @@ import com.nacion.android.nacioncostarica.NacionFragment;
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.content.IContentPresenter;
 import com.nacion.android.nacioncostarica.holders.ViewHolderBase;
-import com.nacion.android.nacioncostarica.home.galleryAdapter.GalleryVideoPagerAdapter;
-import com.nacion.android.nacioncostarica.home.galleryAdapter.VideoFragment;
-import com.nacion.android.nacioncostarica.home.galleryListener.GalleryOnPageChangeListener;
-import com.nacion.android.nacioncostarica.home.listAdapter.HomeListPresenter;
+import com.nacion.android.nacioncostarica.home.adapters.GalleryVideoPagerAdapter;
+import com.nacion.android.nacioncostarica.home.fragments.VideoFragment;
+import com.nacion.android.nacioncostarica.home.listeners.GalleryOnPageChangeListener;
 import com.nacion.android.nacioncostarica.models.Content;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
-import com.nacion.android.nacioncostarica.models.ContentModule;
 import com.nacion.android.nacioncostarica.models.IArticleContentItemList;
-import com.nacion.android.nacioncostarica.tasks.ImageDownloaderTask;
 
 import java.util.ArrayList;
 import java.util.List;

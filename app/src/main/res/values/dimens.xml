@@ -41,6 +41,20 @@
     <dimen name="icon_height_action">35dp</dimen>
     <dimen name="icon_width_action">35dp</dimen>
 
+    <!-- Start - Highlight on tablet -->
+    <dimen name="image_highlight_tablet">640dp</dimen>
+    <!-- End -->
+
+    <!-- Start - Related new on tablet -->
+    <dimen name="image_related_news_width_tablet">128dp</dimen>
+    <dimen name="image_related_news_height_tablet">96dp</dimen>
+    <!-- End -->
+
+    <!-- Start - Articles on tablet -->
+    <dimen name="article_news_width_tablet">400dp</dimen>
+    <dimen name="article_news_height_tablet">200dp</dimen>
+    <dimen name="article_news_title_height_tablet">40dp</dimen>
+    <!-- End -->
 
     <!-- Start - Fonts on tablet -->
     <dimen name="font_author_tablet">12dp</dimen>

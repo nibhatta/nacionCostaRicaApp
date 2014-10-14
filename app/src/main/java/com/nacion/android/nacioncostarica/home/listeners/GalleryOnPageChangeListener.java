@@ -1,6 +1,5 @@
-package com.nacion.android.nacioncostarica.home.galleryListener;
+package com.nacion.android.nacioncostarica.home.listeners;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.TextView;

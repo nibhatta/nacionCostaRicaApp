@@ -9,9 +9,10 @@
 
     <ImageView
         android:id="@+id/moduleNewsImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/module"/>
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/image_related_news_width_tablet"
+        android:src="@drawable/module"
+        android:scaleType="fitXY"/>
 
     <TextView
         android:id="@+id/moduleNewsTitleTextView"

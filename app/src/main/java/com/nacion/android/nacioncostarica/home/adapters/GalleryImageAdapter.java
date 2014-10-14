@@ -1,4 +1,4 @@
-package com.nacion.android.nacioncostarica.home.galleryAdapter;
+package com.nacion.android.nacioncostarica.home.adapters;
 
 import android.content.Context;
 import android.view.View;

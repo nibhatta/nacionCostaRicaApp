@@ -1,9 +1,10 @@
-package com.nacion.android.nacioncostarica.home.galleryAdapter;
+package com.nacion.android.nacioncostarica.home.adapters;
 
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import com.nacion.android.nacioncostarica.NacionFragment;
 
@@ -13,13 +14,18 @@ import java.util.List;
  * Created by Gustavo Matarrita on 26/09/2014.
  */
 
-public class GalleryImagePagerAdapter extends FragmentPagerAdapter {
+public class GalleryVideoPagerAdapter extends FragmentStatePagerAdapter {
     private List<NacionFragment> fragments;
-    private static int TABS_COUNT = 4;
+    private int tabsCount;
 
-    public GalleryImagePagerAdapter(FragmentManager argManager, List<NacionFragment> argFragments){
+    public GalleryVideoPagerAdapter(FragmentManager argManager, List<NacionFragment> argFragments){
         super(argManager);
         fragments = argFragments;
+    }
+
+    @Override
+    public void startUpdate(ViewGroup container) {
+        super.startUpdate(container);
     }
 
     @Override
@@ -41,6 +47,19 @@ public class GalleryImagePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return TABS_COUNT;
+        return tabsCount;
+    }
+
+    @Override
+    public Parcelable saveState() {
+        return null;
+    }
+
+    public int getTabsCount() {
+        return tabsCount;
+    }
+
+    public void setTabsCount(int tabsCount) {
+        this.tabsCount = tabsCount;
     }
 }

@@ -1,4 +1,4 @@
-package com.nacion.android.nacioncostarica.home.listAdapter;
+package com.nacion.android.nacioncostarica.home.adapters;
 
 import com.nacion.android.nacioncostarica.main.MainView;
 

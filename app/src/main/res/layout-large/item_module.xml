@@ -22,11 +22,12 @@
     <ImageView
         android:id="@+id/moduleImageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/module"/>
+        android:layout_height="@dimen/image_highlight_tablet"
+        android:src="@drawable/module"
+        android:scaleType="fitXY"/>
 
     <TextView
-        android:id="@+id/moduleDateTextView"
+        android:id="@+id/moduleSectionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MUNDO 9:30 A.M."
@@ -42,32 +43,20 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/moduleDescriptionTextView"
+        android:id="@+id/moduleSummaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/item_module_description"
         android:textSize="@dimen/title_size_tablet"/>
 
-    <LinearLayout
+    <GridView
+        android:id="@+id/moduleGridView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="4">
-
-        <include
-            android:id="@+id/moduleNews1"
-            layout="@layout/item_news_module"/>
-        <include
-            android:id="@+id/moduleNews2"
-            layout="@layout/item_news_module"/>
-        <include
-            android:id="@+id/moduleNews3"
-            layout="@layout/item_news_module"/>
-        <include
-            android:id="@+id/moduleNews4"
-            layout="@layout/item_news_module"/>
-
-    </LinearLayout>
+        android:layout_height="200dp"
+        android:numColumns="4"
+        android:stretchMode="columnWidth"
+        android:gravity="left"
+        />
 
     <View
         android:layout_width="match_parent"
