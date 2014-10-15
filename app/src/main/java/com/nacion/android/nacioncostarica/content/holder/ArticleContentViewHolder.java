@@ -2,6 +2,7 @@ package com.nacion.android.nacioncostarica.content.holder;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,7 +76,7 @@ public class ArticleContentViewHolder extends ViewHolderBase{
         String url = argItem.getImage().getPhoneUrl();
         downloadImage(url, image);
         title.setText(argItem.getTitle());
-        body.setText(argItem.getBody());
+        body.setText(Html.fromHtml(argItem.getBody()));
         info.setText(argItem.getSummary());
 
         //final String section = contentModule.getSection();

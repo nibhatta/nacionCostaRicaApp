@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/b_block_height_tablet"
+    android:padding="@dimen/padding_separate"
+    android:background="@android:color/darker_gray"
+    >
+
+    <ImageView
+        android:id="@+id/blockB1ImageView"
+        android:layout_width="@dimen/b_block_image_width_tablet"
+        android:layout_height="@dimen/b_block_height_tablet"
+        android:src="@drawable/picture_size02"
+        android:layout_alignParentLeft="true"
+        android:scaleType="fitXY"
+        />
+
+    <TextView
+        android:id="@+id/blockB1TextView"
+        android:layout_width="@dimen/b_block_item_width_tablet"
+        android:layout_height="@dimen/b_block_item_height_tablet"
+        android:text="@string/dummy_text_title"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/blockB1ImageView"
+        android:background="@android:color/white"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/blockB3ImageView"
+        android:layout_width="@dimen/b_block_item_width_tablet"
+        android:layout_height="@dimen/b_block_item_height_tablet"
+        android:src="@drawable/picture_size02"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/blockB1TextView"
+        android:scaleType="fitXY"
+        android:paddingLeft="@dimen/padding_separate"
+        android:paddingRight="0dp"/>
+
+    <ImageView
+        android:id="@+id/blockB2ImageView"
+        android:layout_width="@dimen/b_block_item_width_tablet"
+        android:layout_height="@dimen/b_block_item_height_tablet"
+        android:src="@drawable/picture_size02"
+        android:layout_toRightOf="@+id/blockB1ImageView"
+        android:scaleType="fitXY"
+        android:paddingLeft="@dimen/padding_separate"
+        android:paddingRight="0dp"/>
+
+    <TextView
+        android:id="@+id/blockB2TextView"
+        android:layout_width="@dimen/b_block_item_width_tablet"
+        android:layout_height="@dimen/b_block_item_height_tablet"
+        android:text="@string/dummy_text_title"
+        android:layout_toRightOf="@+id/blockB2ImageView"
+        android:background="@android:color/white"
+        android:gravity="center"/>
+
+</RelativeLayout>

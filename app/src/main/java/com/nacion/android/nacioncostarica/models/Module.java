@@ -41,8 +41,10 @@ public class Module{
             add(NacionConstants.MODULE_ONE);
             add(NacionConstants.MODULE_TWO);
             add(NacionConstants.MODULE_THREE);
+            add(NacionConstants.MODULE_SIX);
             add(NacionConstants.MODULE_SEVEN);
             add(NacionConstants.MODULE_EIGHT);
+            add(NacionConstants.MODULE_TEN);
         }
     };
 
@@ -55,7 +57,6 @@ public class Module{
             add(NacionConstants.MODULE_SIX);
             add(NacionConstants.MODULE_SEVEN);
             add(NacionConstants.MODULE_EIGHT);
-            add(NacionConstants.MODULE_NINE);
             add(NacionConstants.MODULE_TEN);
             add(NacionConstants.MODULE_ELEVEN);
         }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="800dp">
+    android:layout_height="@dimen/article_height_tablet">
 
     <GridView
         android:id="@+id/articleGridView"
         android:layout_width="match_parent"
-        android:layout_height="800dp"
+        android:layout_height="@dimen/article_height_tablet"
         android:numColumns="2"
         android:columnWidth="90dp"
         android:horizontalSpacing="10dp"

@@ -32,17 +32,7 @@ public class GridViewHolder extends ViewHolderBase{
         String url = argItem.getImage().getPhoneUrl();
         downloadImage(url, image);
         title.setText(argItem.getTitle());
-
-        /*
-        final String section = argItem.getSection();
-        final int articleId = argItem.getId();
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.startContextActivity(section, articleId);
-            }
-        });
-        */
+        setStartContextActivityEvent(argItem);
     }
 
     public void setComponentsReferencesForArticleGrid(View argView){
@@ -58,6 +48,26 @@ public class GridViewHolder extends ViewHolderBase{
         title.setText(argItem.getTitle());
         section.setText(getSectionString(argItem));
         summary.setText(argItem.getSummary());
+        setStartContextActivityEvent(argItem);
+    }
+
+    public void setStartContextActivityEvent(ContentItemList argItem){
+        final String section = argItem.getSection();
+        final int articleId = argItem.getId();
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.startContextActivity(section, articleId);
+            }
+        });
+    }
+
+    public void setComponentsReferencesForSpecialDataGrid(View argView){
+        title = (TextView)argView.findViewById(R.id.specialDataCellTitleTextView);
+    }
+
+    public void setValuesForSpecialDataGrid(ContentItemList argItem){
+        title.setText(argItem.getTitle());
     }
 
     private String getSectionString(ContentItemList argItem){

@@ -7,29 +7,30 @@
     android:padding="@dimen/padding_separate">
 
     <TextView
-        android:id="@+id/heathItemTextView"
+        android:id="@+id/approachTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ENFOQUE SALUD"
+        android:text="ENFOQUE "
         android:textColor="@android:color/white"/>
 
     <ImageView
-        android:id="@+id/heathItemImageView"
+        android:id="@+id/approachImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/picture_size02"
-        android:layout_below="@+id/heathItemTextView"
+        android:layout_below="@+id/approachTextView"
         android:layout_marginLeft="@dimen/margin_separate"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_toRightOf="@+id/heathItemImageView"
+        android:layout_toRightOf="@+id/approachImageView"
         android:background="@android:color/white"
         android:padding="@dimen/padding_separate">
 
         <TextView
+            android:id="@+id/approachSectionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dummy_text_date"
@@ -37,6 +38,7 @@
             />
 
         <TextView
+            android:id="@+id/approachTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dummy_text_title"
@@ -44,6 +46,7 @@
             />
 
         <TextView
+            android:id="@+id/approachSummaryTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dummy_text_summary"

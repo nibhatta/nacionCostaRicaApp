@@ -9,14 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.nacion.android.nacioncostarica.NacionFragment;
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
-import com.nacion.android.nacioncostarica.home.fragments.ImageFragment;
 import com.nacion.android.nacioncostarica.home.holder.HomeTabletViewHolder;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,18 +67,12 @@ public class HomeListForTabletAdapter extends ArrayAdapter<ContentItemList> impl
                     break;
 
                 case NacionConstants.MODULE_CODE_SIX:
-                    convertView = inflater.inflate(R.layout.item_entertainment, null);
-                    /*
-                    holder.viewPager = (ViewPager)convertView.findViewById(R.id.imageGalleryViewPager);
-                    GalleryImagePagerAdapter pagerAdapter = new GalleryImagePagerAdapter(fragmentManager, getFragmentsArray());
-                    if(holder.viewPager.getAdapter() == null) {
-                        holder.viewPager.setAdapter(pagerAdapter);
-                        holder.viewPager.setOffscreenPageLimit(4);
-                    }*/
-
+                    convertView = inflater.inflate(R.layout.item_block_b, null);
+                    holder.setComponentsReferencesForBBlockView(convertView);
                     break;
                 case NacionConstants.MODULE_CODE_SEVEN:
                     convertView = inflater.inflate(R.layout.item_special_data, null);
+                    holder.setComponentsReferencesForSpecialDataView(convertView);
                     break;
 
                 case NacionConstants.MODULE_CODE_EIGHT:
@@ -93,11 +84,13 @@ public class HomeListForTabletAdapter extends ArrayAdapter<ContentItemList> impl
                     break;
 
                 case NacionConstants.MODULE_CODE_TEN:
-                    convertView = inflater.inflate(R.layout.item_ad, null);
+                    convertView = inflater.inflate(R.layout.item_articles_ad, null);
+                    holder.setComponentsReferencesForArticleAdView(convertView);
                     break;
 
                 case NacionConstants.MODULE_CODE_ELEVEN:
-                    convertView = inflater.inflate(R.layout.item_health, null);
+                    convertView = inflater.inflate(R.layout.item_approach, null);
+                    holder.setComponentsReferencesForApproachView(convertView);
                     break;
             }
             if(convertView != null) {
@@ -124,41 +117,24 @@ public class HomeListForTabletAdapter extends ArrayAdapter<ContentItemList> impl
                 //argHolder.setViewHolderValuesForVideoGalleryView();
                 break;
             case NacionConstants.MODULE_CODE_FOURTH:
-
                 break;
-            case NacionConstants.MODULE_CODE_FIVE:
-
+            case NacionConstants.MODULE_CODE_SIX:
+                argHolder.setValuesForBBlockView(context, argItem);
+                break;
+            case NacionConstants.MODULE_CODE_SEVEN:
+                argHolder.setValuesForSpecialDataView(context, argItem);
                 break;
             case NacionConstants.MODULE_CODE_EIGHT:
-
+                break;
+            case NacionConstants.MODULE_CODE_NINE:
+                break;
+            case NacionConstants.MODULE_CODE_TEN:
+                argHolder.setValuesForArticleAdView(context, argItem);
+                break;
+            case NacionConstants.MODULE_CODE_ELEVEN:
+                argHolder.setValuesForApproachView(argItem);
                 break;
         }
-    }
-
-    private List<NacionFragment> getFragmentsArray(){
-        List<NacionFragment> fragments = new ArrayList<NacionFragment>();
-        fragments.add(new ImageFragment().getInstance(0));
-        fragments.add(new ImageFragment().getInstance(1));
-        fragments.add(new ImageFragment().getInstance(2));
-        fragments.add(new ImageFragment().getInstance(3));
-        return fragments;
-    }
-
-    private List<NacionFragment> getVideoFragmentsArray(){
-        List<NacionFragment> fragments = new ArrayList<NacionFragment>();
-        /*
-        fragments.add(new VideoFragment().getInstance(0));
-        fragments.add(new VideoFragment().getInstance(1));
-        fragments.add(new VideoFragment().getInstance(2));
-        fragments.add(new VideoFragment().getInstance(3));
-        */
-        return fragments;
-    }
-
-
-    private class ViewHolder{
-        ViewPager viewPager;
-
     }
 
     @Override
@@ -170,6 +146,9 @@ public class HomeListForTabletAdapter extends ArrayAdapter<ContentItemList> impl
     public int getItemViewType(int position) {
         Log.d(HomeListForTabletAdapter.class.getName(), "=====> Position: " + position);
         ContentItemList content = getItem(position);
+        if(content == null){
+            throw new RuntimeException("=====> The content is null!!!!");
+        }
         if(content.getModule() == null){
             throw new RuntimeException("=====> The module is null!!!!");
         }

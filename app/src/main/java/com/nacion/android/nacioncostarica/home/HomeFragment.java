@@ -5,11 +5,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.nacion.android.nacioncostarica.NacionFragment;
 import com.nacion.android.nacioncostarica.R;
+import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
 
 /**
@@ -18,6 +21,7 @@ import com.nacion.android.nacioncostarica.models.ContentItemList;
 public class HomeFragment extends Fragment implements HomeView, NacionFragment {
     private HomeFragment instance;
     private int fragmentIndex;
+    private WebView webView;
     private ArrayAdapter<ContentItemList> homeListAdapter;
     private ListView homeListView;
 
@@ -46,11 +50,22 @@ public class HomeFragment extends Fragment implements HomeView, NacionFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        homeListView = (ListView)rootView.findViewById(R.id.homeListView);
-        if(homeListAdapter != null) {
+        createWebView(rootView);
+        createHomeListView(rootView);
+        return rootView;
+    }
+
+    private void createWebView(View argRootView){
+        webView = (WebView)argRootView.findViewById(R.id.webViewAdvertisement);
+        webView.loadUrl(NacionConstants.ADVERTISEMENT_URL);
+        webView.getSettings().setJavaScriptEnabled(true);
+    }
+
+    private void createHomeListView(View argRootView){
+        homeListView = (ListView)argRootView.findViewById(R.id.homeListView);
+        if(homeListAdapter != null){
             homeListView.setAdapter(homeListAdapter);
         }
-        return rootView;
     }
 
     @Override

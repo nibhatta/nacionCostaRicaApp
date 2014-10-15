@@ -33,6 +33,7 @@ import com.nacion.android.nacioncostarica.home.HomeFragment;
 import com.nacion.android.nacioncostarica.home.adapters.HomeListAdapter;
 import com.nacion.android.nacioncostarica.home.adapters.HomeListForTabletAdapter;
 import com.nacion.android.nacioncostarica.home.adapters.HomeListPresenterImpl;
+import com.nacion.android.nacioncostarica.home.adapters.MenuListAdapter;
 import com.nacion.android.nacioncostarica.main.MainPresenter;
 import com.nacion.android.nacioncostarica.main.MainPresenterImpl;
 import com.nacion.android.nacioncostarica.main.MainView;
@@ -51,7 +52,7 @@ import java.util.List;
 public class NacionCostaRicaActivity extends FragmentActivity implements MainView{
     private static int tabsCount;
     private ViewPager mainViewPager;
-    private WebView webView;
+
     private MainPresenter presenter;
     private List<NacionFragment> fragments;
     private CoverPagerAdapter coverPagerAdapter;
@@ -74,16 +75,9 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         setContentView(R.layout.activity_nacion_costa_rica);
         createOurCustomViewToActionBar();
         createDrawerLayout();
-        createWebView();
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         presenter = new MainPresenterImpl(this);
         mainFragmentManager = getSupportFragmentManager();
-    }
-
-    private void createWebView(){
-        webView = (WebView) findViewById(R.id.webViewAdvertisement);
-        webView.loadUrl(NacionConstants.ADVERTISEMENT_URL);
-        webView.getSettings().setJavaScriptEnabled(true);
     }
 
     private void createOurCustomViewToActionBar(){
@@ -111,13 +105,21 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     }
 
     private void createDrawerLayout(){
-        String[] menu = new String[]{"Home","Android","Windows","Linux","Raspberry Pi","WordPress","Videos","Contact Us"};
+        List<String> menu = new ArrayList<String>(){
+            {
+                add("Menu");
+                add("Menu");
+            }
+        };
+
+        //String[]{"Home","Android","Windows","Linux","Raspberry Pi","WordPress","Videos","Contact Us"};
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         leftList = (ListView) findViewById(R.id.left_drawer);
         rightList = (ListView) findViewById(R.id.right_drawer);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.menu_list_item, menu);
+        MenuListAdapter adapter = new MenuListAdapter(this, menu, mainFragmentManager);
         leftList.setAdapter(adapter);
         rightList.setAdapter(adapter);
 

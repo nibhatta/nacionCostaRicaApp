@@ -35,12 +35,23 @@
             android:layout_weight="1"
             android:padding="10dp">
 
-            <ImageView
-                android:id="@+id/videoGalleryImageView"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:src="@drawable/picture_size01"
-                android:scaleType="fitXY"/>
+                android:layout_height="250dp">
+                <ImageView
+                    android:id="@+id/videoGalleryImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:src="@drawable/picture_size01"
+                    android:scaleType="fitXY"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/list_video"
+                    android:scaleType="fitXY"/>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/videoSectionTextView"

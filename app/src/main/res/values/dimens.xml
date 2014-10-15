@@ -43,14 +43,19 @@
 
     <!-- Start - Highlight on tablet -->
     <dimen name="image_highlight_tablet">640dp</dimen>
+    <dimen name="highlight_note_height_tablet">320dp</dimen>
+    <dimen name="content_padding_highlight_tablet">100dp</dimen>
     <!-- End -->
 
     <!-- Start - Related new on tablet -->
+
     <dimen name="image_related_news_width_tablet">128dp</dimen>
     <dimen name="image_related_news_height_tablet">96dp</dimen>
     <!-- End -->
 
     <!-- Start - Articles on tablet -->
+    <dimen name="article_height_tablet">400dp</dimen>
+
     <dimen name="article_news_width_tablet">400dp</dimen>
     <dimen name="article_news_height_tablet">200dp</dimen>
     <dimen name="article_news_title_height_tablet">40dp</dimen>
@@ -91,10 +96,9 @@
     <dimen name="article_image_height_on_phone">75dp</dimen>
     <!-- End -->
 
-    <!-- Start - Articles and ad component on large screen -->
-    <dimen name="article_ad_height">540dp</dimen>
-    <dimen name="article_image_width">125dp</dimen>
-    <dimen name="article_image_height">75dp</dimen>
+    <!-- Start - Articles and ad component on tablet -->
+    <dimen name="article_ad_width_tablet">400dp</dimen>
+    <dimen name="article_ad_height_tablet">600dp</dimen>
     <!-- End -->
 
     <!-- Start - Articles component on large screen -->
@@ -109,11 +113,12 @@
     <dimen name="health_height">200dp</dimen>
     <!-- End -->
 
-    <!-- Start - Entertainment component on large screen -->
-    <dimen name="entertainment_height">345dp</dimen>
-    <dimen name="entertainment_cell_width">50dp</dimen>
-    <dimen name="entertainment_cell_height">150dp</dimen>
-    <dimen name="entertainment_image_width">300dp</dimen>
+    <!-- Start - B block on tablet -->
+    <dimen name="b_block_height_tablet">290dp</dimen>
+    <dimen name="b_block_image_width_tablet">300dp</dimen>
+
+    <dimen name="b_block_item_width_tablet">250dp</dimen>
+    <dimen name="b_block_item_height_tablet">125dp</dimen>
     <!-- End -->
 
     <!-- Start - Special data component on large screen -->

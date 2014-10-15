@@ -52,9 +52,12 @@ public class Content extends ContentItemList{
             content.setSummary(argJSONContent.getString(tagSummary));
         }
 
-        JSONObject jsonImage = argJSONContent.getJSONObject("image");
-        Image image = new Image().buildImageFromJSONObject(jsonImage);
-        content.setImage(image);
+        String tagImage = "image";
+        if(argJSONContent.has(tagImage)) {
+            JSONObject jsonImage = argJSONContent.getJSONObject(tagImage);
+            Image image = new Image().buildImageFromJSONObject(jsonImage);
+            content.setImage(image);
+        }
         return content;
     }
 }
