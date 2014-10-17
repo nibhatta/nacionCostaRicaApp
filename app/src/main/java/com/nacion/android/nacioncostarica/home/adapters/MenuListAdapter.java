@@ -3,16 +3,19 @@ package com.nacion.android.nacioncostarica.home.adapters;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
-import com.nacion.android.nacioncostarica.home.holder.HomeViewHolder;
+import com.nacion.android.nacioncostarica.home.holder.MenuViewHolder;
+import com.nacion.android.nacioncostarica.home.listeners.MenuOnTouchListener;
+import com.nacion.android.nacioncostarica.main.MainPresenter;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
 
 import java.util.List;
@@ -22,81 +25,74 @@ import java.util.List;
  */
 public class MenuListAdapter extends ArrayAdapter<String> implements HomeListView {
     private static final int VIEWS_TYPE_COUNT = 8;
-    private HomeListPresenter presenter;
+    private MainPresenter presenter;
     private LayoutInflater inflater;
     private Context context;
     private ViewPager viewPager;
     private FragmentManager fragmentManager;
+    private DrawerLayout parentDrawerLayout;
+    private ViewGroup parentReferences;
+    private List<String> contentsList;
 
     public MenuListAdapter(Context context, List<String> argContents, FragmentManager argFragmentManager) {
         super(context, R.layout.menu_list_item, argContents);
         this.context = context;
-
+        contentsList = argContents;
         inflater = LayoutInflater.from(context);
         fragmentManager = argFragmentManager;
     }
 
-    public HomeListPresenter getPresenter() {
+    public DrawerLayout getParentDrawerLayout() {
+        return parentDrawerLayout;
+    }
+
+    public void setParentDrawerLayout(DrawerLayout parentDrawerLayout) {
+        this.parentDrawerLayout = parentDrawerLayout;
+    }
+
+    public MainPresenter getPresenter() {
         return presenter;
     }
 
-    public void setPresenter(HomeListPresenter presenter) {
+    public void setPresenter(MainPresenter presenter) {
         this.presenter = presenter;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        this.parentReferences = parent;
         String itemList = getItem(position);
         int codeType = getItemViewType(position);
-        ViewHolder holder;
-
-        //View view = super.getView(position, convertView, parent);
+        MenuViewHolder holder;
 
         if(convertView == null){
-            holder = new ViewHolder();
+            holder = new MenuViewHolder(presenter);
             convertView = inflater.inflate(R.layout.menu_list_item, null);
-            convertView.setOnTouchListener(touchListener);
+
+            MenuOnTouchListener listener = new MenuOnTouchListener(parentDrawerLayout, parent);
+            listener.setPresenter(presenter);
+
+            convertView.setOnTouchListener(listener);
             convertView.setTag(holder);
+            holder.setComponentsReferences(convertView);
         }else{
-            holder = (ViewHolder)convertView.getTag();
+            holder = (MenuViewHolder)convertView.getTag();
         }
 
-        //setHolderViewValuesByCodeType(holder, itemList, codeType);
+        holder.setValuesForArticleView(position, this, itemList);
 
         return convertView;
     }
 
-    private View.OnTouchListener touchListener = new View.OnTouchListener(){
-
-        float downX;
-
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            switch(motionEvent.getAction()){
-                case MotionEvent.ACTION_DOWN:
-                    downX = motionEvent.getX();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-
-                    float x = motionEvent.getX() + view.getTranslationX();
-                    float deltaX = x - downX;
-                    float deltaXAbs = Math.abs(deltaX);
-
-                    view.setTranslationX(deltaX);
-                    view.setAlpha(1 - deltaXAbs / view.getWidth());
-                    break;
-                default:
-                    return false;
-            }
-            return true;
-        }
-
-    };
-
-    class ViewHolder{
-
+    public List<String> getContentsList() {
+        return contentsList;
     }
 
+    public void setContentsList(List<String> contentsList) {
+        this.contentsList = contentsList;
+    }
+
+    /*
     private void setHolderViewValuesByCodeType(HomeViewHolder argHolder, ContentItemList argItem, int argCodeType){
         switch(argCodeType){
             case NacionConstants.MODULE_CODE_ONE:
@@ -118,19 +114,5 @@ public class MenuListAdapter extends ArrayAdapter<String> implements HomeListVie
 
                 break;
         }
-    }
-
-    /*
-    @Override
-    public int getViewTypeCount() {
-        return VIEWS_TYPE_COUNT;
-    }
-
-    @Override
-
-    public int getItemViewType(int position) {
-        ContentItemList content = getItem(position);
-        return content.getModule().getTypeCode();
-    }
-    */
+    }*/
 }

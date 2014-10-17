@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.NacionFragment;
 import com.nacion.android.nacioncostarica.R;
+import com.nacion.android.nacioncostarica.fonts.Fonts;
 import com.nacion.android.nacioncostarica.holders.ViewHolderBase;
 import com.nacion.android.nacioncostarica.home.adapters.GalleryVideoPagerAdapter;
 import com.nacion.android.nacioncostarica.home.fragments.VideoFragment;
@@ -41,6 +42,7 @@ public class HomeViewHolder extends ViewHolderBase{
     public void setViewHolderComponentsReferencesForArticleView(View argView){
         image = (ImageView)argView.findViewById(R.id.articleImageView);
         section = (TextView)argView.findViewById(R.id.articleSectionTextView);
+        section.setTypeface(presenter.getFonts().ADELE_THIN_ITALIC);
         summary = (TextView)argView.findViewById(R.id.articleSummaryTextView);
     }
 
@@ -62,7 +64,10 @@ public class HomeViewHolder extends ViewHolderBase{
 
     public void setViewHolderComponentsReferencesForHighlightView(View argView){
         image = (ImageView)argView.findViewById(R.id.moduleImageView);
+
         section = (TextView)argView.findViewById(R.id.moduleSectionTextView);
+        section.setTypeface(presenter.getFonts().ADELE_THIN_ITALIC);
+
         title = (TextView)argView.findViewById(R.id.moduleTitleTextView);
     }
 

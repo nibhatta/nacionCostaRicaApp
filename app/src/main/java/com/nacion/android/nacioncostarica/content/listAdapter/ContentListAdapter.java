@@ -15,8 +15,8 @@ import com.nacion.android.nacioncostarica.content.IContentPresenter;
 import com.nacion.android.nacioncostarica.content.holder.ArticleContentViewHolder;
 import com.nacion.android.nacioncostarica.home.fragments.ImageFragment;
 import com.nacion.android.nacioncostarica.home.fragments.VideoFragment;
+import com.nacion.android.nacioncostarica.models.ArticleContentItemList;
 import com.nacion.android.nacioncostarica.models.Content;
-import com.nacion.android.nacioncostarica.models.IArticleContentItemList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +24,15 @@ import java.util.List;
 /**
  * Created by Gustavo Matarrita on 22/09/2014.
  */
-public class ContentListAdapter extends ArrayAdapter<IArticleContentItemList> implements ContentListView {
-    private static final int VIEWS_TYPE_COUNT = 1;
+public class ContentListAdapter extends ArrayAdapter<ArticleContentItemList> implements ContentListView {
+    private static final int VIEWS_TYPE_COUNT = 3;
     private IContentPresenter presenter;
     private LayoutInflater inflater;
     private Context context;
     private ViewPager viewPager;
     private FragmentManager fragmentManager;
 
-    public ContentListAdapter(Context context, List<IArticleContentItemList> argContents, FragmentManager argFragmentManager) {
+    public ContentListAdapter(Context context, List<ArticleContentItemList> argContents, FragmentManager argFragmentManager) {
         super(context, R.layout.item_highlight_content, argContents);
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -49,38 +49,24 @@ public class ContentListAdapter extends ArrayAdapter<IArticleContentItemList> im
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        IArticleContentItemList itemList = getItem(position);
+        ArticleContentItemList itemList = getItem(position);
         int codeType = getItemViewType(position);
         ArticleContentViewHolder holder;
         if(convertView == null){
             holder = new ArticleContentViewHolder(presenter);
             switch(codeType){
-                case NacionConstants.MODULE_CODE_ONE:
+                case NacionConstants.ARTICLE_HIGHLIGHT_CODE:
                     convertView = inflater.inflate(R.layout.item_highlight_content, null);
                     holder.setComponentsReferencesForHighlightView(convertView);
                     break;
-                /*
-                case NacionConstants.MODULE_CODE_TWO:
-                    convertView = inflater.inflate(R.layout.item_article, null);
-                    holder.setViewHolderComponentsReferencesForArticleView(convertView);
+                case NacionConstants.ARTICLE_PARAGRAPH_CODE:
+                    convertView = inflater.inflate(R.layout.item_paragraph_content, null);
+                    holder.setComponentsReferencesForParagraphView(convertView);
                     break;
-                case NacionConstants.MODULE_CODE_THREE:
-                    convertView = inflater.inflate(R.layout.item_video_gallery, null);
-                    holder.setViewHolderComponentsReferencesForVideoGalleryView(convertView, itemList, fragmentManager);
+                case NacionConstants.ARTICLE_WEIGHT_CODE:
+                    convertView = inflater.inflate(R.layout.item_weight_content, null);
+                    holder.setComponentsReferencesForWeightView(convertView);
                     break;
-                case NacionConstants.MODULE_CODE_FOURTH:
-                    convertView = inflater.inflate(R.layout.item_weather, null);
-                    break;
-                case NacionConstants.MODULE_CODE_FIVE:
-
-                    convertView = inflater.inflate(R.layout.item_image_gallery, null);
-
-
-                    break;
-                case NacionConstants.MODULE_CODE_EIGHT:
-                    convertView = inflater.inflate(R.layout.item_more_news, null);
-                    break;
-                */
             }
             convertView.setTag(holder);
         }else{
@@ -92,50 +78,18 @@ public class ContentListAdapter extends ArrayAdapter<IArticleContentItemList> im
         return convertView;
     }
 
-    private void setHolderViewValuesByCodeType(ArticleContentViewHolder argHolder, IArticleContentItemList argItem, int argCodeType){
+    private void setHolderViewValuesByCodeType(ArticleContentViewHolder argHolder, ArticleContentItemList argItem, int argCodeType){
         switch(argCodeType){
-            case NacionConstants.MODULE_CODE_ONE:
+            case NacionConstants.ARTICLE_HIGHLIGHT_CODE:
                 argHolder.setValuesForHighlightView(argItem);
                 break;
-            /*
-            case NacionConstants.MODULE_CODE_TWO:
-                argHolder.setViewHolderValuesForArticleView(argItem);
+            case NacionConstants.ARTICLE_PARAGRAPH_CODE:
+                argHolder.setValuesForParagraphView(argItem);
                 break;
-            case NacionConstants.MODULE_CODE_THREE:
-                argHolder.setViewHolderValuesForVideoGalleryView();
+            case NacionConstants.ARTICLE_WEIGHT_CODE:
+                argHolder.setValuesForWeightView(argItem);
                 break;
-            case NacionConstants.MODULE_CODE_FOURTH:
-
-                break;
-            case NacionConstants.MODULE_CODE_FIVE:
-
-                break;
-            case NacionConstants.MODULE_CODE_EIGHT:
-
-                break;
-             */
         }
-    }
-
-    private List<NacionFragment> getFragmentsArray(){
-        List<NacionFragment> fragments = new ArrayList<NacionFragment>();
-        fragments.add(new ImageFragment().getInstance(0));
-        fragments.add(new ImageFragment().getInstance(1));
-        fragments.add(new ImageFragment().getInstance(2));
-        fragments.add(new ImageFragment().getInstance(3));
-        return fragments;
-    }
-
-    private List<NacionFragment> getVideoFragmentsArray(List<Content> argContents){
-        List<NacionFragment> fragments = new ArrayList<NacionFragment>();
-        int index = 0;
-        for(Content content : argContents){
-            VideoFragment videoFragment = new VideoFragment().getInstance(index, content.getImage().getPhoneUrl());
-            videoFragment.setTitle(content.getTitle());
-            fragments.add(videoFragment);
-            index++;
-        }
-        return fragments;
     }
 
     @Override
@@ -145,7 +99,7 @@ public class ContentListAdapter extends ArrayAdapter<IArticleContentItemList> im
 
     @Override
     public int getItemViewType(int position) {
-        IArticleContentItemList articleContent = getItem(position);
+        ArticleContentItemList articleContent = getItem(position);
         return articleContent.getTypeCode();
     }
 }

@@ -27,4 +27,9 @@ public class MainPresenterImpl implements MainPresenter{
     public void updateView() {
         mainView.updateViewFromModel();
     }
+
+    @Override
+    public void showLeftSubMenuFromMenuOnTouchListener() {
+        mainView.showLeftSubMenu();
+    }
 }

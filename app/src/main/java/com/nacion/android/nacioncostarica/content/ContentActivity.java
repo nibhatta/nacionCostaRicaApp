@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.nacion.android.nacioncostarica.Globals;
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.content.listAdapter.ContentListAdapter;
-import com.nacion.android.nacioncostarica.models.IArticleContentItemList;
+import com.nacion.android.nacioncostarica.models.ArticleContentItemList;
 
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class ContentActivity extends FragmentActivity implements ContentView{
             return;
         }
         contentListView = (ListView)findViewById(R.id.contentListView);
-        List<IArticleContentItemList> articleContents = presenter.getArticleContentFromView(articleId);
+        List<ArticleContentItemList> articleContents = presenter.getArticleContentFromView(articleId);
         ContentListAdapter contentListAdapter = new ContentListAdapter(context, articleContents, getSupportFragmentManager());
         contentListAdapter.setPresenter(presenter);
         contentListView.setAdapter(contentListAdapter);

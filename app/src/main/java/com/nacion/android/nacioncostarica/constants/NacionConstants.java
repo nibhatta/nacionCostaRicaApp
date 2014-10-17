@@ -57,6 +57,21 @@ public class NacionConstants {
         }
     };
 
+    public final static String ARTICLE_HIGHLIGHT = "article";
+    public final static String ARTICLE_PARAGRAPH = "parrafo";
+    public final static String ARTICLE_WEIGHT = "peso";
+
+    public final static int ARTICLE_HIGHLIGHT_CODE = 0;
+    public final static int ARTICLE_PARAGRAPH_CODE = 1;
+    public final static int ARTICLE_WEIGHT_CODE = 2;
+
+    public final static Map<String, Integer> ARTICLE_PARTS = new HashMap<String, Integer>(){
+        {
+            put(ARTICLE_HIGHLIGHT, ARTICLE_HIGHLIGHT_CODE);
+            put(ARTICLE_PARAGRAPH, ARTICLE_PARAGRAPH_CODE);
+            put(ARTICLE_WEIGHT, ARTICLE_WEIGHT_CODE);
+        }
+    };
 }
 
 

@@ -1,5 +1,6 @@
 package com.nacion.android.nacioncostarica.home.adapters;
 
+import com.nacion.android.nacioncostarica.fonts.Fonts;
 import com.nacion.android.nacioncostarica.main.MainView;
 
 /**
@@ -20,5 +21,10 @@ public class HomeListForTabletPresenterImpl implements HomeListPresenter{
     @Override
     public void startVideoActivity() {
         mainView.showVideoActivityFromViewHolder();
+    }
+
+    @Override
+    public Fonts getFonts() {
+        return mainView.getFontsFromChildrenViews();
     }
 }

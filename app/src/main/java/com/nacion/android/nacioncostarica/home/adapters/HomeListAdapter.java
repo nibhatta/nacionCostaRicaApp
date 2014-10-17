@@ -29,7 +29,6 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
     public HomeListAdapter(Context context, List<ContentItemList> argContents, FragmentManager argFragmentManager) {
         super(context, R.layout.item_module, argContents);
         this.context = context;
-
         inflater = LayoutInflater.from(context);
         fragmentManager = argFragmentManager;
     }

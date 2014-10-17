@@ -99,13 +99,14 @@ public class Site{
         return boardNames;
     }
 
-    public List<IArticleContentItemList> getArticleContentsForPhone(int argArticleId){
-        //TODO Create a list of article content item list with the article object.
-        List<IArticleContentItemList> articleContents = new ArrayList<IArticleContentItemList>();
-        //TODO Add the type code in order.
+    public List<ArticleContentItemList> getArticleContentsForPhone(int argArticleId){
+        List<ArticleContentItemList> articleContents = new ArrayList<ArticleContentItemList>();
         Article article = getArticleById(argArticleId);
-        article.setTypeCode(0);
+        article.setType("article");
         articleContents.add(article);
+        for(Weight weight : article.getBody()){
+            articleContents.add(weight);
+        }
         return articleContents;
     }
 
@@ -113,3 +114,4 @@ public class Site{
         return articles.containsKey(argArticleId)? articles.get(argArticleId) : new Article();
     }
 }
+

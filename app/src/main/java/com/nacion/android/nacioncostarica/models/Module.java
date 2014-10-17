@@ -110,7 +110,9 @@ public class Module{
 
     public int getTypeCode(){
         int code = 0;
-        code = NacionConstants.MODULES.get(type);
+        if(NacionConstants.MODULES.containsKey(type)) {
+            code = NacionConstants.MODULES.get(type);
+        }
         return code;
     }
 

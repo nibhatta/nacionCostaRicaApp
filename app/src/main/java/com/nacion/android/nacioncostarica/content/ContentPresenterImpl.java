@@ -1,7 +1,7 @@
 package com.nacion.android.nacioncostarica.content;
 
 import com.nacion.android.nacioncostarica.models.Article;
-import com.nacion.android.nacioncostarica.models.IArticleContentItemList;
+import com.nacion.android.nacioncostarica.models.ArticleContentItemList;
 import com.nacion.android.nacioncostarica.models.Site;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class ContentPresenterImpl implements IContentPresenter{
         this.site = site;
     }
 
-    public List<IArticleContentItemList> getArticleContentFromView(int argArticleId){
+    public List<ArticleContentItemList> getArticleContentFromView(int argArticleId){
         return site.getArticleContentsForPhone(argArticleId);
     }
 

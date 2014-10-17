@@ -1,6 +1,6 @@
 package com.nacion.android.nacioncostarica.content;
 
-import com.nacion.android.nacioncostarica.models.IArticleContentItemList;
+import com.nacion.android.nacioncostarica.models.ArticleContentItemList;
 import com.nacion.android.nacioncostarica.models.Site;
 
 import java.util.List;
@@ -11,6 +11,6 @@ import java.util.List;
 public interface IContentPresenter {
     Site getSite();
     void setSite(Site argSite);
-    List<IArticleContentItemList> getArticleContentFromView(int argArticleId);
+    List<ArticleContentItemList> getArticleContentFromView(int argArticleId);
     boolean articleNotExistsFromView(int argArticleId);
 }

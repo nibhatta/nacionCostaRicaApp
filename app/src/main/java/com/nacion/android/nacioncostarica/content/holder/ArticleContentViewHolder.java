@@ -14,9 +14,9 @@ import com.nacion.android.nacioncostarica.holders.ViewHolderBase;
 import com.nacion.android.nacioncostarica.home.adapters.GalleryVideoPagerAdapter;
 import com.nacion.android.nacioncostarica.home.fragments.VideoFragment;
 import com.nacion.android.nacioncostarica.home.listeners.GalleryOnPageChangeListener;
+import com.nacion.android.nacioncostarica.models.ArticleContentItemList;
 import com.nacion.android.nacioncostarica.models.Content;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
-import com.nacion.android.nacioncostarica.models.IArticleContentItemList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,41 +42,29 @@ public class ArticleContentViewHolder extends ViewHolderBase{
         presenter = argPresenter;
     }
 
-    public void setComponentsReferencesForArticleView(View argView){
-        image = (ImageView)argView.findViewById(R.id.articleImageView);
-        section = (TextView)argView.findViewById(R.id.articleSectionTextView);
-        summary = (TextView)argView.findViewById(R.id.articleSummaryTextView);
+    public void setComponentsReferencesForParagraphView(View argView){
+        body = (TextView)argView.findViewById(R.id.bodyContentTextView);
     }
 
-    public void setValuesForArticleView(ContentItemList argItem){
-        String url = argItem.getImage().getPhoneUrl();
-        downloadImage(url, image);
-        section.setText(getSectionString(argItem));
-        summary.setText(argItem.getSummary());
-
-        final String section = argItem.getSection();
-        final int articleId = argItem.getId();
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               // presenter.startContextActivity(section, articleId);
-            }
-        });
+    public void setValuesForParagraphView(ArticleContentItemList argItem){
+        if(argItem.isParagraph()) {
+            body.setText(Html.fromHtml(argItem.getStrData()));
+        }
     }
 
     public void setComponentsReferencesForHighlightView(View argView){
         image = (ImageView)argView.findViewById(R.id.moduleImageView);
         title = (TextView)argView.findViewById(R.id.titleContentTextView);
-        body = (TextView)argView.findViewById(R.id.bodyContentTextView);
+
         info = (TextView)argView.findViewById(R.id.infoTextView);
         infoButtonImageView = (ImageView)argView.findViewById(R.id.infoButtonImageView);
     }
 
-    public void setValuesForHighlightView(IArticleContentItemList argItem){
+    public void setValuesForHighlightView(ArticleContentItemList argItem){
         String url = argItem.getImage().getPhoneUrl();
         downloadImage(url, image);
         title.setText(argItem.getTitle());
-        body.setText(Html.fromHtml(argItem.getBody()));
+        //body.setText(Html.fromHtml(argItem.getBody()));
         info.setText(argItem.getSummary());
 
         //final String section = contentModule.getSection();
@@ -100,47 +88,12 @@ public class ArticleContentViewHolder extends ViewHolderBase{
         });
     }
 
-    public void setViewHolderComponentsReferencesForVideoGalleryView(View argView, ContentItemList argItem, FragmentManager argFragmentManager){
-        viewPager = (ViewPager)argView.findViewById(R.id.videoGalleryViewPager);
-        viewPagerTitle = (TextView)argView.findViewById(R.id.videoTitleTextView);
-        viewPagerSection = (TextView)argView.findViewById(R.id.sectionVideoTextView);
-
-        List<Content> contents = argItem.getModule().getContents();
-        int size = contents.size();
-
-        List<NacionFragment> fragments = getVideoFragmentsArray(contents);
-
-        GalleryOnPageChangeListener listener = new GalleryOnPageChangeListener(fragments);
-        listener.setTitleViewPager(viewPagerTitle);
-        listener.setSectionViewPager(viewPagerSection);
-
-        GalleryVideoPagerAdapter videoPagerAdapter = new GalleryVideoPagerAdapter(argFragmentManager, fragments);
-        videoPagerAdapter.setTabsCount(size);
-
-        if(viewPager.getAdapter() == null){
-            viewPager.setAdapter(videoPagerAdapter);
-            viewPager.setOnPageChangeListener(listener);
-            viewPager.setOffscreenPageLimit(size);
-        }
+    public void setComponentsReferencesForWeightView(View argView){
+        image = (ImageView)argView.findViewById(R.id.weightImageView);
     }
 
-    public void setViewHolderValuesForVideoGalleryView(){
+    public void setValuesForWeightView(ArticleContentItemList argItem){
 
-    }
-
-    private List<NacionFragment> getVideoFragmentsArray(List<Content> argContents){
-        List<NacionFragment> fragments = new ArrayList<NacionFragment>();
-        int index = 0;
-        for(Content content : argContents){
-            VideoFragment videoFragment = new VideoFragment().getInstance(index, content.getImage().getPhoneUrl());
-            videoFragment.setTitle(content.getTitle());
-            videoFragment.setSection(getDateFormat(content.getTimestamp()));
-           // videoFragment.setPresenter(presenter);
-            videoFragment.setContent(content);
-            fragments.add(videoFragment);
-            index++;
-        }
-        return fragments;
     }
 
     private String getSectionString(ContentItemList argItem){

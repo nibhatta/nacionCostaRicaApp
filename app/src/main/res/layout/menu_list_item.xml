@@ -4,19 +4,32 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/holo_green_dark">
+    android:background="@android:color/darker_gray">
 
     <TextView
-        android:id="@+id/idTextView"
+        android:id="@+id/menuIdTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Menu"/>
+        android:text="Menu"
+        android:textSize="24dp"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"/>
 
-    <ImageButton
+    <ImageView
+        android:id="@+id/notificationImageView"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:src="@drawable/ic_launcher"/>
+        android:src="@drawable/notification_icon"/>
+
+    <ImageView
+        android:id="@+id/deleteImageView"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:src="@drawable/ic_launcher"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

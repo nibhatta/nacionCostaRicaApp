@@ -15,15 +15,14 @@ import java.util.Map;
 /**
  * Created by Gustavo Matarrita on 19/09/2014.
  */
-public class Article implements IArticleContentItemList {
+public class Article extends ArticleContentItemList {
     private int id;
-    private int typeCode;
     private Image image;
     private String title;
     private String summary;
     private String author;
     private Date timestamp;
-    private String body;
+    private List<Weight> body;
     private List<Weight> weights;
 
     public boolean isAEmptyObject(){
@@ -40,11 +39,11 @@ public class Article implements IArticleContentItemList {
         this.timestamp = timestamp;
     }
 
-    public String getBody() {
+    public List<Weight> getBody() {
         return body;
     }
 
-    public void setBody(String body) {
+    public void setBody(List<Weight> body) {
         this.body = body;
     }
 
@@ -96,13 +95,7 @@ public class Article implements IArticleContentItemList {
         this.author = author;
     }
 
-    public int getTypeCode() {
-        return typeCode;
-    }
 
-    public void setTypeCode(int typeCode) {
-        this.typeCode = typeCode;
-    }
 
     public Map<Integer, Article> buildArticlesMapFromJSONObject(JSONArray argJSONArticles){
         Map<Integer, Article> articles = new HashMap<Integer, Article>();
@@ -133,8 +126,6 @@ public class Article implements IArticleContentItemList {
             int timestampInt = jsonArticle.getInt("datetime");
             article.setTimestamp(new Date(timestampInt));
 
-            article.setBody(jsonArticle.getString("body"));
-
             JSONObject jsonImage = jsonArticle.getJSONObject("image");
             article.setImage(new Image().buildImageFromJSONObject(jsonImage));
 
@@ -142,6 +133,12 @@ public class Article implements IArticleContentItemList {
             if(jsonArticle.has(weightTag)) {
                 JSONArray jsonWeights = jsonArticle.getJSONArray(weightTag);
                 article.setWeights(new Weight().buildWeightListFromJSONObject(jsonWeights));
+            }
+
+            String bodyTag = "body";
+            if(jsonArticle.has(bodyTag)){
+                JSONArray jsonBody = jsonArticle.getJSONArray(bodyTag);
+                article.setBody(new Weight().buildWeightListFromJSONObject(jsonBody));
             }
         }
         return article;

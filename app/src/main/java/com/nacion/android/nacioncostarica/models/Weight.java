@@ -12,16 +12,16 @@ import java.util.List;
 /**
  * Created by Gustavo Matarrita on 06/10/2014.
  */
-public class Weight {
-    private String type;
+public class Weight extends ArticleContentItemList{
     private Data data;
+    private String strData;
 
-    public String getType() {
-        return type;
+    public String getStrData() {
+        return strData;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setStrData(String strData) {
+        this.strData = strData;
     }
 
     public Data getData() {
@@ -47,15 +47,21 @@ public class Weight {
         return weights;
     }
 
-
     public Weight buildWeightFromJSONObject(JSONObject argJSONWeight) throws JSONException{
         Weight weight = new Weight();
         String type = argJSONWeight.getString("tipo");
         weight.setType(type);
-
-        JSONObject jsonData = argJSONWeight.getJSONObject("data");
-        weight.setData(new Data().buildDataFromJSONObject(jsonData));
-
+        String dataTag = "data";
+        if(isDataString(argJSONWeight)){
+            weight.setStrData(argJSONWeight.getString(dataTag));
+        }else {
+            JSONObject jsonData = argJSONWeight.getJSONObject(dataTag);
+            weight.setData(new Data().buildDataFromJSONObject(jsonData));
+        }
         return weight;
+    }
+
+    private boolean isDataString(JSONObject argJSONData){
+        return !argJSONData.has("id") && !argJSONData.has("caption") && !argJSONData.has("url") && !argJSONData.has("assetId") && !argJSONData.has("embed");
     }
 }

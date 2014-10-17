@@ -2,6 +2,7 @@ package com.nacion.android.nacioncostarica;
 
 import android.app.Application;
 
+import com.nacion.android.nacioncostarica.fonts.Fonts;
 import com.nacion.android.nacioncostarica.models.Site;
 
 /**
@@ -9,6 +10,7 @@ import com.nacion.android.nacioncostarica.models.Site;
  */
 public class Globals extends Application{
     private Site site;
+    private Fonts fonts;
 
     public Site getSite() {
         return site;
@@ -16,5 +18,13 @@ public class Globals extends Application{
 
     public void setSite(Site site) {
         this.site = site;
+    }
+
+    public Fonts getFonts() {
+        return fonts;
+    }
+
+    public void setFonts(Fonts fonts) {
+        this.fonts = fonts;
     }
 }

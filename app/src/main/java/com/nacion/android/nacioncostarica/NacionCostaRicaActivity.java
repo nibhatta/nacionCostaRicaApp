@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,18 +17,22 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.nacion.android.nacioncostarica.content.ContentActivity;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
+import com.nacion.android.nacioncostarica.fonts.Fonts;
 import com.nacion.android.nacioncostarica.holders.Section;
 import com.nacion.android.nacioncostarica.home.HomeFragment;
 import com.nacion.android.nacioncostarica.home.adapters.HomeListAdapter;
@@ -73,11 +78,15 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nacion_costa_rica);
+        presenter = new MainPresenterImpl(this);
         createOurCustomViewToActionBar();
         createDrawerLayout();
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        presenter = new MainPresenterImpl(this);
         mainFragmentManager = getSupportFragmentManager();
+    }
+
+    public Fonts getFontsFromChildrenViews(){
+        return Fonts.getInstance(getApplicationContext());
     }
 
     private void createOurCustomViewToActionBar(){
@@ -107,21 +116,35 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     private void createDrawerLayout(){
         List<String> menu = new ArrayList<String>(){
             {
-                add("Menu");
-                add("Menu");
+                add("Menu 1");
+                add("Menu 2");
+                add("Menu 3");
+                add("Menu 4");
+                add("Menu 5");
+                add("Menu 6");
+                add("Menu 7");
+                add("Menu 8");
+                add("Menu 9");
+                add("Menu 10");
+                add("Menu 11");
+                add("Menu 12");
+                add("Menu 13");
+                add("Menu 14");
+                add("Menu 15");
             }
         };
 
-        //String[]{"Home","Android","Windows","Linux","Raspberry Pi","WordPress","Videos","Contact Us"};
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         leftList = (ListView) findViewById(R.id.left_drawer);
         rightList = (ListView) findViewById(R.id.right_drawer);
 
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.menu_list_item, menu);
         MenuListAdapter adapter = new MenuListAdapter(this, menu, mainFragmentManager);
+        adapter.setPresenter(presenter);
+        adapter.setParentDrawerLayout(drawerLayout);
         leftList.setAdapter(adapter);
         rightList.setAdapter(adapter);
+
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_launcher, 0, 0){
             public void onDrawerSlide(View drawerView, float slideOffset){
@@ -232,10 +255,6 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         setTabsCount(fragments.size());
     }
 
-    private List<ContentItemList> getContentsForTablet(){
-        return null;
-    }
-
     private void startAsyncTask(){
         cancelAsyncTask();
         jsonAsyncTask = new ReadJSONFeedTask();
@@ -315,7 +334,14 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         startAsyncTask();
     }
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_MENU){
+            showLeftDrawLayout();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     public void showContentActivityFromViewHolder(String argSectionTitle, int argArticleId){
@@ -332,6 +358,30 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     }
 
     @Override
+    public void showRightSubMenu() {
+
+    }
+
+    @Override
+    public void showLeftSubMenu() {
+        MenuListAdapter adapter = (MenuListAdapter)leftList.getAdapter();
+        adapter.clear();
+        adapter.notifyDataSetChanged();
+
+        List<String> subMenu = new ArrayList<String>(){
+            {
+                add("Sub Menu 1");
+                add("Sub Menu 2");
+            }
+        };
+
+        adapter = new MenuListAdapter(this, subMenu, mainFragmentManager);
+        adapter.setPresenter(presenter);
+        adapter.setParentDrawerLayout(drawerLayout);
+
+        leftList.setAdapter(adapter);
+    }
+
     public void showRightDrawLayout() {
         if(drawerLayout != null && rightList != null){
             if(drawerLayout.isDrawerOpen(leftList)){
@@ -341,7 +391,6 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         }
     }
 
-    @Override
     public void showLeftDrawLayout() {
         if(drawerLayout != null && leftList != null){
             if(drawerLayout.isDrawerOpen(rightList)){
