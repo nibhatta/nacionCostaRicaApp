@@ -17,17 +17,17 @@
         android:padding="@dimen/content_padding">
 
         <TextView
-            android:id="@+id/moduleSectionTextView"
+            style="@style/TitleAdelleBoldFont"
+            android:id="@+id/moduleTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/item_module_title"
             android:gravity="left"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:textColor="#000000"/>
+            />
 
         <TextView
-            android:id="@+id/moduleTitleTextView"
+            style="@style/SummaryTimesNewRomanRegularFont"
+            android:id="@+id/moduleSummaryTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dummy_text_summary"

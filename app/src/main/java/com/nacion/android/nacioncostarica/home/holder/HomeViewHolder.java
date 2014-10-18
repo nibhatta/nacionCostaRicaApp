@@ -42,8 +42,8 @@ public class HomeViewHolder extends ViewHolderBase{
     public void setViewHolderComponentsReferencesForArticleView(View argView){
         image = (ImageView)argView.findViewById(R.id.articleImageView);
         section = (TextView)argView.findViewById(R.id.articleSectionTextView);
-        section.setTypeface(presenter.getFonts().ADELE_THIN_ITALIC);
         summary = (TextView)argView.findViewById(R.id.articleSummaryTextView);
+        setTypefaceForTextViews();
     }
 
     public void setViewHolderValuesForArticleView(ContentItemList argItem){
@@ -64,20 +64,17 @@ public class HomeViewHolder extends ViewHolderBase{
 
     public void setViewHolderComponentsReferencesForHighlightView(View argView){
         image = (ImageView)argView.findViewById(R.id.moduleImageView);
-
-        section = (TextView)argView.findViewById(R.id.moduleSectionTextView);
-        section.setTypeface(presenter.getFonts().ADELE_THIN_ITALIC);
-
+        summary = (TextView)argView.findViewById(R.id.moduleSummaryTextView);
         title = (TextView)argView.findViewById(R.id.moduleTitleTextView);
+        setTypefaceForTextViews();
     }
 
     public void setViewHolderValuesForHighlightView(ContentItemList argItem){
         ContentModule contentModule = argItem.getModule().getContentModule();
         String url = contentModule.getImage().getPhoneUrl();
         downloadImage(url, image);
-        section.setText(getSectionString(contentModule));
         title.setText(contentModule.getTitle());
-
+        summary.setText(contentModule.getSummary());
         final String section = contentModule.getSection();
         final int articleId = contentModule.getId();
         image.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +89,8 @@ public class HomeViewHolder extends ViewHolderBase{
         viewPager = (ViewPager)argView.findViewById(R.id.videoGalleryViewPager);
         viewPagerTitle = (TextView)argView.findViewById(R.id.videoTitleTextView);
         viewPagerSection = (TextView)argView.findViewById(R.id.sectionVideoTextView);
+
+        setTypefaceForTextViews();
 
         List<Content> contents = argItem.getModule().getContents();
         int size = contents.size();
@@ -129,6 +128,18 @@ public class HomeViewHolder extends ViewHolderBase{
             index++;
         }
         return fragments;
+    }
+
+    private void setTypefaceForTextViews(){
+        if(summary != null){
+            summary.setTypeface(presenter.getFonts().TIMES_NEW_ROMAN);
+        }
+        if(title != null){
+            title.setTypeface(presenter.getFonts().ADELE_BOLD);
+        }
+        if(viewPagerTitle != null){
+            viewPagerTitle.setTypeface(presenter.getFonts().ADELE_SEMI_BOLD);
+        }
     }
 
     private String getSectionString(ContentItemList argItem){

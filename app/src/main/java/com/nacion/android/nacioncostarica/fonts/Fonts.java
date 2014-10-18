@@ -10,6 +10,9 @@ public class Fonts {
     private static Fonts instance;
     private static Context context;
     public static Typeface ADELE_THIN_ITALIC;
+    public static Typeface ADELE_BOLD;
+    public static Typeface TIMES_NEW_ROMAN;
+    public static Typeface ADELE_SEMI_BOLD;
 
     public static Fonts getInstance(Context argContext){
         if(instance == null){
@@ -23,6 +26,9 @@ public class Fonts {
     private Fonts(){};
 
     private void setupFonts(){
-        ADELE_THIN_ITALIC = Typeface.createFromAsset(context.getAssets(), "fonts/Adelle_ThinItalic.ttf");
+        ADELE_THIN_ITALIC = Typeface.createFromAsset(context.getAssets(), "fonts/Adelle_ThinItalic.otf");
+        ADELE_BOLD = Typeface.createFromAsset(context.getAssets(), "fonts/Adelle_Bold.otf");
+        TIMES_NEW_ROMAN = Typeface.createFromAsset(context.getAssets(), "fonts/times.ttf");
+        ADELE_SEMI_BOLD = Typeface.createFromAsset(context.getAssets(), "fonts/Adelle_Semibold.otf");
     }
 }

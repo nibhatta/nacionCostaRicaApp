@@ -2,4 +2,5 @@
 <resources>
     <color name="video_color_component">#071750</color>
     <color name="health_color_component">#071750</color>
+    <color name="video_gallery_background">#5f71b3</color>
 </resources>

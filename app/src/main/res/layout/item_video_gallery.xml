@@ -19,12 +19,12 @@
                 android:background="@android:color/black"/>
 
             <TextView
+                style="@style/SectionOpenSansBoldWhiteFont"
                 android:id="@+id/sectionVideoTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/item_video_time"
                 android:textColor="@android:color/white"
-                android:textStyle="bold"
+                android:text="@string/item_video_time"
                 android:layout_alignParentTop="true"
                 android:padding="5dp"/>
 
@@ -34,27 +34,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@color/video_gallery_background"
             android:layout_below="@+id/videoLayout"
             android:gravity="center">
 
             <TextView
+                style="@style/TitleAdelleSemiBoldWhiteFont"
                 android:id="@+id/videoTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/item_video_title"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
                 android:gravity="center"
-                android:padding="20dp"/>
+                android:padding="10dp"/>
 
             <TextView
                 android:id="@+id/videoImageTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TODO Add buttons."
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
                 android:gravity="center"/>
 
         </LinearLayout>

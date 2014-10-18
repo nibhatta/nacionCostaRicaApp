@@ -34,7 +34,6 @@ public class GalleryOnPageChangeListener implements ViewPager.OnPageChangeListen
     private void changeViewPagerComponents(int argPosition){
         for(NacionFragment fragment : fragments){
             if(fragment.getFragmentIndex() == argPosition){
-                //fragment.reloadImage();
                 titleViewPager.setText(fragment.getTitle());
                 sectionViewPager.setText(fragment.getSection());
                 break;
