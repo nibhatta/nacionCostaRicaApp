@@ -39,11 +39,14 @@ import com.nacion.android.nacioncostarica.home.adapters.HomeListAdapter;
 import com.nacion.android.nacioncostarica.home.adapters.HomeListForTabletAdapter;
 import com.nacion.android.nacioncostarica.home.adapters.HomeListPresenterImpl;
 import com.nacion.android.nacioncostarica.home.adapters.MenuListAdapter;
+import com.nacion.android.nacioncostarica.home.adapters.SubMenuListAdapter;
 import com.nacion.android.nacioncostarica.main.MainPresenter;
 import com.nacion.android.nacioncostarica.main.MainPresenterImpl;
 import com.nacion.android.nacioncostarica.main.MainView;
 import com.nacion.android.nacioncostarica.models.Board;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
+import com.nacion.android.nacioncostarica.models.LeftMenu;
+import com.nacion.android.nacioncostarica.models.Menu;
 import com.nacion.android.nacioncostarica.models.Site;
 import com.nacion.android.nacioncostarica.useCases.JSONFeed;
 import com.nacion.android.nacioncostarica.useCases.JSONFeedImpl;
@@ -57,7 +60,6 @@ import java.util.List;
 public class NacionCostaRicaActivity extends FragmentActivity implements MainView{
     private static int tabsCount;
     private ViewPager mainViewPager;
-
     private MainPresenter presenter;
     private List<NacionFragment> fragments;
     private CoverPagerAdapter coverPagerAdapter;
@@ -71,6 +73,8 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     private ListView rightList;
     private float lastTranslate = 0.0f;
     private ReadJSONFeedTask jsonAsyncTask;
+    private Site site;
+    private LeftMenu leftMenu;
     private JSONReader jsonReader = new JSONReaderImpl();
     private JSONFeed jsonFeed = new JSONFeedImpl();
 
@@ -80,7 +84,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         setContentView(R.layout.activity_nacion_costa_rica);
         presenter = new MainPresenterImpl(this);
         createOurCustomViewToActionBar();
-        createDrawerLayout();
+
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         mainFragmentManager = getSupportFragmentManager();
     }
@@ -114,32 +118,16 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     }
 
     private void createDrawerLayout(){
-        List<String> menu = new ArrayList<String>(){
-            {
-                add("Menu 1");
-                add("Menu 2");
-                add("Menu 3");
-                add("Menu 4");
-                add("Menu 5");
-                add("Menu 6");
-                add("Menu 7");
-                add("Menu 8");
-                add("Menu 9");
-                add("Menu 10");
-                add("Menu 11");
-                add("Menu 12");
-                add("Menu 13");
-                add("Menu 14");
-                add("Menu 15");
-            }
-        };
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         leftList = (ListView) findViewById(R.id.left_drawer);
         rightList = (ListView) findViewById(R.id.right_drawer);
 
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.menu_list_item, menu);
-        MenuListAdapter adapter = new MenuListAdapter(this, menu, mainFragmentManager);
+        leftMenu = new LeftMenu();
+        leftMenu.setMenus(site.getBoardNames());
+
+        List<Menu> menus = leftMenu.getMainMenu();
+
+        MenuListAdapter adapter = new MenuListAdapter(this, menus, mainFragmentManager);
         adapter.setPresenter(presenter);
         adapter.setParentDrawerLayout(drawerLayout);
         leftList.setAdapter(adapter);
@@ -308,11 +296,12 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
 
         @Override
         protected void onPostExecute(String json) {
-            Site site = jsonReader.createObjectsFromJSONString(json);
+            site = jsonReader.createObjectsFromJSONString(json);
             Globals globals = (Globals)getApplication();
             globals.setSite(site);
             presenter.setSite(site);
             presenter.updateView();
+            createDrawerLayout();
         }
     }
 
@@ -363,23 +352,33 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     }
 
     @Override
-    public void showLeftSubMenu() {
+    public void goToLeftSubMenu() {
         MenuListAdapter adapter = (MenuListAdapter)leftList.getAdapter();
         adapter.clear();
         adapter.notifyDataSetChanged();
 
-        List<String> subMenu = new ArrayList<String>(){
-            {
-                add("Sub Menu 1");
-                add("Sub Menu 2");
-            }
-        };
+        List<Menu> subMenu = leftMenu.getSubMenu();
 
-        adapter = new MenuListAdapter(this, subMenu, mainFragmentManager);
-        adapter.setPresenter(presenter);
-        adapter.setParentDrawerLayout(drawerLayout);
+        SubMenuListAdapter subMenuAdapter = new SubMenuListAdapter(this, subMenu, mainFragmentManager);
+        subMenuAdapter.setPresenter(presenter);
+        subMenuAdapter.setParentDrawerLayout(drawerLayout);
 
-        leftList.setAdapter(adapter);
+        leftList.setAdapter(subMenuAdapter);
+    }
+
+    @Override
+    public void backLeftMenu() {
+        SubMenuListAdapter adapter = (SubMenuListAdapter)leftList.getAdapter();
+        adapter.clear();
+        adapter.notifyDataSetChanged();
+
+        List<Menu> menu = leftMenu.getMainMenu();
+
+        MenuListAdapter menuAdapter = new MenuListAdapter(this, menu, mainFragmentManager);
+        menuAdapter.setPresenter(presenter);
+        menuAdapter.setParentDrawerLayout(drawerLayout);
+
+        leftList.setAdapter(menuAdapter);
     }
 
     public void showRightDrawLayout() {

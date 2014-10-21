@@ -94,7 +94,9 @@ public class Site{
         String[] items = argBoardNames.split(",");
         for(String item : items){
             String[] values = item.split(":");
-            boardNames.put(values[key], values[value]);
+            String keyStr = values[key].replaceAll("\"", "").replaceAll("\\{", "").replaceAll("\\}", "");
+            String valueStr = values[value].replaceAll("\"", "").replaceAll("\\{", "").replaceAll("\\}", "");
+            boardNames.put(keyStr, valueStr);
         }
         return boardNames;
     }

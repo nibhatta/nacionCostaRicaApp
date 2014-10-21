@@ -29,7 +29,12 @@ public class MainPresenterImpl implements MainPresenter{
     }
 
     @Override
-    public void showLeftSubMenuFromMenuOnTouchListener() {
-        mainView.showLeftSubMenu();
+    public void goToLeftSubMenuFromMenuOnTouchListener() {
+        mainView.goToLeftSubMenu();
+    }
+
+    @Override
+    public void backLeftMenuFromMenuOnClickListener() {
+        mainView.backLeftMenu();
     }
 }

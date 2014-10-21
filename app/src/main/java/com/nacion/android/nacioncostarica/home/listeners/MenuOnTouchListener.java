@@ -55,7 +55,6 @@ public class MenuOnTouchListener implements View.OnTouchListener{
             case MotionEvent.ACTION_DOWN:
                 disableParentsView();
                 downX = motionEvent.getX();
-                presenter.showLeftSubMenuFromMenuOnTouchListener();
                 break;
 
             case MotionEvent.ACTION_CANCEL:

@@ -12,6 +12,7 @@ import com.nacion.android.nacioncostarica.home.adapters.HomeListPresenter;
 import com.nacion.android.nacioncostarica.home.adapters.MenuListAdapter;
 import com.nacion.android.nacioncostarica.main.MainPresenter;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
+import com.nacion.android.nacioncostarica.models.Menu;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class MenuViewHolder extends ViewHolderBase{
     private final static int START_POSITION = 0;
 
+    private ImageView goToImageView;
     private ImageView deleteImageView;
     private ImageView notificationImageView;
     private TextView title;
@@ -30,19 +32,42 @@ public class MenuViewHolder extends ViewHolderBase{
         presenter = argPresenter;
     }
 
-    public void setComponentsReferences(View argView){
+    public void setComponentsReferencesForHeaderView(View argView){
+        title = (TextView)argView.findViewById(R.id.headerTitleTextView);
+    }
+
+    public void setValuesForHeaderView(Menu argItem){
+        title.setText(argItem.getName());
+    }
+
+    public void setComponentsReferencesForSubMenuView(View argView){
+        title = (TextView)argView.findViewById(R.id.subMenuTextView);
+        goToImageView = (ImageView)argView.findViewById(R.id.goToImageView);
+    }
+
+    public void setValuesForSubMenuView(Menu argItem){
+        title.setText(argItem.getName());
+        goToImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+    }
+
+    public void setComponentsReferencesForMenuView(View argView){
         deleteImageView = (ImageView)argView.findViewById(R.id.deleteImageView);
         notificationImageView = (ImageView)argView.findViewById(R.id.notificationImageView);
         title = (TextView)argView.findViewById(R.id.menuIdTextView);
     }
 
-    public void setValuesForArticleView(final int argPosition, final MenuListAdapter argListAdapter, String argItemList){
-        title.setText(argItemList);
+    public void setValuesForMenuView(final int argPosition, final MenuListAdapter argListAdapter, Menu argItem){
+        title.setText(argItem.getName());
         deleteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 resetOriginalView();
-                argListAdapter.getContentsList().remove(argPosition);
+                //argListAdapter.getContentsList().remove(argPosition);
                 argListAdapter.notifyDataSetChanged();
             }
         });

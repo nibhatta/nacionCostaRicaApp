@@ -9,5 +9,6 @@ public interface MainPresenter {
     Site getSite();
     void setSite(Site argSite);
     void updateView();
-    void showLeftSubMenuFromMenuOnTouchListener();
+    void goToLeftSubMenuFromMenuOnTouchListener();
+    void backLeftMenuFromMenuOnClickListener();
 }

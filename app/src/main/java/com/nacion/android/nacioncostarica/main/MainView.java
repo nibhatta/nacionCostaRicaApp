@@ -9,7 +9,9 @@ import com.nacion.android.nacioncostarica.fonts.Fonts;
  */
 public interface MainView {
     void showRightSubMenu();
-    void showLeftSubMenu();
+    void goToLeftSubMenu();
+    void backLeftMenu();
+
     void updateViewFromModel();
     void showContentActivityFromViewHolder(String argSection, int argArticleId);
     void showVideoActivityFromViewHolder();
