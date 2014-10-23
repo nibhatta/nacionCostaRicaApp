@@ -6,6 +6,7 @@ import android.test.ApplicationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.nacion.android.nacioncostarica.NacionCostaRicaActivity;
+import com.nacion.android.nacioncostarica.constants.NacionConstants;
 
 import junit.framework.TestCase;
 
@@ -27,8 +28,7 @@ public class JSONFeedImplTestCase extends AndroidTestCase {
     }
 
     public void testCaseReadJSONFeedExpectedSuccess(){
-        String urlToTest = "http://192.168.205.34/perfilformulario/appNativoNacion.json";
-        String json = jsonFeed.readJSONFeed(urlToTest);
+        String json = jsonFeed.readJSONFeed(NacionConstants.JSON_URL);
         assertTrue(json != null && !json.isEmpty());
     }
 }

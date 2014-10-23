@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_article_height"
+    android:paddingLeft="@dimen/padding_separate"
+    android:paddingRight="@dimen/padding_separate">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/padding_separate"
+        android:paddingTop="@dimen/padding_separate">
+
+        <ImageView
+            android:id="@+id/relatedImageView"
+            android:layout_width="@dimen/article_image_width_on_phone"
+            android:layout_height="@dimen/article_image_height_on_phone"
+            android:scaleType="centerCrop"
+            android:layout_weight="0.40"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.60"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                style="@style/SectionOpenSansFont"
+                android:id="@+id/relatedSectionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy_text_date"
+                android:textSize="@dimen/title_article_size"/>
+
+            <TextView
+                style="@style/SummaryTimesNewRomanRegularFont"
+                android:id="@+id/relatedSummaryTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_article_summary"
+                android:layout_marginTop="@dimen/margin_separate"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

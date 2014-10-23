@@ -8,6 +8,10 @@ import java.util.Map;
  */
 public class NacionConstants {
     public final static int HOME_FRAGMENT_INDEX = 0;
+
+    public final static String IMG = "IMG";
+    public final static String PGL = "PGL";
+
     //public final static String JSON_URL = "http://192.168.205.34/perfilformulario/appNativoNacion.json";
     public final static String IFRAME_FOR_TESTING ="<html><body><iframe width=\"250\" height=\"250\" src=\"http://www.youtube.com/embed/hv2NEW0uC1o\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
     public final static String EMPTY_STRING = "";
@@ -58,18 +62,22 @@ public class NacionConstants {
     };
 
     public final static String ARTICLE_HIGHLIGHT = "article";
-    public final static String ARTICLE_PARAGRAPH = "parrafo";
-    public final static String ARTICLE_WEIGHT = "peso";
+    public final static String ARTICLE_PARAGRAPH = "paragraph";
+    public final static String ARTICLE_WEIGHT = "IMG";
+    public final static String ARTICLE_RELATED = "related";
 
     public final static int ARTICLE_HIGHLIGHT_CODE = 0;
     public final static int ARTICLE_PARAGRAPH_CODE = 1;
     public final static int ARTICLE_WEIGHT_CODE = 2;
+    public final static int ARTICLE_RELATED_CODE = 3;
+
 
     public final static Map<String, Integer> ARTICLE_PARTS = new HashMap<String, Integer>(){
         {
             put(ARTICLE_HIGHLIGHT, ARTICLE_HIGHLIGHT_CODE);
             put(ARTICLE_PARAGRAPH, ARTICLE_PARAGRAPH_CODE);
             put(ARTICLE_WEIGHT, ARTICLE_WEIGHT_CODE);
+            put(ARTICLE_RELATED, ARTICLE_RELATED_CODE);
         }
     };
 }

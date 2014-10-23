@@ -1,4 +1,4 @@
-package com.nacion.android.nacioncostarica.content.listAdapter;
+package com.nacion.android.nacioncostarica.content.adapters;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
@@ -8,24 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.nacion.android.nacioncostarica.NacionFragment;
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.content.IContentPresenter;
 import com.nacion.android.nacioncostarica.content.holder.ArticleContentViewHolder;
-import com.nacion.android.nacioncostarica.home.fragments.ImageFragment;
-import com.nacion.android.nacioncostarica.home.fragments.VideoFragment;
 import com.nacion.android.nacioncostarica.models.ArticleContentItemList;
-import com.nacion.android.nacioncostarica.models.Content;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Gustavo Matarrita on 22/09/2014.
  */
 public class ContentListAdapter extends ArrayAdapter<ArticleContentItemList> implements ContentListView {
-    private static final int VIEWS_TYPE_COUNT = 3;
+    private static final int VIEWS_TYPE_COUNT = 4;
     private IContentPresenter presenter;
     private LayoutInflater inflater;
     private Context context;
@@ -56,8 +51,13 @@ public class ContentListAdapter extends ArrayAdapter<ArticleContentItemList> imp
             holder = new ArticleContentViewHolder(presenter);
             switch(codeType){
                 case NacionConstants.ARTICLE_HIGHLIGHT_CODE:
-                    convertView = inflater.inflate(R.layout.item_highlight_content, null);
-                    holder.setComponentsReferencesForHighlightView(convertView);
+                    if(itemList.getContentType().equals(NacionConstants.PGL)) {
+                        convertView = inflater.inflate(R.layout.item_highlight_image_gallery_content, null);
+                        holder.setComponentsReferencesForHighlightImageGalleryView(convertView);
+                    }else{
+                        convertView = inflater.inflate(R.layout.item_highlight_content, null);
+                        holder.setComponentsReferencesForHighlightView(convertView);
+                    }
                     break;
                 case NacionConstants.ARTICLE_PARAGRAPH_CODE:
                     convertView = inflater.inflate(R.layout.item_paragraph_content, null);
@@ -66,6 +66,10 @@ public class ContentListAdapter extends ArrayAdapter<ArticleContentItemList> imp
                 case NacionConstants.ARTICLE_WEIGHT_CODE:
                     convertView = inflater.inflate(R.layout.item_weight_content, null);
                     holder.setComponentsReferencesForWeightView(convertView);
+                    break;
+                case NacionConstants.ARTICLE_RELATED_CODE:
+                    convertView = inflater.inflate(R.layout.item_related_content, null);
+                    holder.setComponentsReferencesForRelatedView(convertView);
                     break;
             }
             convertView.setTag(holder);
@@ -88,6 +92,9 @@ public class ContentListAdapter extends ArrayAdapter<ArticleContentItemList> imp
                 break;
             case NacionConstants.ARTICLE_WEIGHT_CODE:
                 argHolder.setValuesForWeightView(argItem);
+                break;
+            case NacionConstants.ARTICLE_RELATED_CODE:
+                argHolder.setValuesForRelatedView(argItem);
                 break;
         }
     }

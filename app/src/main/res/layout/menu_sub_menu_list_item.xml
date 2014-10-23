@@ -21,15 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:scaleType="centerCrop"
-        android:src="@drawable/active_2x"/>
-
-    <ImageView
-        android:id="@+id/removeImageView"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
         android:src="@drawable/ic_launcher"
         android:visibility="invisible"/>
 

@@ -2,6 +2,7 @@ package com.nacion.android.nacioncostarica.models;
 
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,10 +12,14 @@ public abstract class ArticleContentItemList {
     protected String type;
 
     public String getTitle(){return null;}
+    public String getAuthor(){return null;}
     public String getSummary(){return null;}
     public Image getImage(){return null;}
-    public String getStrData(){return null;}
-    public Data getData(){return null;}
+    public Cover getCover(){return null;}
+    public String getDataStr(){return null;}
+    public Data getDataObj(){return null;}
+    public Date getTimestamp(){return null;}
+    public String getContentType(){return null;}
 
     public String getType() {
         return type;

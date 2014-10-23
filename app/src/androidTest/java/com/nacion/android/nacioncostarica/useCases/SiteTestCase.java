@@ -33,7 +33,7 @@ public class SiteTestCase extends AndroidTestCase {
         String json = getJSONString();
         assertTrue(json != null && !json.isEmpty());
         Site site = jsonReader.createObjectsFromJSONString(json);
-        int articleId = 892351;
+        int articleId = 115388674;
         Article article = site.getArticleById(articleId);
         assertNotNull(article);
         assertFalse(article.isAEmptyObject());

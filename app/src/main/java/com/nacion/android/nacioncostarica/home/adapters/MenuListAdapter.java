@@ -126,4 +126,12 @@ public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView 
         Menu item = getItem(position);
         return item.getTypeCode();
     }
+
+    public List<Menu> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<Menu> menuList) {
+        this.menuList = menuList;
+    }
 }

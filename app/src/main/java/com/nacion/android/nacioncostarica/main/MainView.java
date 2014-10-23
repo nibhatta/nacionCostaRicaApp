@@ -11,9 +11,12 @@ public interface MainView {
     void showRightSubMenu();
     void goToLeftSubMenu();
     void backLeftMenu();
+    void addItemToMainMenu(int position);
+    void removeItemFromMainMenu(int position);
+    void removeItemFromMainMenu(String name);
 
     void updateViewFromModel();
-    void showContentActivityFromViewHolder(String argSection, int argArticleId);
+    void showContentActivityFromViewHolder(String section, int articleId);
     void showVideoActivityFromViewHolder();
     Fonts getFontsFromChildrenViews();
 }

@@ -1,5 +1,7 @@
 package com.nacion.android.nacioncostarica.models;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,11 +41,47 @@ public class LeftMenu {
     public List<Menu> getSubMenu(){
         List<Menu> subMenu = new ArrayList<Menu>();
         subMenu.add(Menu.createMainMenuHeader());
+        subMenu.addAll(menus);
+        return subMenu;
+    }
+
+    public void addItemToMainMenu(int position){
+        Menu item = menus.get(position - 1);
+        if(item != null){
+            item.setMain(true);
+        }
+    }
+
+    public void removeItemFromMainMenu(int position){
+        Menu item = menus.get(position - 1);
+        if(item != null){
+            item.setMain(false);
+        }
+    }
+
+    public void removeItemFromMainMenu(String name){
+        Menu menuToRemove = searchMenuByName(name);
+        if(menuToRemove != null){
+            menuToRemove.setMain(false);
+        }
+    }
+
+    private Menu searchMenuByName(String name){
+        Menu toSearch = null;
         for(Menu menu : menus){
-            if(!menu.isMain()) {
-                subMenu.add(menu);
+            if(menu.getName().equals(name)){
+                toSearch = menu;
+                break;
             }
         }
-        return subMenu;
+        return toSearch;
+    }
+
+    public JSONArray getJSONArrayObject(){
+        JSONArray arrayObj = new JSONArray();
+        for(Menu menu : menus){
+            arrayObj.put(menu.getJSONObject());
+        }
+        return arrayObj;
     }
 }

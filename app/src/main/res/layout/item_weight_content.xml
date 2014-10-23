@@ -7,7 +7,6 @@
         android:id="@+id/weightImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/graph"/>
+        android:scaleType="fitXY"/>
 
 </RelativeLayout>

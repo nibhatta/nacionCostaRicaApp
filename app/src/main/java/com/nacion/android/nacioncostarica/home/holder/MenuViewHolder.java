@@ -61,14 +61,15 @@ public class MenuViewHolder extends ViewHolderBase{
         title = (TextView)argView.findViewById(R.id.menuIdTextView);
     }
 
-    public void setValuesForMenuView(final int argPosition, final MenuListAdapter argListAdapter, Menu argItem){
-        title.setText(argItem.getName());
+    public void setValuesForMenuView(final int position, final MenuListAdapter listAdapter, final Menu menu){
+        title.setText(menu.getName());
         deleteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 resetOriginalView();
-                //argListAdapter.getContentsList().remove(argPosition);
-                argListAdapter.notifyDataSetChanged();
+                listAdapter.getMenuList().remove(position);
+                listAdapter.notifyDataSetChanged();
+                presenter.removeItemFromMainMenuSubMenuView(menu.getName());
             }
         });
     }

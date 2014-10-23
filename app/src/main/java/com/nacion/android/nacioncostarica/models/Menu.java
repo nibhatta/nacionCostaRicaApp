@@ -77,14 +77,6 @@ public class Menu {
         return obj;
     }
 
-    public JSONArray getJSONArrayObject(List<Menu> argMenus){
-        JSONArray arrayObj = new JSONArray();
-        for(Menu menu : argMenus){
-            arrayObj.put(menu.getJSONObject());
-        }
-        return arrayObj;
-    }
-
     public static Menu createMainMenuHeader(){
         return new Menu(HEADER, "Secciones", true, false);
     }

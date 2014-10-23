@@ -1,7 +1,6 @@
 package com.nacion.android.nacioncostarica.content;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +16,8 @@ import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.Globals;
 import com.nacion.android.nacioncostarica.R;
-import com.nacion.android.nacioncostarica.content.listAdapter.ContentListAdapter;
+import com.nacion.android.nacioncostarica.content.adapters.ContentListAdapter;
+import com.nacion.android.nacioncostarica.fonts.Fonts;
 import com.nacion.android.nacioncostarica.models.ArticleContentItemList;
 
 import java.util.List;
@@ -102,5 +102,10 @@ public class ContentActivity extends FragmentActivity implements ContentView{
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Fonts getFontsFromChildrenViews(){
+        return Fonts.getInstance(getApplicationContext());
     }
 }

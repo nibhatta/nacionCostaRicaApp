@@ -11,4 +11,7 @@ public interface MainPresenter {
     void updateView();
     void goToLeftSubMenuFromMenuOnTouchListener();
     void backLeftMenuFromMenuOnClickListener();
+    void addItemToMainMenuFromSubMenuView(int position);
+    void removeItemFromMainMenuSubMenuView(int position);
+    void removeItemFromMainMenuSubMenuView(String name);
 }

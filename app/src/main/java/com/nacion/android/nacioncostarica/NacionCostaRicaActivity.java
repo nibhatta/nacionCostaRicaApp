@@ -359,9 +359,8 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
 
         List<Menu> subMenu = leftMenu.getSubMenu();
 
-        SubMenuListAdapter subMenuAdapter = new SubMenuListAdapter(this, subMenu, mainFragmentManager);
+        SubMenuListAdapter subMenuAdapter = new SubMenuListAdapter(this, subMenu);
         subMenuAdapter.setPresenter(presenter);
-        subMenuAdapter.setParentDrawerLayout(drawerLayout);
 
         leftList.setAdapter(subMenuAdapter);
     }
@@ -379,6 +378,21 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         menuAdapter.setParentDrawerLayout(drawerLayout);
 
         leftList.setAdapter(menuAdapter);
+    }
+
+    @Override
+    public void addItemToMainMenu(int position){
+        leftMenu.addItemToMainMenu(position);
+    }
+
+    @Override
+    public void removeItemFromMainMenu(int position){
+        leftMenu.removeItemFromMainMenu(position);
+    }
+
+    @Override
+    public void removeItemFromMainMenu(String name){
+        leftMenu.removeItemFromMainMenu(name);
     }
 
     public void showRightDrawLayout() {

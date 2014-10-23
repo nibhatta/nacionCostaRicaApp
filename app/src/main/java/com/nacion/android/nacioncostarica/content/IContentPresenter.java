@@ -1,5 +1,6 @@
 package com.nacion.android.nacioncostarica.content;
 
+import com.nacion.android.nacioncostarica.fonts.Fonts;
 import com.nacion.android.nacioncostarica.models.ArticleContentItemList;
 import com.nacion.android.nacioncostarica.models.Site;
 
@@ -13,4 +14,5 @@ public interface IContentPresenter {
     void setSite(Site argSite);
     List<ArticleContentItemList> getArticleContentFromView(int argArticleId);
     boolean articleNotExistsFromView(int argArticleId);
+    Fonts getFonts();
 }

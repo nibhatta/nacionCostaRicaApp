@@ -26,26 +26,10 @@ public class SubMenuListAdapter extends ArrayAdapter<Menu> implements HomeListVi
     private static final int VIEWS_TYPE_COUNT = 2;
     private MainPresenter presenter;
     private LayoutInflater inflater;
-    private Context context;
-    private FragmentManager fragmentManager;
-    private DrawerLayout parentDrawerLayout;
-    private ViewGroup parentReferences;
-    private List<Menu> menuList;
 
-    public SubMenuListAdapter(Context context, List<Menu> argContents, FragmentManager argFragmentManager) {
+    public SubMenuListAdapter(Context context, List<Menu> argContents) {
         super(context, R.layout.menu_list_item, argContents);
-        this.context = context;
-        menuList = argContents;
         inflater = LayoutInflater.from(context);
-        fragmentManager = argFragmentManager;
-    }
-
-    public DrawerLayout getParentDrawerLayout() {
-        return parentDrawerLayout;
-    }
-
-    public void setParentDrawerLayout(DrawerLayout parentDrawerLayout) {
-        this.parentDrawerLayout = parentDrawerLayout;
     }
 
     public MainPresenter getPresenter() {
@@ -58,7 +42,6 @@ public class SubMenuListAdapter extends ArrayAdapter<Menu> implements HomeListVi
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        this.parentReferences = parent;
         Menu itemList = getItem(position);
         int codeType = getItemViewType(position);
         SubMenuViewHolder holder;
@@ -73,7 +56,7 @@ public class SubMenuListAdapter extends ArrayAdapter<Menu> implements HomeListVi
 
                 case Menu.MENU:
                     convertView = inflater.inflate(R.layout.menu_sub_menu_list_item, null);
-                    holder.setComponentsReferencesForMenuView(convertView);
+                    holder.setComponentsReferencesForMenuView(convertView, position);
                     break;
             }
             convertView.setTag(holder);
@@ -82,18 +65,18 @@ public class SubMenuListAdapter extends ArrayAdapter<Menu> implements HomeListVi
             holder = (SubMenuViewHolder)convertView.getTag();
         }
 
-        setHolderViewValuesByCodeType(holder, itemList, codeType, position);
+        setHolderViewValuesByCodeType(holder, itemList, codeType);
 
         return convertView;
     }
 
-    private void setHolderViewValuesByCodeType(SubMenuViewHolder argHolder, Menu argItem, int argCodeType, int argPosition){
+    private void setHolderViewValuesByCodeType(SubMenuViewHolder argHolder, Menu argItem, int argCodeType){
         switch(argCodeType){
             case Menu.HEADER:
                 argHolder.setValuesForHeaderView(argItem);
                 break;
             case Menu.MENU:
-                argHolder.setValuesForMenuView(argItem, menuList, argPosition);
+                argHolder.setValuesForMenuView(argItem);
                 break;
         }
     }

@@ -37,4 +37,19 @@ public class MainPresenterImpl implements MainPresenter{
     public void backLeftMenuFromMenuOnClickListener() {
         mainView.backLeftMenu();
     }
+
+    @Override
+    public void addItemToMainMenuFromSubMenuView(int position){
+        mainView.addItemToMainMenu(position);
+    }
+
+    @Override
+    public void removeItemFromMainMenuSubMenuView(int position){
+        mainView.removeItemFromMainMenu(position);
+    }
+
+    @Override
+    public void removeItemFromMainMenuSubMenuView(String name){
+        mainView.removeItemFromMainMenu(name);
+    }
 }

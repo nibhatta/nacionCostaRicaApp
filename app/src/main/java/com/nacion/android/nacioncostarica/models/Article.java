@@ -17,18 +17,56 @@ import java.util.Map;
  */
 public class Article extends ArticleContentItemList {
     private int id;
-    private Image image;
+    private Cover cover;
     private String title;
     private String summary;
     private String author;
+    private String place;
+    private String section;
+    private String subSection;
     private Date timestamp;
-    private List<Weight> body;
-    private List<Weight> weights;
+    private List<Body> body;
+    private List<Related> related;
 
     public boolean isAEmptyObject(){
-        return(id == 0 || image == null ||
+        return(id == 0 || cover == null ||
                title == null || summary == null ||
-               author == null || timestamp == null || body == null);
+               author == null || timestamp == null ||
+               body == null || place == null ||
+               section == null || subSection == null ||
+               timestamp == null || body == null);
+    }
+
+    public List<Related> getRelated() {
+        return related;
+    }
+
+    public void setRelated(List<Related> related) {
+        this.related = related;
+    }
+
+    public Cover getCover() {
+        return cover;
+    }
+
+    public void setCover(Cover cover) {
+        this.cover = cover;
+    }
+
+    public String getSubSection() {
+        return subSection;
+    }
+
+    public void setSubSection(String subSection) {
+        this.subSection = subSection;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
     }
 
     public Date getTimestamp() {
@@ -39,20 +77,12 @@ public class Article extends ArticleContentItemList {
         this.timestamp = timestamp;
     }
 
-    public List<Weight> getBody() {
+    public List<Body> getBody() {
         return body;
     }
 
-    public void setBody(List<Weight> body) {
+    public void setBody(List<Body> body) {
         this.body = body;
-    }
-
-    public List<Weight> getWeights() {
-        return weights;
-    }
-
-    public void setWeights(List<Weight> weights) {
-        this.weights = weights;
     }
 
     public int getId() {
@@ -61,14 +91,6 @@ public class Article extends ArticleContentItemList {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
     }
 
     public String getTitle() {
@@ -95,7 +117,13 @@ public class Article extends ArticleContentItemList {
         this.author = author;
     }
 
+    public String getPlace() {
+        return place;
+    }
 
+    public void setPlace(String place) {
+        this.place = place;
+    }
 
     public Map<Integer, Article> buildArticlesMapFromJSONObject(JSONArray argJSONArticles){
         Map<Integer, Article> articles = new HashMap<Integer, Article>();
@@ -112,35 +140,40 @@ public class Article extends ArticleContentItemList {
         return articles;
     }
 
-    public Article buildArticleFromJSONObject(JSONObject argJSONArticle) throws JSONException{
+    public Article buildArticleFromJSONObject(JSONObject jsonArticle) throws JSONException{
         Article article = new Article();
-        Iterator<String> iterator = argJSONArticle.keys();
-        String key = (iterator.hasNext())? iterator.next() : null;
-        if(key != null){
-            article.id = Integer.parseInt(key);
-            JSONObject jsonArticle = argJSONArticle.getJSONObject(key);
-            article.setTitle(jsonArticle.getString("title"));
-            article.setSummary(jsonArticle.getString("summary"));
-            article.setAuthor(jsonArticle.getString("autor"));
 
-            int timestampInt = jsonArticle.getInt("datetime");
-            article.setTimestamp(new Date(timestampInt));
+        int id = Integer.parseInt(jsonArticle.getString("id"));
+        article.setId(id);
 
-            JSONObject jsonImage = jsonArticle.getJSONObject("image");
-            article.setImage(new Image().buildImageFromJSONObject(jsonImage));
+        article.setTitle(jsonArticle.getString("title"));
+        article.setSummary(jsonArticle.getString("summary"));
+        article.setAuthor(jsonArticle.getString("author"));
+        article.setPlace(jsonArticle.getString("place"));
+        article.setSection(jsonArticle.getString("section"));
+        article.setSubSection(jsonArticle.getString("subsection"));
 
-            String weightTag = "pesos";
-            if(jsonArticle.has(weightTag)) {
-                JSONArray jsonWeights = jsonArticle.getJSONArray(weightTag);
-                article.setWeights(new Weight().buildWeightListFromJSONObject(jsonWeights));
-            }
+        int timestampInt = jsonArticle.getInt("timestamp");
+        article.setTimestamp(new Date(timestampInt));
 
-            String bodyTag = "body";
-            if(jsonArticle.has(bodyTag)){
-                JSONArray jsonBody = jsonArticle.getJSONArray(bodyTag);
-                article.setBody(new Weight().buildWeightListFromJSONObject(jsonBody));
-            }
+        String bodyTag = "body";
+        if(jsonArticle.has(bodyTag)){
+            JSONArray jsonBody = jsonArticle.getJSONArray(bodyTag);
+            article.setBody(new Body().buildBodyListFromJSONObject(jsonBody));
         }
+
+        String coverTag = "cover";
+        if(jsonArticle.has(coverTag)) {
+            JSONObject jsonCover = jsonArticle.getJSONObject(coverTag);
+            article.setCover(new Cover().buildCoverFromJSONObject(jsonCover));
+        }
+
+        String tagRelated = "related";
+        if(jsonArticle.has(tagRelated)){
+            JSONArray jsonRelated = jsonArticle.getJSONArray(tagRelated);
+            article.setRelated(new Related().buildRelatedListFromJSONObject(jsonRelated));
+        }
+
         return article;
     }
 }

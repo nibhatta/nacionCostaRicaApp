@@ -2,6 +2,8 @@ package com.nacion.android.nacioncostarica.models;
 
 import android.util.Log;
 
+import com.nacion.android.nacioncostarica.constants.NacionConstants;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -104,10 +106,14 @@ public class Site{
     public List<ArticleContentItemList> getArticleContentsForPhone(int argArticleId){
         List<ArticleContentItemList> articleContents = new ArrayList<ArticleContentItemList>();
         Article article = getArticleById(argArticleId);
-        article.setType("article");
+        article.setType(NacionConstants.ARTICLE_HIGHLIGHT);
         articleContents.add(article);
-        for(Weight weight : article.getBody()){
-            articleContents.add(weight);
+        for(Body body : article.getBody()){
+            articleContents.add(body);
+        }
+        for(Related related : article.getRelated()){
+            related.setType(NacionConstants.ARTICLE_RELATED);
+            articleContents.add(related);
         }
         return articleContents;
     }

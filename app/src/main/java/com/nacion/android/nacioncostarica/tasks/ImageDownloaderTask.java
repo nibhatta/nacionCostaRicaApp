@@ -28,9 +28,9 @@ public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
         try {
             bitmap = FTPLoader.downloadPhotoFromURL(argUrl[0]);
         }catch(FTPLoaderException e){
-            Log.d(ImageDownloaderTask.class.getName(), e.getLocalizedMessage());
+            Log.e(ImageDownloaderTask.class.getName(), e.getLocalizedMessage());
         }catch(IllegalArgumentException e){
-            Log.d(ImageDownloaderTask.class.getName(), e.getLocalizedMessage());
+            Log.e(ImageDownloaderTask.class.getName(), e.getLocalizedMessage());
         }
         return bitmap;
     }
