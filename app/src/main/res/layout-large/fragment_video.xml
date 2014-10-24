@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/video_height_component_large"
-    tools:context="com.nacion.android.nacioncostarica.home.fragments.VideoTabletFragment">
+    tools:context="com.nacion.android.nacioncostarica.views.home.fragments.VideoTabletFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

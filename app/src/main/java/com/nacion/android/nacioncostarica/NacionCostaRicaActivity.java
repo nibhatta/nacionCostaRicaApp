@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,30 +15,24 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
-import android.webkit.WebView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.nacion.android.nacioncostarica.content.ContentActivity;
+import com.nacion.android.nacioncostarica.views.content.ContentActivity;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
-import com.nacion.android.nacioncostarica.fonts.Fonts;
-import com.nacion.android.nacioncostarica.holders.Section;
-import com.nacion.android.nacioncostarica.home.HomeFragment;
-import com.nacion.android.nacioncostarica.home.adapters.HomeListAdapter;
-import com.nacion.android.nacioncostarica.home.adapters.HomeListForTabletAdapter;
-import com.nacion.android.nacioncostarica.home.adapters.HomeListPresenterImpl;
-import com.nacion.android.nacioncostarica.home.adapters.MenuListAdapter;
-import com.nacion.android.nacioncostarica.home.adapters.SubMenuListAdapter;
+import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
+import com.nacion.android.nacioncostarica.views.home.HomeFragment;
+import com.nacion.android.nacioncostarica.views.home.adapters.HomeListAdapter;
+import com.nacion.android.nacioncostarica.views.home.adapters.HomeListForTabletAdapter;
+import com.nacion.android.nacioncostarica.views.home.adapters.HomeListPresenterImpl;
+import com.nacion.android.nacioncostarica.views.home.adapters.MenuListAdapter;
+import com.nacion.android.nacioncostarica.views.home.adapters.SubMenuListAdapter;
 import com.nacion.android.nacioncostarica.main.MainPresenter;
 import com.nacion.android.nacioncostarica.main.MainPresenterImpl;
 import com.nacion.android.nacioncostarica.main.MainView;
@@ -52,7 +45,7 @@ import com.nacion.android.nacioncostarica.useCases.JSONFeed;
 import com.nacion.android.nacioncostarica.useCases.JSONFeedImpl;
 import com.nacion.android.nacioncostarica.useCases.JSONReader;
 import com.nacion.android.nacioncostarica.useCases.JSONReaderImpl;
-import com.nacion.android.nacioncostarica.video.VideoActivity;
+import com.nacion.android.nacioncostarica.views.video.VideoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,15 +147,6 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         drawerLayout.setDrawerListener(drawerToggle);
     }
 
-    private List<Section> getSections(){
-        List<Section> sections = new ArrayList<Section>();
-        for(int i=0; i<10; i++){
-            Section section = Section.createDummySectionCore(i < 5 ? true : false);
-            sections.add(section);
-        }
-        return sections;
-    }
-
     private static boolean isTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
@@ -179,12 +163,10 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         mainViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Log.i(NacionCostaRicaActivity.class.getName(), "*****>> onPageScrolled - position: " + position);
             }
 
             @Override
             public void onPageSelected(int position) {
-                Log.i(NacionCostaRicaActivity.class.getName(), "*****>> onPageSelected - position: " + position);
             }
 
             private Fragment searchFragmentToDisplay(int argPosition){
@@ -223,7 +205,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
             List<ContentItemList> items = board.getAllContentsForPhoneDevice();
             HomeListAdapter homeListAdapter = new HomeListAdapter(context, items, mainFragmentManager);
             homeListAdapter.setPresenter(new HomeListPresenterImpl(this));
-            fragments.add(new HomeFragment().getInstance(homeListAdapter, index));
+            fragments.add(new HomeFragment().getInstance(homeListAdapter, index, board.getId()));
             index++;
         }
         setTabsCount(fragments.size());
@@ -237,7 +219,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
             List<ContentItemList> items = board.getAllContentsForTabletDevice();
             HomeListForTabletAdapter homeListForTabletAdapter = new HomeListForTabletAdapter(context, items, mainFragmentManager);
             homeListForTabletAdapter.setPresenter(new HomeListPresenterImpl(this));
-            fragments.add(new HomeFragment().getInstance(homeListForTabletAdapter, index));
+            fragments.add(new HomeFragment().getInstance(homeListForTabletAdapter, index, board.getId()));
             index++;
         }
         setTabsCount(fragments.size());
@@ -352,16 +334,44 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     }
 
     @Override
+    public void goToSection(int boardId) {
+        if(mainViewPager != null){
+            int index = getFragmentIndexByCode(boardId);
+            mainViewPager.setCurrentItem(index);
+            closeLeftMenu();
+        }
+    }
+
+    private int getFragmentIndexByCode(int boardId){
+        int find = 0;
+        for(NacionFragment fragment : fragments){
+            if(fragment.getBoardId() == boardId){
+                find = fragment.getFragmentIndex();
+                break;
+            }
+        }
+        return find;
+    }
+
+    private void closeLeftMenu(){
+        if(drawerLayout != null && drawerLayout.isDrawerOpen(leftList)){
+            drawerLayout.closeDrawer(leftList);
+        }
+    }
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
+    }
+
+    @Override
     public void goToLeftSubMenu() {
         MenuListAdapter adapter = (MenuListAdapter)leftList.getAdapter();
         adapter.clear();
         adapter.notifyDataSetChanged();
-
         List<Menu> subMenu = leftMenu.getSubMenu();
-
         SubMenuListAdapter subMenuAdapter = new SubMenuListAdapter(this, subMenu);
         subMenuAdapter.setPresenter(presenter);
-
         leftList.setAdapter(subMenuAdapter);
     }
 
@@ -370,13 +380,10 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         SubMenuListAdapter adapter = (SubMenuListAdapter)leftList.getAdapter();
         adapter.clear();
         adapter.notifyDataSetChanged();
-
         List<Menu> menu = leftMenu.getMainMenu();
-
         MenuListAdapter menuAdapter = new MenuListAdapter(this, menu, mainFragmentManager);
         menuAdapter.setPresenter(presenter);
         menuAdapter.setParentDrawerLayout(drawerLayout);
-
         leftList.setAdapter(menuAdapter);
     }
 

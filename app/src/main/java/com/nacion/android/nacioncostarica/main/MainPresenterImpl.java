@@ -52,4 +52,9 @@ public class MainPresenterImpl implements MainPresenter{
     public void removeItemFromMainMenuSubMenuView(String name){
         mainView.removeItemFromMainMenu(name);
     }
+
+    @Override
+    public void goToSectionFromAdapter(int boardId) {
+        mainView.goToSection(boardId);
+    }
 }

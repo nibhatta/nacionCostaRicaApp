@@ -19,7 +19,6 @@ public abstract class ArticleContentItemList {
     public String getDataStr(){return null;}
     public Data getDataObj(){return null;}
     public Date getTimestamp(){return null;}
-    public String getContentType(){return null;}
 
     public String getType() {
         return type;

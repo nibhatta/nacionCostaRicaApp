@@ -14,7 +14,7 @@
         >
 
         <activity
-            android:name=".splash.SplashScreenActivity"
+            android:name=".views.splash.SplashScreenActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
@@ -31,13 +31,13 @@
         </activity>
 
         <activity
-            android:name=".content.ContentActivity"
+            android:name=".views.content.ContentActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation">
         </activity>
 
         <activity
-            android:name=".video.VideoActivity"
+            android:name=".views.video.VideoActivity"
             android:screenOrientation="landscape"
             android:configChanges="orientation">
         </activity>

@@ -2,7 +2,7 @@ package com.nacion.android.nacioncostarica;
 
 import android.app.Application;
 
-import com.nacion.android.nacioncostarica.fonts.Fonts;
+import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
 import com.nacion.android.nacioncostarica.models.Site;
 
 /**

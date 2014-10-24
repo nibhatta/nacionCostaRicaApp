@@ -15,21 +15,24 @@ import java.util.Map;
  * Created by Gustavo Matarrita on 17/10/2014.
  */
 public class Menu {
+    public static final int WITHOUT_BOARD = -1;
     public static final String HOME_CODE = "1600";
     public static final int HEADER = 0;
     public static final int MENU = 1;
     public static final int SUB_MENU = 2;
 
     private int typeCode;
+    private int boardId;
     private String name;
     private boolean main;
     private boolean notification;
 
-    public Menu(int argTypeCode, String argName, boolean argMain, boolean argNotification){
-        typeCode = argTypeCode;
-        name = argName;
-        main = argMain;
-        notification = argNotification;
+    public Menu(int typeCode, String name, boolean main, boolean notification, int boardId){
+        this.typeCode = typeCode;
+        this.name = name;
+        this.main = main;
+        this.notification = notification;
+        this.boardId = boardId;
     }
 
     public String getName() {
@@ -78,12 +81,18 @@ public class Menu {
     }
 
     public static Menu createMainMenuHeader(){
-        return new Menu(HEADER, "Secciones", true, false);
+        return new Menu(HEADER, "Secciones", true, false, WITHOUT_BOARD);
     }
 
     public static Menu createSectionSubMenu(){
-        return new Menu(SUB_MENU, "Más secciones", true, false);
+        return new Menu(SUB_MENU, "Más secciones", true, false, WITHOUT_BOARD);
     }
 
+    public int getBoardId() {
+        return boardId;
+    }
 
+    public void setBoardId(int boardId) {
+        this.boardId = boardId;
+    }
 }

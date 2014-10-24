@@ -14,4 +14,5 @@ public interface MainPresenter {
     void addItemToMainMenuFromSubMenuView(int position);
     void removeItemFromMainMenuSubMenuView(int position);
     void removeItemFromMainMenuSubMenuView(String name);
+    void goToSectionFromAdapter(int boardId);
 }

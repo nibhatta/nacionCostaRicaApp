@@ -17,7 +17,8 @@ public class LeftMenu {
         List<String> keys = new ArrayList<String>(argBoardNamesMap.keySet());
         for(String key : keys){
             String value = argBoardNamesMap.get(key);
-            Menu menu = key.equals(Menu.HOME_CODE) ? new Menu(Menu.MENU, value, true, true) : new Menu(Menu.MENU, value, false, false);
+            int keyInt = Integer.parseInt(key);
+            Menu menu = key.equals(Menu.HOME_CODE) ? new Menu(Menu.MENU, value, true, true, keyInt) : new Menu(Menu.MENU, value, false, false, keyInt);
             menus.add(menu);
         }
     }
