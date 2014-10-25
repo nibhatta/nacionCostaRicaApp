@@ -8,18 +8,17 @@ import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
 /**
  * Created by Gustavo Matarrita on 23/10/2014.
  */
-public class TitleTextView {
+public class TitleTextCreator {
     private TextView text;
     private Fonts fonts;
 
-    public TitleTextView(Context context, TextView textView){
+    public TitleTextCreator(Context context){
         fonts = Fonts.getInstance(context);
-        text = textView;
     }
 
-    public TextView withTimesNewRoman(){
-        text.setTypeface(fonts.TIMES_NEW_ROMAN);
-        return text;
+    public TitleTextCreator buildText(TextView text){
+        this.text = text;
+        return this;
     }
 
     public TextView withAdeleBold(){

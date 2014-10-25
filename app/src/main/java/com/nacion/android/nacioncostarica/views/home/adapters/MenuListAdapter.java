@@ -66,7 +66,7 @@ public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView 
             switch(codeType) {
                 case Menu.HEADER:
                     convertView = inflater.inflate(R.layout.header_menu_list_item, null);
-                    holder.setComponentsReferencesForHeaderView(convertView);
+                    holder.setReferencesForHeaderView(convertView);
                     break;
 
                 case Menu.MENU:
@@ -74,14 +74,14 @@ public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView 
                     MenuOnTouchListener listener = new MenuOnTouchListener(parentDrawerLayout, parent);
                     listener.setPresenter(presenter);
                     convertView.setOnTouchListener(listener);
-                    holder.setComponentsReferencesForMenuView(convertView);
+                    holder.setReferencesForMenuView(convertView);
                     break;
 
                 case Menu.SUB_MENU:
                     convertView = inflater.inflate(R.layout.submenu_list_item, null);
                     SubMenuOnClickListener subMenuListener = new SubMenuOnClickListener(presenter);
                     convertView.setOnClickListener(subMenuListener);
-                    holder.setComponentsReferencesForSubMenuView(convertView);
+                    holder.setReferencesForSubMenuView(convertView);
                     break;
             }
             convertView.setTag(holder);

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.main.MainPresenter;
@@ -31,7 +32,7 @@ public class MenuOnTouchListener implements View.OnTouchListener{
     private float endX;
     private TextView menuTextView;
     private ImageView deleteImageView;
-    private ImageView notificationImageView;
+    private ToggleButton notificationToggleButton;
     private DrawerLayout parentDrawerLayout;
     private ViewGroup parentReferences;
     private MainPresenter presenter;
@@ -46,7 +47,7 @@ public class MenuOnTouchListener implements View.OnTouchListener{
 
         menuTextView = (TextView) view.findViewById(R.id.menuIdTextView);
         deleteImageView = (ImageView)view.findViewById(R.id.deleteImageView);
-        notificationImageView = (ImageView)view.findViewById(R.id.notificationImageView);
+        notificationToggleButton = (ToggleButton)view.findViewById(R.id.notificationToggleButton);
         float deltaX = 0;
         float deltaXAbs = 0;
 
@@ -116,13 +117,13 @@ public class MenuOnTouchListener implements View.OnTouchListener{
 
     private void setViewWhenIsFromLeftToRight(){
         deleteImageView.setVisibility(View.INVISIBLE);
-        notificationImageView.setVisibility(View.VISIBLE);
+        notificationToggleButton.setVisibility(View.VISIBLE);
         endX = RIGHT_EDGE;
     }
 
     private void setViewWhenIsFromRightToLeft(){
         deleteImageView.setVisibility(View.VISIBLE);
-        notificationImageView.setVisibility(View.INVISIBLE);
+        notificationToggleButton.setVisibility(View.INVISIBLE);
         endX = LEFT_EDGE;
     }
 

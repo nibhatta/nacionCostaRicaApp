@@ -1,5 +1,7 @@
 package com.nacion.android.nacioncostarica.main;
 
+import android.content.Context;
+
 import com.nacion.android.nacioncostarica.models.Site;
 
 /**
@@ -56,5 +58,20 @@ public class MainPresenterImpl implements MainPresenter{
     @Override
     public void goToSectionFromAdapter(int boardId) {
         mainView.goToSection(boardId);
+    }
+
+    @Override
+    public void addMenuToNotificationsFromMenuView(String name) {
+        mainView.addMenuToNotification(name);
+    }
+
+    @Override
+    public void removeMenuFromNotificationsFromMenuView(String name) {
+        mainView.removeMenuFromNotification(name);
+    }
+
+    @Override
+    public Context getContext() {
+        return mainView.getContext();
     }
 }

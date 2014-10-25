@@ -20,4 +20,6 @@ public interface MainView {
     Fonts getFontsFromChildrenViews();
     void goToSection(int boardId);
     Context getContext();
+    void addMenuToNotification(String name);
+    void removeMenuFromNotification(String name);
 }

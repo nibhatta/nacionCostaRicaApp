@@ -35,6 +35,8 @@ public class Menu {
         this.boardId = boardId;
     }
 
+    public Menu(){}
+
     public String getName() {
         return name;
     }
@@ -71,6 +73,7 @@ public class Menu {
         JSONObject obj = new JSONObject();
         try{
             obj.put("typeCode", typeCode);
+            obj.put("boardId", boardId);
             obj.put("name", name);
             obj.put("main", main);
             obj.put("notification", notification);

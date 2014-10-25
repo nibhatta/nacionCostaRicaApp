@@ -51,15 +51,15 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
             switch(codeType){
                 case NacionConstants.MODULE_CODE_ONE:
                     convertView = inflater.inflate(R.layout.item_module, null);
-                    holder.setViewHolderComponentsReferencesForHighlightView(convertView);
+                    holder.setReferencesForHighlightView(convertView);
                     break;
                 case NacionConstants.MODULE_CODE_TWO:
                     convertView = inflater.inflate(R.layout.item_article, null);
-                    holder.setViewHolderComponentsReferencesForArticleView(convertView);
+                    holder.setReferencesForArticleView(convertView);
                     break;
                 case NacionConstants.MODULE_CODE_THREE:
                     convertView = inflater.inflate(R.layout.item_video_gallery, null);
-                    holder.setViewHolderComponentsReferencesForVideoGalleryView(convertView, itemList, fragmentManager);
+                    holder.setReferencesForVideoGalleryView(convertView);
                     break;
                 case NacionConstants.MODULE_CODE_FOURTH:
                     convertView = inflater.inflate(R.layout.item_weather, null);
@@ -94,16 +94,16 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
         return convertView;
     }
 
-    private void setHolderViewValuesByCodeType(HomeViewHolder argHolder, ContentItemList argItem, int argCodeType){
-        switch(argCodeType){
+    private void setHolderViewValuesByCodeType(HomeViewHolder holder, ContentItemList item, int codeType){
+        switch(codeType){
             case NacionConstants.MODULE_CODE_ONE:
-                argHolder.setViewHolderValuesForHighlightView(argItem);
+                holder.setValuesForHighlightView(item);
                 break;
             case NacionConstants.MODULE_CODE_TWO:
-                argHolder.setViewHolderValuesForArticleView(argItem);
+                holder.setValuesForArticleView(item);
                 break;
             case NacionConstants.MODULE_CODE_THREE:
-                argHolder.setViewHolderValuesForVideoGalleryView();
+                holder.setValuesForVideoGalleryView(item, fragmentManager);
                 break;
             case NacionConstants.MODULE_CODE_FOURTH:
 

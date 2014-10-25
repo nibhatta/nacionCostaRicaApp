@@ -1,5 +1,7 @@
 package com.nacion.android.nacioncostarica.main;
 
+import android.content.Context;
+
 import com.nacion.android.nacioncostarica.models.Site;
 
 /**
@@ -15,4 +17,7 @@ public interface MainPresenter {
     void removeItemFromMainMenuSubMenuView(int position);
     void removeItemFromMainMenuSubMenuView(String name);
     void goToSectionFromAdapter(int boardId);
+    void addMenuToNotificationsFromMenuView(String name);
+    void removeMenuFromNotificationsFromMenuView(String name);
+    Context getContext();
 }

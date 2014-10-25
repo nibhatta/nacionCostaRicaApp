@@ -3,6 +3,7 @@ package com.nacion.android.nacioncostarica;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -24,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.nacion.android.nacioncostarica.commons.SharedPreferencesManager;
 import com.nacion.android.nacioncostarica.views.content.ContentActivity;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
@@ -70,14 +72,15 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     private LeftMenu leftMenu;
     private JSONReader jsonReader = new JSONReaderImpl();
     private JSONFeed jsonFeed = new JSONFeedImpl();
+    private SharedPreferencesManager preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nacion_costa_rica);
+        preferences = SharedPreferencesManager.getPreferences(getApplicationContext());
         presenter = new MainPresenterImpl(this);
         createOurCustomViewToActionBar();
-
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         mainFragmentManager = getSupportFragmentManager();
     }
@@ -115,7 +118,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         leftList = (ListView) findViewById(R.id.left_drawer);
         rightList = (ListView) findViewById(R.id.right_drawer);
 
-        leftMenu = new LeftMenu();
+        leftMenu = new LeftMenu(presenter);
         leftMenu.setMenus(site.getBoardNames());
 
         List<Menu> menus = leftMenu.getMainMenu();
@@ -390,16 +393,36 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     @Override
     public void addItemToMainMenu(int position){
         leftMenu.addItemToMainMenu(position);
+        storeMenuChanges();
+    }
+
+    @Override
+    public void addMenuToNotification(String name) {
+        leftMenu.addItemToNotifications(name);
+        storeMenuChanges();
+    }
+
+    @Override
+    public void removeMenuFromNotification(String name) {
+        leftMenu.removeItemFromNotifications(name);
+        storeMenuChanges();
     }
 
     @Override
     public void removeItemFromMainMenu(int position){
         leftMenu.removeItemFromMainMenu(position);
+        storeMenuChanges();
+    }
+
+    private void storeMenuChanges(){
+        String jsonString = leftMenu.getJSONArrayObject().toString();
+        preferences.putMenu(jsonString);
     }
 
     @Override
     public void removeItemFromMainMenu(String name){
         leftMenu.removeItemFromMainMenu(name);
+        storeMenuChanges();
     }
 
     public void showRightDrawLayout() {

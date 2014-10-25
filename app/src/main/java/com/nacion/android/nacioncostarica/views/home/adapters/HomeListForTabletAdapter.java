@@ -52,15 +52,15 @@ public class HomeListForTabletAdapter extends ArrayAdapter<ContentItemList> impl
             switch(codeType){
                 case NacionConstants.MODULE_CODE_ONE:
                     convertView = inflater.inflate(R.layout.item_module, null);
-                    holder.setComponentsReferencesForHighlightView(convertView);
+                    holder.setReferencesForHighlightView(convertView);
                     break;
                 case NacionConstants.MODULE_CODE_TWO:
                     convertView = inflater.inflate(R.layout.item_article, null);
-                    holder.setComponentsReferencesForArticleView(convertView);
+                    holder.setReferencesForArticleView(convertView);
                     break;
                 case NacionConstants.MODULE_CODE_THREE:
                     convertView = inflater.inflate(R.layout.item_video_gallery, null);
-                    holder.setComponentsReferencesForVideoGalleryView(convertView, itemList, fragmentManager);
+                    holder.setReferencesForVideoGalleryView(convertView);
                     break;
                 case NacionConstants.MODULE_CODE_FOURTH:
                     convertView = inflater.inflate(R.layout.item_weather, null);
@@ -68,11 +68,11 @@ public class HomeListForTabletAdapter extends ArrayAdapter<ContentItemList> impl
 
                 case NacionConstants.MODULE_CODE_SIX:
                     convertView = inflater.inflate(R.layout.item_block_b, null);
-                    holder.setComponentsReferencesForBBlockView(convertView);
+                    holder.setReferencesForBBlockView(convertView);
                     break;
                 case NacionConstants.MODULE_CODE_SEVEN:
                     convertView = inflater.inflate(R.layout.item_special_data, null);
-                    holder.setComponentsReferencesForSpecialDataView(convertView);
+                    holder.setReferencesForSpecialDataView(convertView);
                     break;
 
                 case NacionConstants.MODULE_CODE_EIGHT:
@@ -85,12 +85,12 @@ public class HomeListForTabletAdapter extends ArrayAdapter<ContentItemList> impl
 
                 case NacionConstants.MODULE_CODE_TEN:
                     convertView = inflater.inflate(R.layout.item_articles_ad, null);
-                    holder.setComponentsReferencesForArticleAdView(convertView);
+                    holder.setReferencesForArticleAdView(convertView);
                     break;
 
                 case NacionConstants.MODULE_CODE_ELEVEN:
                     convertView = inflater.inflate(R.layout.item_approach, null);
-                    holder.setComponentsReferencesForApproachView(convertView);
+                    holder.setReferencesForApproachView(convertView);
                     break;
             }
             if(convertView != null) {
@@ -105,34 +105,34 @@ public class HomeListForTabletAdapter extends ArrayAdapter<ContentItemList> impl
         return convertView;
     }
 
-    private void setHolderViewValuesByCodeType(HomeTabletViewHolder argHolder, ContentItemList argItem, int argCodeType){
-        switch(argCodeType){
+    private void setHolderViewValuesByCodeType(HomeTabletViewHolder holder, ContentItemList item, int codeType){
+        switch(codeType){
             case NacionConstants.MODULE_CODE_ONE:
-                argHolder.setValuesForHighlightView(argItem, context);
+                holder.setValuesForHighlightView(item, context);
                 break;
             case NacionConstants.MODULE_CODE_TWO:
-                argHolder.setValuesForArticleView(context, argItem);
+                holder.setValuesForArticleView(context, item);
                 break;
             case NacionConstants.MODULE_CODE_THREE:
-                //argHolder.setViewHolderValuesForVideoGalleryView();
+                holder.setValuesForVideoGalleryView(item, fragmentManager);
                 break;
             case NacionConstants.MODULE_CODE_FOURTH:
                 break;
             case NacionConstants.MODULE_CODE_SIX:
-                argHolder.setValuesForBBlockView(context, argItem);
+                holder.setValuesForBBlockView(context, item);
                 break;
             case NacionConstants.MODULE_CODE_SEVEN:
-                argHolder.setValuesForSpecialDataView(context, argItem);
+                holder.setValuesForSpecialDataView(context, item);
                 break;
             case NacionConstants.MODULE_CODE_EIGHT:
                 break;
             case NacionConstants.MODULE_CODE_NINE:
                 break;
             case NacionConstants.MODULE_CODE_TEN:
-                argHolder.setValuesForArticleAdView(context, argItem);
+                holder.setValuesForArticleAdView(context, item);
                 break;
             case NacionConstants.MODULE_CODE_ELEVEN:
-                argHolder.setValuesForApproachView(argItem);
+                holder.setValuesForApproachView(item);
                 break;
         }
     }

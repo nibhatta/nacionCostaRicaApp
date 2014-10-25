@@ -7,6 +7,10 @@ import android.util.Log;
 
 import com.nacion.android.nacioncostarica.models.Menu;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +22,16 @@ public class SharedPreferencesManager{
     private static final String EMPTY_VALUE = "";
     private static final String MENU = "menu";
 
-    private static SharedPreferences preferences;
+    private static SharedPreferencesManager instance;
+    private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
-    public static SharedPreferences getPreferences(Context context){
-        if(preferences == null){
-            preferences = context.getSharedPreferences(APP_ID, Context.MODE_PRIVATE);
+    public static SharedPreferencesManager getPreferences(Context context){
+        if(instance == null){
+            instance = new SharedPreferencesManager();
+            instance.preferences = context.getSharedPreferences(APP_ID, Context.MODE_PRIVATE);
         }
-        return preferences;
+        return instance;
     }
 
     protected SharedPreferencesManager(){}
@@ -38,7 +44,30 @@ public class SharedPreferencesManager{
 
     public List<Menu> getMenu(){
         List<Menu> menus = new ArrayList<Menu>();
-        String json = preferences.getString(MENU, EMPTY_VALUE);
+        String jsonStr = preferences.getString(MENU, EMPTY_VALUE);
+        try {
+            JSONObject jsonObj = new JSONObject(jsonStr);
+            JSONArray jsonArray = jsonObj.optJSONArray("menus");
+            if(jsonArray != null){
+                int size = jsonArray.length();
+                for(int i=0; i<size; i++){
+                    JSONObject obj = jsonArray.getJSONObject(i);
+                    Menu menu = new Menu();
+                    menu.setTypeCode(obj.getInt("typeCode"));
+                    menu.setBoardId(obj.getInt("boardId"));
+                    menu.setName(obj.getString("name"));
+                    menu.setMain(obj.getBoolean("main"));
+                    menu.setNotification(obj.getBoolean("notification"));
+                    menus.add(menu);
+                }
+            }
+        }catch(JSONException e){
+            Log.e(SharedPreferencesManager.class.getName(), e.getLocalizedMessage());
+        }
         return menus;
+    }
+
+    public boolean isMenuInSharedPreferences(){
+        return preferences.contains(MENU);
     }
 }

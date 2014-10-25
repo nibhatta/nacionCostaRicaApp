@@ -15,22 +15,26 @@
         android:layout_marginLeft="20dp"
         android:layout_centerVertical="true"/>
 
-    <ImageView
-        android:id="@+id/notificationImageView"
-        android:layout_alignParentRight="true"
+    <ToggleButton
+        android:id="@+id/notificationToggleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent"
+        android:drawableBottom="@drawable/toggle_button_notification"
+        android:textOff=""
+        android:textOn=""
         android:scaleType="centerCrop"
-        android:src="@drawable/notification_icon_2x"/>
+        />
 
     <ImageView
         android:id="@+id/deleteImageView"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
         android:src="@drawable/ic_launcher"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:scaleType="centerCrop"/>
 
 </RelativeLayout>

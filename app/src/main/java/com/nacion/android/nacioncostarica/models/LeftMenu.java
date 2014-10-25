@@ -1,6 +1,13 @@
 package com.nacion.android.nacioncostarica.models;
 
+import android.util.Log;
+
+import com.nacion.android.nacioncostarica.commons.SharedPreferencesManager;
+import com.nacion.android.nacioncostarica.main.MainPresenter;
+
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +18,27 @@ import java.util.Map;
  */
 public class LeftMenu {
     private List<Menu> menus;
+    private MainPresenter presenter;
+    private SharedPreferencesManager preferences;
 
-    public void setMenus(Map<String, String> argBoardNamesMap){
+    public LeftMenu(MainPresenter presenter){
+        this.presenter = presenter;
+        preferences = SharedPreferencesManager.getPreferences(this.presenter.getContext());
+    }
+
+    public void setMenus(Map<String, String> boardNamesMap){
+        if(preferences.isMenuInSharedPreferences()) {
+            menus = preferences.getMenu();
+        }else{
+            makeMenuFromScratch(boardNamesMap);
+        }
+    }
+
+    private void makeMenuFromScratch(Map<String, String> boardNamesMap){
         menus = new ArrayList<Menu>();
-        List<String> keys = new ArrayList<String>(argBoardNamesMap.keySet());
+        List<String> keys = new ArrayList<String>(boardNamesMap.keySet());
         for(String key : keys){
-            String value = argBoardNamesMap.get(key);
+            String value = boardNamesMap.get(key);
             int keyInt = Integer.parseInt(key);
             Menu menu = key.equals(Menu.HOME_CODE) ? new Menu(Menu.MENU, value, true, true, keyInt) : new Menu(Menu.MENU, value, false, false, keyInt);
             menus.add(menu);
@@ -64,6 +86,21 @@ public class LeftMenu {
         Menu menuToRemove = searchMenuByName(name);
         if(menuToRemove != null){
             menuToRemove.setMain(false);
+            menuToRemove.setNotification(false);
+        }
+    }
+
+    public void addItemToNotifications(String name){
+        Menu menu = searchMenuByName(name);
+        if(menu != null){
+            menu.setNotification(true);
+        }
+    }
+
+    public void removeItemFromNotifications(String name){
+        Menu menu = searchMenuByName(name);
+        if(menu != null){
+            menu.setNotification(false);
         }
     }
 
@@ -78,11 +115,17 @@ public class LeftMenu {
         return toSearch;
     }
 
-    public JSONArray getJSONArrayObject(){
+    public JSONObject getJSONArrayObject(){
         JSONArray arrayObj = new JSONArray();
         for(Menu menu : menus){
             arrayObj.put(menu.getJSONObject());
         }
-        return arrayObj;
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put("menus", arrayObj);
+        }catch(JSONException e){
+            Log.d(LeftMenu.class.getName(), e.getLocalizedMessage());
+        }
+        return jsonObj;
     }
 }

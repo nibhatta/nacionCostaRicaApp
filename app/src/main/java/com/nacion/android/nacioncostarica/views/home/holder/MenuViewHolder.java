@@ -1,8 +1,10 @@
 package com.nacion.android.nacioncostarica.views.home.holder;
 
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.views.base.holders.ViewHolderBase;
@@ -19,7 +21,7 @@ public class MenuViewHolder extends ViewHolderBase{
 
     private ImageView goToImageView;
     private ImageView deleteImageView;
-    private ImageView notificationImageView;
+    private ToggleButton notificationToggleButton;
     private TextView title;
     private MainPresenter presenter;
 
@@ -27,7 +29,7 @@ public class MenuViewHolder extends ViewHolderBase{
         presenter = argPresenter;
     }
 
-    public void setComponentsReferencesForHeaderView(View argView){
+    public void setReferencesForHeaderView(View argView){
         title = (TextView)argView.findViewById(R.id.headerTitleTextView);
     }
 
@@ -35,7 +37,7 @@ public class MenuViewHolder extends ViewHolderBase{
         title.setText(argItem.getName());
     }
 
-    public void setComponentsReferencesForSubMenuView(View argView){
+    public void setReferencesForSubMenuView(View argView){
         title = (TextView)argView.findViewById(R.id.subMenuTextView);
         goToImageView = (ImageView)argView.findViewById(R.id.goToImageView);
     }
@@ -50,9 +52,9 @@ public class MenuViewHolder extends ViewHolderBase{
         });
     }
 
-    public void setComponentsReferencesForMenuView(View argView){
+    public void setReferencesForMenuView(View argView){
         deleteImageView = (ImageView)argView.findViewById(R.id.deleteImageView);
-        notificationImageView = (ImageView)argView.findViewById(R.id.notificationImageView);
+        notificationToggleButton = (ToggleButton)argView.findViewById(R.id.notificationToggleButton);
         title = (TextView)argView.findViewById(R.id.menuIdTextView);
     }
 
@@ -70,11 +72,30 @@ public class MenuViewHolder extends ViewHolderBase{
                 presenter.removeItemFromMainMenuSubMenuView(menu.getName());
             }
         });
+
+
+        if(menu.isNotification()) {
+            notificationToggleButton.setChecked(true);
+        }else{
+            notificationToggleButton.setChecked(false);
+        }
+
+        notificationToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                String name = menu.getName();
+                if(isChecked){
+                    presenter.addMenuToNotificationsFromMenuView(name);
+                }else{
+                    presenter.removeMenuFromNotificationsFromMenuView(name);
+                }
+            }
+        });
     }
 
     private void resetOriginalView(){
         deleteImageView.setVisibility(View.INVISIBLE);
-        notificationImageView.setVisibility(View.VISIBLE);
+        notificationToggleButton.setVisibility(View.VISIBLE);
         title.setTranslationX(START_POSITION);
     }
 }

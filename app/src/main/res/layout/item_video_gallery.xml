@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_video_height">
+    android:layout_height="@dimen/item_video_height_phone">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/videoGalleryViewPager"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/viewpager_video_gallery_height_phone"
                 android:background="@android:color/black"/>
 
             <TextView
@@ -42,11 +42,12 @@
                 style="@style/TitleAdelleSemiBoldWhiteFont"
                 android:id="@+id/videoTitleTextView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/video_title_video_gallery_phone"
                 android:text="@string/item_video_title"
                 android:gravity="center"
                 android:textColor="@android:color/white"
-                android:padding="10dp"/>
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
 
             <TextView
                 android:id="@+id/videoImageTextView"

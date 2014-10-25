@@ -6,13 +6,15 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 
 /**
  * Created by Gustavo Matarrita on 10/10/2014.
  */
-public class VideoActivity extends Activity{
+public class VideoActivity extends YouTubeBaseActivity{
+    public static final String API_KEY = "AIzaSyCteLzNYtnqlxiwpAwip8iPHBRKGciA71g";
     private WebView webView;
 
     @Override

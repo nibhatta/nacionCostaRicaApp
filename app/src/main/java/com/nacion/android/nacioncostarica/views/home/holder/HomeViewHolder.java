@@ -1,5 +1,6 @@
 package com.nacion.android.nacioncostarica.views.home.holder;
 
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -7,7 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.R;
-import com.nacion.android.nacioncostarica.gui.textView.TitleTextView;
+import com.nacion.android.nacioncostarica.gui.textView.SectionTextCreator;
+import com.nacion.android.nacioncostarica.gui.textView.SummaryTextCreator;
+import com.nacion.android.nacioncostarica.gui.textView.TitleTextCreator;
 import com.nacion.android.nacioncostarica.views.base.holders.ViewHolderBase;
 import com.nacion.android.nacioncostarica.views.home.adapters.GalleryVideoPagerAdapter;
 import com.nacion.android.nacioncostarica.views.home.fragments.GalleryFragment;
@@ -34,18 +37,27 @@ public class HomeViewHolder extends ViewHolderBase{
     private TextView viewPagerSection;
     private ViewPager viewPager;
     private HomeListPresenter presenter;
+    private TitleTextCreator titleCreator;
+    private SummaryTextCreator summaryCreator;
+    private SectionTextCreator sectionCreator;
 
     public HomeViewHolder(HomeListPresenter argPresenter){
         presenter = argPresenter;
+        Context context = presenter.getContextFromMainActivity();
+        titleCreator = new TitleTextCreator(context);
+        summaryCreator = new SummaryTextCreator(context);
+        sectionCreator = new SectionTextCreator(context);
     }
 
-    public void setViewHolderComponentsReferencesForArticleView(View argView){
+    public void setReferencesForArticleView(View argView){
         image = (ImageView)argView.findViewById(R.id.articleImageView);
         section = (TextView)argView.findViewById(R.id.articleSectionTextView);
-        summary = (TextView)argView.findViewById(R.id.articleSummaryTextView);
+        summary = summaryCreator
+                .buildText((TextView)argView.findViewById(R.id.articleSummaryTextView))
+                .withTimesNewRoman();
     }
 
-    public void setViewHolderValuesForArticleView(ContentItemList argItem){
+    public void setValuesForArticleView(ContentItemList argItem){
         String url = argItem.getImage().getPhoneUrl();
         downloadImage(url, image);
         section.setText(getSectionString(argItem));
@@ -61,13 +73,15 @@ public class HomeViewHolder extends ViewHolderBase{
         });
     }
 
-    public void setViewHolderComponentsReferencesForHighlightView(View argView){
+    public void setReferencesForHighlightView(View argView){
         image = (ImageView)argView.findViewById(R.id.moduleImageView);
         summary = (TextView)argView.findViewById(R.id.moduleSummaryTextView);
-        title = new TitleTextView(presenter.getContextFromMainActivity(), (TextView)argView.findViewById(R.id.moduleTitleTextView)).withAdeleBold();
+        title = titleCreator
+                .buildText((TextView) argView.findViewById(R.id.moduleTitleTextView))
+                .withAdeleBold();
     }
 
-    public void setViewHolderValuesForHighlightView(ContentItemList argItem){
+    public void setValuesForHighlightView(ContentItemList argItem){
         ContentModule contentModule = argItem.getModule().getContentModule();
         String url = contentModule.getImage().getPhoneUrl();
         downloadImage(url, image);
@@ -84,12 +98,19 @@ public class HomeViewHolder extends ViewHolderBase{
         });
     }
 
-    public void setViewHolderComponentsReferencesForVideoGalleryView(View argView, ContentItemList argItem, FragmentManager argFragmentManager){
-        viewPager = (ViewPager)argView.findViewById(R.id.videoGalleryViewPager);
-        viewPagerTitle = (TextView)argView.findViewById(R.id.videoTitleTextView);
-        viewPagerSection = (TextView)argView.findViewById(R.id.sectionVideoTextView);
+    public void setReferencesForVideoGalleryView(View view){
+        viewPager = (ViewPager)view.findViewById(R.id.videoGalleryViewPager);
+        viewPagerTitle = titleCreator
+                .buildText((TextView)view.findViewById(R.id.videoTitleTextView))
+                .withAdeleBold();
+        viewPagerSection = sectionCreator
+                .buildText((TextView)view.findViewById(R.id.sectionVideoTextView))
+                .withOpenSans();
 
-        List<Content> contents = argItem.getModule().getContents();
+    }
+
+    public void setValuesForVideoGalleryView(ContentItemList item, FragmentManager argFragmentManager){
+        List<Content> contents = item.getModule().getContents();
         int size = contents.size();
 
         List<GalleryFragment> fragments = getVideoFragmentsArray(contents);
@@ -106,10 +127,6 @@ public class HomeViewHolder extends ViewHolderBase{
             viewPager.setOnPageChangeListener(listener);
             viewPager.setOffscreenPageLimit(size);
         }
-    }
-
-    public void setViewHolderValuesForVideoGalleryView(){
-
     }
 
     private List<GalleryFragment> getVideoFragmentsArray(List<Content> argContents){

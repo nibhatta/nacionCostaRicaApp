@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.R;
+import com.nacion.android.nacioncostarica.gui.textView.SectionTextCreator;
+import com.nacion.android.nacioncostarica.gui.textView.SummaryTextCreator;
+import com.nacion.android.nacioncostarica.gui.textView.TitleTextCreator;
 import com.nacion.android.nacioncostarica.views.base.holders.ViewHolderBase;
 import com.nacion.android.nacioncostarica.views.home.adapters.GalleryVideoPagerAdapter;
 import com.nacion.android.nacioncostarica.views.home.adapters.HomeSpecialDataGridAdapter;
@@ -45,12 +48,19 @@ public class HomeTabletViewHolder extends ViewHolderBase{
     private ViewPager viewPager;
     private GridView gridView;
     private HomeListPresenter presenter;
+    private TitleTextCreator titleCreator;
+    private SummaryTextCreator summaryCreator;
+    private SectionTextCreator sectionCreator;
 
     public HomeTabletViewHolder(HomeListPresenter argPresenter){
         presenter = argPresenter;
+        Context context = presenter.getContextFromMainActivity();
+        titleCreator = new TitleTextCreator(context);
+        summaryCreator = new SummaryTextCreator(context);
+        sectionCreator = new SectionTextCreator(context);
     }
 
-    public void setComponentsReferencesForArticleView(View argView){
+    public void setReferencesForArticleView(View argView){
         gridView = (GridView)argView.findViewById(R.id.articleGridView);
     }
 
@@ -61,8 +71,10 @@ public class HomeTabletViewHolder extends ViewHolderBase{
         gridView.setAdapter(homeArticleGridAdapter);
     }
 
-    public void setComponentsReferencesForSpecialDataView(View argView){
-        title = (TextView)argView.findViewById(R.id.specialDataTitleTextView);
+    public void setReferencesForSpecialDataView(View argView){
+        title = titleCreator
+                .buildText((TextView)argView.findViewById(R.id.specialDataTitleTextView)).withAdeleBold();
+
         gridView = (GridView)argView.findViewById(R.id.specialDataGridView);
     }
 
@@ -74,11 +86,15 @@ public class HomeTabletViewHolder extends ViewHolderBase{
         gridView.setAdapter(homeSpecialDataGridAdapter);
     }
 
-    public void setComponentsReferencesForBBlockView(View argView){
+    public void setReferencesForBBlockView(View argView){
         b1ImageView = (ImageView)argView.findViewById(R.id.blockB1ImageView);
-        b1TextView = (TextView)argView.findViewById(R.id.blockB1TextView);
+        b1TextView = titleCreator
+                .buildText((TextView)argView.findViewById(R.id.blockB1TextView))
+                .withAdeleSemiBold();
         b2ImageView = (ImageView)argView.findViewById(R.id.blockB2ImageView);
-        b2TextView = (TextView)argView.findViewById(R.id.blockB2TextView);
+        b2TextView = titleCreator
+                .buildText((TextView)argView.findViewById(R.id.blockB2TextView))
+                .withAdeleBold();
         b3ImageView = (ImageView)argView.findViewById(R.id.blockB3ImageView);
     }
 
@@ -96,11 +112,17 @@ public class HomeTabletViewHolder extends ViewHolderBase{
         downloadImage(third.getImage().getPhoneUrl(), b1ImageView);
     }
 
-    public void setComponentsReferencesForApproachView(View argView){
+    public void setReferencesForApproachView(View argView){
         image = (ImageView)argView.findViewById(R.id.approachImageView);
-        section = (TextView)argView.findViewById(R.id.approachSectionTextView);
-        title = (TextView)argView.findViewById(R.id.approachTitleTextView);
-        summary = (TextView)argView.findViewById(R.id.approachSummaryTextView);
+        section = sectionCreator
+                .buildText((TextView)argView.findViewById(R.id.approachSectionTextView))
+                .withOpenSans();
+        title = titleCreator
+                .buildText((TextView)argView.findViewById(R.id.approachTitleTextView))
+                .withAdeleBold();
+        summary = summaryCreator
+                .buildText((TextView)argView.findViewById(R.id.approachSummaryTextView))
+                .withTimesNewRoman();
         approachTextView = (TextView)argView.findViewById(R.id.approachTextView);
     }
 
@@ -112,7 +134,7 @@ public class HomeTabletViewHolder extends ViewHolderBase{
         //downloadImage(argItem.getImage().getPhoneUrl(), image);
     }
 
-    public void setComponentsReferencesForArticleAdView(View argView){
+    public void setReferencesForArticleAdView(View argView){
         gridView = (GridView)argView.findViewById(R.id.articleAdGridView);
     }
 
@@ -123,11 +145,17 @@ public class HomeTabletViewHolder extends ViewHolderBase{
         gridView.setAdapter(homeArticleGridAdapter);
     }
 
-    public void setComponentsReferencesForHighlightView(View argView){
+    public void setReferencesForHighlightView(View argView){
         image = (ImageView)argView.findViewById(R.id.moduleImageView);
-        section = (TextView)argView.findViewById(R.id.moduleSectionTextView);
-        title = (TextView)argView.findViewById(R.id.moduleTitleTextView);
-        summary = (TextView)argView.findViewById(R.id.moduleSummaryTextView);
+        section = sectionCreator
+                .buildText((TextView)argView.findViewById(R.id.moduleSectionTextView))
+                .withOpenSans();
+        title = titleCreator
+                .buildText((TextView)argView.findViewById(R.id.moduleTitleTextView))
+                .withAdeleBold();
+        summary = summaryCreator
+                .buildText((TextView)argView.findViewById(R.id.moduleSummaryTextView))
+                .withTimesNewRoman();
         gridView = (GridView)argView.findViewById(R.id.moduleGridView);
     }
 
@@ -154,25 +182,23 @@ public class HomeTabletViewHolder extends ViewHolderBase{
         });
     }
 
-    public void setComponentsReferencesForVideoGalleryView(View argView, ContentItemList argItem, FragmentManager argFragmentManager){
+    public void setReferencesForVideoGalleryView(View argView){
         viewPager = (ViewPager)argView.findViewById(R.id.videoGalleryViewPager);
+    }
 
-        List<Content> contents = argItem.getModule().getContents();
+    public void setValuesForVideoGalleryView(ContentItemList item, FragmentManager fragmentManager){
+        List<Content> contents = item.getModule().getContents();
         int size = contents.size();
 
         List<GalleryFragment> fragments = getVideoFragmentsArray(contents);
 
-        GalleryVideoPagerAdapter videoPagerAdapter = new GalleryVideoPagerAdapter(argFragmentManager, fragments);
+        GalleryVideoPagerAdapter videoPagerAdapter = new GalleryVideoPagerAdapter(fragmentManager, fragments);
         videoPagerAdapter.setTabsCount(size);
 
         if(viewPager.getAdapter() == null){
             viewPager.setAdapter(videoPagerAdapter);
             viewPager.setOffscreenPageLimit(size);
         }
-    }
-
-    public void setViewHolderValuesForVideoGalleryView(){
-
     }
 
     private List<GalleryFragment> getVideoFragmentsArray(List<Content> argContents){

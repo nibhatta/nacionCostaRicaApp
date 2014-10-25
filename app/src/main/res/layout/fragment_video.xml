@@ -10,13 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:scaleType="fitXY"/>
+        android:scaleType="centerCrop"/>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@drawable/list_video"
-        android:scaleType="fitXY"/>
+        android:scaleType="centerCrop"/>
 
 </FrameLayout>

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.nacion.android.nacioncostarica.commons.BufferedImageManager;
 import com.nacion.android.nacioncostarica.commons.FTPLoader;
 import com.nacion.android.nacioncostarica.commons.exceptions.FTPLoaderException;
 
@@ -16,17 +17,24 @@ import java.lang.ref.WeakReference;
  */
 public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
     private WeakReference imageViewReference;
+    private BufferedImageManager buffer = BufferedImageManager.getInstance();
 
     public ImageDownloaderTask(ImageView argImageView){
         imageViewReference = new WeakReference(argImageView);
     }
 
     @Override
-    protected Bitmap doInBackground(String... argUrl) {
-        Log.d(ImageDownloaderTask.class.getName(), "=====> Start download image in background!!!");
+    protected Bitmap doInBackground(String... urls) {
         Bitmap bitmap = null;
         try {
-            bitmap = FTPLoader.downloadPhotoFromURL(argUrl[0]);
+            String url = urls[0];
+            if(buffer.bufferContainsImage(url)){
+                bitmap = buffer.getImageFromBuffer(url);
+            }else {
+                bitmap = FTPLoader.downloadPhotoFromURL(url);
+                buffer.addImageToBuffer(url, bitmap);
+            }
+
         }catch(FTPLoaderException e){
             Log.e(ImageDownloaderTask.class.getName(), e.getLocalizedMessage());
         }catch(IllegalArgumentException e){
@@ -42,9 +50,6 @@ public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
         }
         if(imageViewReference != null){
             ImageView imageView = (ImageView)imageViewReference.get();
-            if(imageView != null){
-                Log.d(ImageDownloaderTask.class.getName(), "=====> Weak reference was deleted for the garbage collector.");
-            }
             if(argBitmap != null && imageView != null){
                 imageView.setImageBitmap(argBitmap);
             }
