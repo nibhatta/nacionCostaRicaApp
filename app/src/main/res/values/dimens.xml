@@ -53,6 +53,25 @@
     <dimen name="icon_height_action">35dp</dimen>
     <dimen name="icon_width_action">35dp</dimen>
 
+
+
+    <!-- Start - Fonts on phone -->
+    <dimen name="font_author_phone">12dp</dimen>
+    <dimen name="font_date_phone">12dp</dimen>
+    <dimen name="font_section_phone">12dp</dimen>
+    <dimen name="font_section_article_phone">22dp</dimen>
+    <dimen name="font_title_phone">24dp</dimen>
+    <dimen name="font_summary_phone">12dp</dimen>
+    <dimen name="font_body_phone">14dp</dimen>
+    <dimen name="font_subtitle_phone">18dp</dimen>
+    <!-- End -->
+
+    <dimen name="image_width_video">192dp</dimen>
+    <dimen name="image_height_video">96dp</dimen>
+
+
+    <!-- Tablet -->
+
     <!-- Start - Highlight on tablet -->
     <dimen name="image_highlight_tablet">640dp</dimen>
     <dimen name="highlight_note_height_tablet">320dp</dimen>
@@ -60,7 +79,6 @@
     <!-- End -->
 
     <!-- Start - Related new on tablet -->
-
     <dimen name="image_related_news_width_tablet">128dp</dimen>
     <dimen name="image_related_news_height_tablet">96dp</dimen>
     <!-- End -->
@@ -83,23 +101,6 @@
     <dimen name="font_body_tablet">12dp</dimen>
     <dimen name="font_subtitle_tablet">18dp</dimen>
     <!-- End -->
-
-    <!-- Start - Fonts on phone -->
-    <dimen name="font_author_phone">12dp</dimen>
-    <dimen name="font_date_phone">12dp</dimen>
-    <dimen name="font_section_phone">12dp</dimen>
-    <dimen name="font_section_article_phone">22dp</dimen>
-    <dimen name="font_title_phone">24dp</dimen>
-    <dimen name="font_summary_phone">12dp</dimen>
-    <dimen name="font_body_phone">14dp</dimen>
-    <dimen name="font_subtitle_phone">18dp</dimen>
-    <!-- End -->
-
-    <dimen name="image_width_video">192dp</dimen>
-    <dimen name="image_height_video">96dp</dimen>
-
-
-    <!-- Tablet -->
 
     <!-- Start - Video gallery on phone -->
     <dimen name="item_video_height_tablet">620px</dimen>

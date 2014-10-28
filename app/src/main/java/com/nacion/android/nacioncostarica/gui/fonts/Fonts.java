@@ -13,6 +13,8 @@ public class Fonts {
     public static Typeface ADELE_BOLD;
     public static Typeface TIMES_NEW_ROMAN;
     public static Typeface ADELE_SEMI_BOLD;
+    public static Typeface OPEN_SANS;
+    public static Typeface OPEN_SANS_BOLD;
 
     public static Fonts getInstance(Context argContext){
         if(instance == null){
@@ -30,5 +32,7 @@ public class Fonts {
         ADELE_BOLD = Typeface.createFromAsset(context.getAssets(), "fonts/Adelle_Bold.otf");
         TIMES_NEW_ROMAN = Typeface.createFromAsset(context.getAssets(), "fonts/times.ttf");
         ADELE_SEMI_BOLD = Typeface.createFromAsset(context.getAssets(), "fonts/Adelle_Semibold.otf");
+        OPEN_SANS = Typeface.createFromAsset(context.getAssets(), "fonts/OpenSans-Regular.ttf");
+        OPEN_SANS_BOLD = Typeface.createFromAsset(context.getAssets(), "fonts/OpenSans-Bold.ttf");
     }
 }

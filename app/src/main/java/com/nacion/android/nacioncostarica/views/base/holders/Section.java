@@ -31,11 +31,4 @@ public class Section {
     public void setEnable(boolean enable) {
         this.enable = enable;
     }
-
-    public static Section createDummySectionCore(boolean argEnable){
-        Section section = new Section();
-        section.name = "Section";
-        section.enable = argEnable;
-        return section;
-    }
 }

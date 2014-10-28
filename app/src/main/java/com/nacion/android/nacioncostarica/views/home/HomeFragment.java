@@ -17,7 +17,7 @@ import com.nacion.android.nacioncostarica.models.ContentItemList;
 /**
  * Created by Gustavo Matarrita on 22/09/2014.
  */
-public class HomeFragment extends Fragment implements HomeView, NacionFragment {
+public class HomeFragment extends Fragment implements NacionFragment {
     private int fragmentIndex;
     private int boardId;
     private HomeFragment instance;

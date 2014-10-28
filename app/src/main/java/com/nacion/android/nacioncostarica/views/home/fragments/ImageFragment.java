@@ -9,7 +9,6 @@ import android.widget.ListView;
 
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.views.home.HomePresenter;
-import com.nacion.android.nacioncostarica.views.home.HomeView;
 import com.nacion.android.nacioncostarica.views.home.adapters.HomeListAdapter;
 
 /**

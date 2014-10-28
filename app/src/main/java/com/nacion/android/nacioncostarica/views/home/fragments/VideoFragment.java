@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.nacion.android.nacioncostarica.R;
-import com.nacion.android.nacioncostarica.views.home.HomeView;
 import com.nacion.android.nacioncostarica.views.home.adapters.HomeListPresenter;
 import com.nacion.android.nacioncostarica.models.Content;
 import com.nacion.android.nacioncostarica.tasks.ImageDownloaderTask;
@@ -49,8 +48,7 @@ public class VideoFragment extends Fragment implements GalleryFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_video, container, false);
         imageView = (ImageView)rootView.findViewById(R.id.videoGalleryImageView);
-        final String section = getContent().getSection();
-        final int articleId = getContent().getId();
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

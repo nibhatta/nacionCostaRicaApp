@@ -1,18 +1,24 @@
 package com.nacion.android.nacioncostarica.views.home.holder;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.R;
+import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.gui.textView.SectionTextCreator;
 import com.nacion.android.nacioncostarica.gui.textView.SummaryTextCreator;
 import com.nacion.android.nacioncostarica.gui.textView.TitleTextCreator;
+import com.nacion.android.nacioncostarica.models.Image;
+import com.nacion.android.nacioncostarica.models.Module;
 import com.nacion.android.nacioncostarica.views.base.holders.ViewHolderBase;
 import com.nacion.android.nacioncostarica.views.home.adapters.GalleryVideoPagerAdapter;
+import com.nacion.android.nacioncostarica.views.home.adapters.HomeListAdapter;
 import com.nacion.android.nacioncostarica.views.home.fragments.GalleryFragment;
 import com.nacion.android.nacioncostarica.views.home.fragments.VideoFragment;
 import com.nacion.android.nacioncostarica.views.home.listeners.GalleryOnPageChangeListener;
@@ -49,17 +55,21 @@ public class HomeViewHolder extends ViewHolderBase{
         sectionCreator = new SectionTextCreator(context);
     }
 
-    public void setReferencesForArticleView(View argView){
-        image = (ImageView)argView.findViewById(R.id.articleImageView);
-        section = (TextView)argView.findViewById(R.id.articleSectionTextView);
+    public void setReferencesForArticleView(View view){
+        image = (ImageView)view.findViewById(R.id.articleImageView);
+        section = (TextView)view.findViewById(R.id.articleSectionTextView);
         summary = summaryCreator
-                .buildText((TextView)argView.findViewById(R.id.articleSummaryTextView))
+                .buildText((TextView)view.findViewById(R.id.articleSummaryTextView))
                 .withTimesNewRoman();
     }
 
     public void setValuesForArticleView(ContentItemList argItem){
-        String url = argItem.getImage().getPhoneUrl();
-        downloadImage(url, image);
+        Image imageModel = argItem.getImage();
+        if(imageModel != null) {
+            String url = imageModel.getPhoneUrl();
+            downloadImage(url, image);
+        }
+
         section.setText(getSectionString(argItem));
         summary.setText(argItem.getSummary());
 
@@ -96,6 +106,32 @@ public class HomeViewHolder extends ViewHolderBase{
                 presenter.startContextActivity(section, articleId);
             }
         });
+    }
+
+    public synchronized void setReferencesForMoreView(View view, final HomeListAdapter adapter, final ContentItemList item){
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.setShowMoreActive(true);
+                adapter.setNotifyOnChange(true);
+                Module module = item.getModule();
+                if(module != null){
+                    adapter.remove(item);
+                    List<Content> contents = module.getContents();
+                    for (Content content : contents) {
+                        adapter.add(content);
+                    }
+                    adapter.notifyDataSetChanged();
+                    adapter.getParentListView().smoothScrollToPosition(adapter.getCount());
+                }
+                view = adapter.getInflater().inflate(R.layout.item_article, null);
+                setReferencesForArticleView(view);
+            }
+        });
+    }
+
+    public void setValuesForMoreView(ContentItemList item){
+
     }
 
     public void setReferencesForVideoGalleryView(View view){
@@ -145,6 +181,9 @@ public class HomeViewHolder extends ViewHolderBase{
     }
 
     private String getSectionString(ContentItemList argItem){
+        if(argItem.getTimestamp() == null || argItem.getSection() == null){
+            return NacionConstants.EMPTY_STRING;
+        }
         String date = getDateFormat(argItem.getTimestamp());
         String section = argItem.getSection() + date;
         return section;

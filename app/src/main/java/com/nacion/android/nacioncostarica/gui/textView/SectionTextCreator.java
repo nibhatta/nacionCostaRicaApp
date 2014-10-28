@@ -22,10 +22,12 @@ public class SectionTextCreator {
     }
 
     public TextView withOpenSans(){
+        text.setTypeface(fonts.OPEN_SANS);
         return text;
     }
 
     public TextView withOpenSansBold(){
+        text.setTypeface(fonts.OPEN_SANS_BOLD);
         return text;
     }
 }

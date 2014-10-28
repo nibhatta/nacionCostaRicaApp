@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.R;
-import com.nacion.android.nacioncostarica.views.home.HomeView;
 import com.nacion.android.nacioncostarica.views.home.adapters.HomeListPresenter;
 import com.nacion.android.nacioncostarica.tasks.ImageDownloaderTask;
 

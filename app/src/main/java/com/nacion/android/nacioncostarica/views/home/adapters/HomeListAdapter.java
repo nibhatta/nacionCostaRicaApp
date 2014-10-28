@@ -7,12 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
+import com.nacion.android.nacioncostarica.models.Content;
 import com.nacion.android.nacioncostarica.views.home.holder.HomeViewHolder;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,17 +23,19 @@ import java.util.List;
  */
 public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements HomeListView {
     private static final int VIEWS_TYPE_COUNT = 8;
+    private boolean showMoreActive;
     private HomeListPresenter presenter;
     private LayoutInflater inflater;
-    private Context context;
-    private ViewPager viewPager;
     private FragmentManager fragmentManager;
+    private List<Content> moreItems;
+    private ListView parentListView;
+    private List<ContentItemList> items;
 
-    public HomeListAdapter(Context context, List<ContentItemList> argContents, FragmentManager argFragmentManager) {
-        super(context, R.layout.item_module, argContents);
-        this.context = context;
+    public HomeListAdapter(Context context, List<ContentItemList> items, FragmentManager fragmentManager) {
+        super(context, R.layout.item_module, items);
+        this.items = items;
         inflater = LayoutInflater.from(context);
-        fragmentManager = argFragmentManager;
+        this.fragmentManager = fragmentManager;
     }
 
     public HomeListPresenter getPresenter() {
@@ -41,8 +46,19 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
         this.presenter = presenter;
     }
 
+    public LayoutInflater getInflater() {
+        return inflater;
+    }
+
+    public void setInflater(LayoutInflater inflater) {
+        this.inflater = inflater;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        if(parentListView == null) {
+            parentListView = (ListView) parent;
+        }
         ContentItemList itemList = getItem(position);
         int codeType = getItemViewType(position);
         HomeViewHolder holder;
@@ -65,23 +81,17 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
                     convertView = inflater.inflate(R.layout.item_weather, null);
                     break;
                 case NacionConstants.MODULE_CODE_FIVE:
-
                     convertView = inflater.inflate(R.layout.item_image_gallery, null);
-
-                    //holder.viewPager = (ViewPager)convertView.findViewById(R.id.imageGalleryViewPager);
-                    /*
-                    fragments = getFragmentsArray();
-
-                    GalleryImagePagerAdapter pagerAdapter = new GalleryImagePagerAdapter(fragmentManager, fragments);
-                    if(holder.viewPager.getAdapter() == null) {
-                        holder.viewPager.setAdapter(pagerAdapter);
-                        holder.viewPager.setOnPageChangeListener();
-                        holder.viewPager.setOffscreenPageLimit(4);
-                    }*/
-
                     break;
                 case NacionConstants.MODULE_CODE_EIGHT:
-                    convertView = inflater.inflate(R.layout.item_more_news, null);
+                    if(isShowMoreActive()) {
+                        convertView = inflater.inflate(R.layout.item_article, null);
+                        holder.setReferencesForArticleView(convertView);
+                    }else{
+                        convertView = inflater.inflate(R.layout.item_more_news, null);
+                        holder.setReferencesForMoreView(convertView, this, itemList);
+                    }
+
                     break;
             }
             convertView.setTag(holder);
@@ -90,6 +100,7 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
         }
 
         setHolderViewValuesByCodeType(holder, itemList, codeType);
+
 
         return convertView;
     }
@@ -106,13 +117,15 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
                 holder.setValuesForVideoGalleryView(item, fragmentManager);
                 break;
             case NacionConstants.MODULE_CODE_FOURTH:
-
                 break;
             case NacionConstants.MODULE_CODE_FIVE:
-
                 break;
             case NacionConstants.MODULE_CODE_EIGHT:
-
+                if(isShowMoreActive()) {
+                    holder.setValuesForArticleView(item);
+                }else{
+                    holder.setValuesForMoreView(item);
+                }
                 break;
         }
     }
@@ -126,5 +139,29 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
     public int getItemViewType(int position) {
         ContentItemList content = getItem(position);
         return content.getModule().getTypeCode();
+    }
+
+    public boolean isShowMoreActive() {
+        return showMoreActive;
+    }
+
+    public void setShowMoreActive(boolean showMoreActive) {
+        this.showMoreActive = showMoreActive;
+    }
+
+    public List<Content> getMoreItems() {
+        return moreItems;
+    }
+
+    public void setMoreItems(List<Content> moreItems) {
+        this.moreItems = moreItems;
+    }
+
+    public ListView getParentListView() {
+        return parentListView;
+    }
+
+    public void setParentListView(ListView parentListView) {
+        this.parentListView = parentListView;
     }
 }
