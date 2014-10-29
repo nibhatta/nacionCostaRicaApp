@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.R;
@@ -108,24 +109,13 @@ public class HomeViewHolder extends ViewHolderBase{
         });
     }
 
-    public synchronized void setReferencesForMoreView(View view, final HomeListAdapter adapter, final ContentItemList item){
+    public void setReferencesForMoreView(View view, final HomeListAdapter adapter, final ContentItemList item){
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.setShowMoreActive(true);
-                adapter.setNotifyOnChange(true);
-                Module module = item.getModule();
-                if(module != null){
-                    adapter.remove(item);
-                    List<Content> contents = module.getContents();
-                    for (Content content : contents) {
-                        adapter.add(content);
-                    }
-                    adapter.notifyDataSetChanged();
-                    adapter.getParentListView().smoothScrollToPosition(adapter.getCount());
-                }
                 view = adapter.getInflater().inflate(R.layout.item_article, null);
                 setReferencesForArticleView(view);
+                adapter.displayMoreNews(item);
             }
         });
     }
@@ -141,7 +131,7 @@ public class HomeViewHolder extends ViewHolderBase{
                 .withAdeleBold();
         viewPagerSection = sectionCreator
                 .buildText((TextView)view.findViewById(R.id.sectionVideoTextView))
-                .withOpenSans();
+                .withOpenSansRegular();
 
     }
 

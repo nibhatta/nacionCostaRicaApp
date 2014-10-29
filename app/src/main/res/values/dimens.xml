@@ -12,15 +12,15 @@
     <!-- Phone -->
 
     <!-- Start - Video gallery on phone -->
-    <dimen name="item_video_height_phone">620px</dimen>
+    <dimen name="item_video_height_phone">630px</dimen>
     <dimen name="viewpager_video_gallery_height_phone">430px</dimen>
     <dimen name="video_title_video_gallery_phone">130px</dimen>
     <!-- End -->
 
     <!-- Start - Image gallery on phone -->
-    <dimen name="item_image_height_phone">620px</dimen>
+    <dimen name="item_image_height_phone">630px</dimen>
     <dimen name="viewpager_image_gallery_height_phone">430px</dimen>
-    <dimen name="video_title_image_gallery_phone">130px</dimen>
+    <dimen name="image_title_image_gallery_phone">130px</dimen>
     <!-- End -->
 
     <dimen name="item_image_height">350dp</dimen>

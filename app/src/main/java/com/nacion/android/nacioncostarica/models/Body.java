@@ -18,11 +18,12 @@ public class Body extends ArticleContentItemList{
     public static final List<String> DATA_OBJECT_TYPES = new ArrayList<String>(){
         {
             add(NacionConstants.IMG);
+            add(NacionConstants.PGL);
         }
     };
 
     private String dataStr;
-    private Data dataObj;
+    private List<Data> dataList;
 
     public String getDataStr() {
         return dataStr;
@@ -32,12 +33,12 @@ public class Body extends ArticleContentItemList{
         this.dataStr = dataStr;
     }
 
-    public Data getDataObj() {
-        return dataObj;
+    public List<Data> getDataList() {
+        return dataList;
     }
 
-    public void setDataObj(Data dataObj) {
-        this.dataObj = dataObj;
+    public void setDataList(List<Data> dataList) {
+        this.dataList = dataList;
     }
 
     public List<Body> buildBodyListFromJSONObject(JSONArray jsonArrayBody){
@@ -67,8 +68,8 @@ public class Body extends ArticleContentItemList{
 
         String dataTag = "data";
         if(DATA_OBJECT_TYPES.contains(body.getType())){
-            JSONObject jsonData = jsonBody.getJSONObject(dataTag);
-            body.setDataObj(new Data().buildDataFromJSONObject(jsonData));
+            JSONArray jsonArray = jsonBody.getJSONArray(dataTag);
+            body.setDataList(new Data().buildDataListFromJSONObject(jsonArray));
         }else{
             body.setDataStr(jsonBody.getString(dataTag));
         }
@@ -76,6 +77,6 @@ public class Body extends ArticleContentItemList{
     }
 
     public boolean isEmpty(){
-        return(type == null && (dataStr == null || dataObj == null));
+        return(type == null && (dataStr == null || dataList == null));
     }
 }

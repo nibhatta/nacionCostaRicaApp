@@ -12,13 +12,16 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/image_related_news_width_tablet"
         android:src="@drawable/module"
-        android:scaleType="fitXY"/>
+        android:scaleType="centerCrop"/>
 
     <TextView
+        style="@style/TitleTabletAdelleRegularFont"
         android:id="@+id/moduleNewsTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/item_module_title"
+        android:maxLines="5"
+        android:ellipsize="end"
         />
 
 </LinearLayout>

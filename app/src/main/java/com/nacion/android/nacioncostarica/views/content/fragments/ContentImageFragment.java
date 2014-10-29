@@ -24,6 +24,7 @@ public class ContentImageFragment extends Fragment implements ContentFragment {
     private int fragmentIndex;
     private String imageUrl;
     private String photoAuthor;
+    private String title;
     private ImageDownloaderTask task;
     private View rootView;
     private Content content;
@@ -134,5 +135,15 @@ public class ContentImageFragment extends Fragment implements ContentFragment {
 
     public void setPresenter(ContentPresenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

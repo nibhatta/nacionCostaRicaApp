@@ -2,6 +2,8 @@ package com.nacion.android.nacioncostarica.models;
 
 import android.util.Log;
 
+import com.nacion.android.nacioncostarica.constants.NacionConstants;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,5 +61,22 @@ public class Content extends ContentItemList{
             content.setImage(image);
         }
         return content;
+    }
+
+    public static Content makeDefensiveCopy(Content content){
+        Content copy = new Content();
+        copy.setId(content.getId());
+        copy.setTitle(content.getTitle());
+        copy.setSection(content.getSection());
+        copy.setTimestamp(content.getTimestamp());
+        copy.setSummary(content.getSummary());
+        copy.setImage(content.getImage());
+
+        Module module = new Module();
+        module.setType(NacionConstants.MODULE_TWO);
+
+        copy.setModule(module);
+
+        return copy;
     }
 }

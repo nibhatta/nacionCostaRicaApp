@@ -21,8 +21,8 @@ public class SectionTextCreator {
         return this;
     }
 
-    public TextView withOpenSans(){
-        text.setTypeface(fonts.OPEN_SANS);
+    public TextView withOpenSansRegular(){
+        text.setTypeface(fonts.OPEN_SANS_REGULAR);
         return text;
     }
 

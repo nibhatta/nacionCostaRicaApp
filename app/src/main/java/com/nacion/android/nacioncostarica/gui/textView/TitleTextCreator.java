@@ -30,4 +30,14 @@ public class TitleTextCreator {
         text.setTypeface(fonts.ADELE_SEMI_BOLD);
         return text;
     }
+
+    public TextView withAdeleExtraBold(){
+        text.setTypeface(fonts.ADELE_EXTRA_BOLD);
+        return text;
+    }
+
+    public TextView withAdeleRegular(){
+        text.setTypeface(fonts.ADELE_REGULAR);
+        return text;
+    }
 }

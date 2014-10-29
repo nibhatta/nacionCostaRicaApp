@@ -25,4 +25,9 @@ public class SummaryTextCreator {
         text.setTypeface(fonts.TIMES_NEW_ROMAN);
         return text;
     }
+
+    public TextView withOpenSansRegular(){
+        text.setTypeface(fonts.OPEN_SANS_REGULAR);
+        return text;
+    }
 }

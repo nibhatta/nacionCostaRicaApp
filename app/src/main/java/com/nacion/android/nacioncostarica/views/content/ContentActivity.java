@@ -108,4 +108,9 @@ public class ContentActivity extends FragmentActivity implements ContentView{
     public Fonts getFontsFromChildrenViews(){
         return Fonts.getInstance(getApplicationContext());
     }
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
+    }
 }

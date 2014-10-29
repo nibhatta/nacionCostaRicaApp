@@ -116,7 +116,7 @@ public class HomeTabletViewHolder extends ViewHolderBase{
         image = (ImageView)argView.findViewById(R.id.approachImageView);
         section = sectionCreator
                 .buildText((TextView)argView.findViewById(R.id.approachSectionTextView))
-                .withOpenSans();
+                .withOpenSansRegular();
         title = titleCreator
                 .buildText((TextView)argView.findViewById(R.id.approachTitleTextView))
                 .withAdeleBold();
@@ -149,13 +149,13 @@ public class HomeTabletViewHolder extends ViewHolderBase{
         image = (ImageView)argView.findViewById(R.id.moduleImageView);
         section = sectionCreator
                 .buildText((TextView)argView.findViewById(R.id.moduleSectionTextView))
-                .withOpenSans();
+                .withOpenSansRegular();
         title = titleCreator
                 .buildText((TextView)argView.findViewById(R.id.moduleTitleTextView))
-                .withAdeleBold();
+                .withAdeleExtraBold();
         summary = summaryCreator
                 .buildText((TextView)argView.findViewById(R.id.moduleSummaryTextView))
-                .withTimesNewRoman();
+                .withOpenSansRegular();
         gridView = (GridView)argView.findViewById(R.id.moduleGridView);
     }
 

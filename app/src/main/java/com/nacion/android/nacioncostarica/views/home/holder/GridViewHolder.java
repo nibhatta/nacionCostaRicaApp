@@ -1,10 +1,14 @@
 package com.nacion.android.nacioncostarica.views.home.holder;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.R;
+import com.nacion.android.nacioncostarica.gui.textView.SectionTextCreator;
+import com.nacion.android.nacioncostarica.gui.textView.SummaryTextCreator;
+import com.nacion.android.nacioncostarica.gui.textView.TitleTextCreator;
 import com.nacion.android.nacioncostarica.views.base.holders.ViewHolderBase;
 import com.nacion.android.nacioncostarica.views.home.adapters.HomeListPresenter;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
@@ -18,14 +22,23 @@ public class GridViewHolder extends ViewHolderBase{
     private TextView section;
     private TextView summary;
     private HomeListPresenter presenter;
+    private TitleTextCreator titleCreator;
+    private SummaryTextCreator summaryCreator;
+    private SectionTextCreator sectionCreator;
 
     public GridViewHolder(HomeListPresenter argPresenter){
         presenter = argPresenter;
+        Context context = presenter.getContextFromMainActivity();
+        titleCreator = new TitleTextCreator(context);
+        summaryCreator = new SummaryTextCreator(context);
+        sectionCreator = new SectionTextCreator(context);
     }
 
     public void setComponentsReferences(View argView){
         image = (ImageView)argView.findViewById(R.id.moduleNewsImageView);
-        title = (TextView)argView.findViewById(R.id.moduleNewsTitleTextView);
+        title = titleCreator
+                .buildText((TextView)argView.findViewById(R.id.moduleNewsTitleTextView))
+                .withAdeleRegular();
     }
 
     public void setValues(ContentItemList argItem){

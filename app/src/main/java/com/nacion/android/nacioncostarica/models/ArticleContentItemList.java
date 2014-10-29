@@ -17,7 +17,7 @@ public abstract class ArticleContentItemList {
     public Image getImage(){return null;}
     public Cover getCover(){return null;}
     public String getDataStr(){return null;}
-    public Data getDataObj(){return null;}
+    public List<Data> getDataList(){return null;}
     public Date getTimestamp(){return null;}
 
     public String getType() {

@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.models.Content;
+import com.nacion.android.nacioncostarica.models.Module;
 import com.nacion.android.nacioncostarica.views.home.holder.HomeViewHolder;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
 
@@ -23,13 +24,15 @@ import java.util.List;
  */
 public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements HomeListView {
     private static final int VIEWS_TYPE_COUNT = 8;
-    private boolean showMoreActive;
+    private static final int BLOCK_MORE = 4;
+    private static final int MAX_MORE_DISPLAY = 16;
     private HomeListPresenter presenter;
     private LayoutInflater inflater;
     private FragmentManager fragmentManager;
     private List<Content> moreItems;
     private ListView parentListView;
     private List<ContentItemList> items;
+    private int startMorePosition;
 
     public HomeListAdapter(Context context, List<ContentItemList> items, FragmentManager fragmentManager) {
         super(context, R.layout.item_module, items);
@@ -84,14 +87,8 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
                     convertView = inflater.inflate(R.layout.item_image_gallery, null);
                     break;
                 case NacionConstants.MODULE_CODE_EIGHT:
-                    if(isShowMoreActive()) {
-                        convertView = inflater.inflate(R.layout.item_article, null);
-                        holder.setReferencesForArticleView(convertView);
-                    }else{
-                        convertView = inflater.inflate(R.layout.item_more_news, null);
-                        holder.setReferencesForMoreView(convertView, this, itemList);
-                    }
-
+                    convertView = inflater.inflate(R.layout.item_more_news, null);
+                    holder.setReferencesForMoreView(convertView, this, itemList);
                     break;
             }
             convertView.setTag(holder);
@@ -121,11 +118,7 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
             case NacionConstants.MODULE_CODE_FIVE:
                 break;
             case NacionConstants.MODULE_CODE_EIGHT:
-                if(isShowMoreActive()) {
-                    holder.setValuesForArticleView(item);
-                }else{
-                    holder.setValuesForMoreView(item);
-                }
+                holder.setValuesForMoreView(item);
                 break;
         }
     }
@@ -139,14 +132,6 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
     public int getItemViewType(int position) {
         ContentItemList content = getItem(position);
         return content.getModule().getTypeCode();
-    }
-
-    public boolean isShowMoreActive() {
-        return showMoreActive;
-    }
-
-    public void setShowMoreActive(boolean showMoreActive) {
-        this.showMoreActive = showMoreActive;
     }
 
     public List<Content> getMoreItems() {
@@ -163,5 +148,35 @@ public class HomeListAdapter extends ArrayAdapter<ContentItemList> implements Ho
 
     public void setParentListView(ListView parentListView) {
         this.parentListView = parentListView;
+    }
+
+    public int getStartMorePosition() {
+        return startMorePosition;
+    }
+
+    public void setStartMorePosition(int startMorePosition) {
+        this.startMorePosition = startMorePosition;
+    }
+
+    public void displayMoreNews(ContentItemList item){
+        ListView listView = getParentListView();
+        int startPosition = getStartMorePosition();
+        int endPosition = startPosition + BLOCK_MORE;
+
+        Module module = item.getModule();
+        if(module != null && startPosition < MAX_MORE_DISPLAY){
+            remove(item);
+            List<Content> contents = module.getContents();
+            for (int i = startPosition ; i < endPosition; i++) {
+                add(Content.makeDefensiveCopy(contents.get(i)));
+            }
+            setStartMorePosition(endPosition);
+            add(item);
+            notifyDataSetChanged();
+            listView.smoothScrollToPosition(getCount());
+        }else{
+            remove(item);
+            notifyDataSetChanged();
+        }
     }
 }

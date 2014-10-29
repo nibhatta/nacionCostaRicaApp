@@ -45,9 +45,9 @@ public class JSONReaderImplTestCase extends AndroidTestCase {
         Site site = jsonReader.createObjectsFromJSONString(json);
         assertNotNull(site.getTimestamp());
         assertNotNull(site.getBoardNames());
-        validateBoardsExpectedSuccess(site);
         validateArticlesExpectedSuccess(site);
         validateGalleriesExpectedSuccess(site);
+        validateBoardsExpectedSuccess(site);
     }
 
     private void validateGalleriesExpectedSuccess(Site argSite){
@@ -96,7 +96,7 @@ public class JSONReaderImplTestCase extends AndroidTestCase {
         assertNotNull(cover.getContentType());
         assertTrue(cover.getDataAre() != null && !cover.getDataAre().isEmpty());
         for(Data data : cover.getDataAre()){
-            validateDataFromCoverExpectedSuccess(data);
+            validateDataExpectedSuccess(data);
         }
     }
 
@@ -106,10 +106,16 @@ public class JSONReaderImplTestCase extends AndroidTestCase {
             assertNotNull(body);
             assertTrue(body.getType() != null && !body.getType().isEmpty());
             if(Body.DATA_OBJECT_TYPES.contains(body.getType())) {
-                validateDataFromCoverExpectedSuccess(body.getDataObj());
+                validateDataListFromBodyExpectedSuccess(body.getDataList());
             }else{
                 assertTrue(body.getDataStr() != null && !body.getDataStr().isEmpty());
             }
+        }
+    }
+
+    private void validateDataListFromBodyExpectedSuccess(List<Data> dataList){
+        for(Data data:dataList){
+            validateDataExpectedSuccess(data);
         }
     }
 
@@ -125,7 +131,7 @@ public class JSONReaderImplTestCase extends AndroidTestCase {
         }
     }
 
-    private void validateDataFromCoverExpectedSuccess(Data data){
+    private void validateDataExpectedSuccess(Data data){
         assertNotNull(data);
         assertTrue(data.getCaption() != null && !data.getCaption().isEmpty());
         assertTrue(data.getCredit() != null && !data.getCredit().isEmpty());

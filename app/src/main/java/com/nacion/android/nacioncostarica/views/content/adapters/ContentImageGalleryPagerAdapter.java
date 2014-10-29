@@ -14,11 +14,11 @@ import java.util.List;
  * Created by Gustavo Matarrita on 26/09/2014.
  */
 
-public class ContentGalleryVideoPagerAdapter extends FragmentStatePagerAdapter {
+public class ContentImageGalleryPagerAdapter extends FragmentStatePagerAdapter {
     private List<ContentFragment> fragments;
     private int tabsCount;
 
-    public ContentGalleryVideoPagerAdapter(FragmentManager argManager, List<ContentFragment> argFragments){
+    public ContentImageGalleryPagerAdapter(FragmentManager argManager, List<ContentFragment> argFragments){
         super(argManager);
         fragments = argFragments;
     }

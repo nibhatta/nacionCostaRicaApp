@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_image_height_phone"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/videoLayout"
+            android:gravity="center">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/imageGalleryViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/viewpager_image_gallery_height_phone"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@+id/videoLayout"
+            android:gravity="center">
+
+            <TextView
+                style="@style/TitleAdelleSemiBoldWhiteFont"
+                android:id="@+id/imageTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/image_title_image_gallery_phone"
+                android:text="@string/item_video_title"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

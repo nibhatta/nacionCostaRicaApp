@@ -1,5 +1,7 @@
 package com.nacion.android.nacioncostarica.views.content;
 
+import android.content.Context;
+
 import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
 import com.nacion.android.nacioncostarica.models.Article;
 import com.nacion.android.nacioncostarica.models.ArticleContentItemList;
@@ -38,5 +40,10 @@ public class ContentPresenterImpl implements ContentPresenter {
     @Override
     public Fonts getFonts() {
         return contentView.getFontsFromChildrenViews();
+    }
+
+    @Override
+    public Context getContextFromContentActivity() {
+        return contentView.getContext();
     }
 }

@@ -63,21 +63,25 @@ public class NacionConstants {
 
     public final static String ARTICLE_HIGHLIGHT = "article";
     public final static String ARTICLE_PARAGRAPH = "paragraph";
-    public final static String ARTICLE_WEIGHT = "IMG";
+    public final static String ARTICLE_WEIGHT_IMG = "IMG";
     public final static String ARTICLE_RELATED = "related";
+    public final static String ARTICLE_WEIGHT_PGL = "PGL";
 
     public final static int ARTICLE_HIGHLIGHT_CODE = 0;
     public final static int ARTICLE_PARAGRAPH_CODE = 1;
-    public final static int ARTICLE_WEIGHT_CODE = 2;
+    public final static int ARTICLE_WEIGHT_IMG_CODE = 2;
     public final static int ARTICLE_RELATED_CODE = 3;
+    public final static int ARTICLE_WEIGHT_PGL_CODE = 4;
 
 
     public final static Map<String, Integer> ARTICLE_PARTS = new HashMap<String, Integer>(){
         {
             put(ARTICLE_HIGHLIGHT, ARTICLE_HIGHLIGHT_CODE);
             put(ARTICLE_PARAGRAPH, ARTICLE_PARAGRAPH_CODE);
-            put(ARTICLE_WEIGHT, ARTICLE_WEIGHT_CODE);
+            put(ARTICLE_WEIGHT_IMG, ARTICLE_WEIGHT_IMG_CODE);
             put(ARTICLE_RELATED, ARTICLE_RELATED_CODE);
+            put(ARTICLE_WEIGHT_PGL, ARTICLE_WEIGHT_PGL_CODE);
+
         }
     };
 }

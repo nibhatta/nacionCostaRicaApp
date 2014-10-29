@@ -9,6 +9,7 @@
         android:layout_height="@dimen/article_height_tablet"
         android:numColumns="2"
         android:columnWidth="90dp"
+
         android:horizontalSpacing="10dp"
         android:verticalSpacing="10dp"
         android:gravity="center"
