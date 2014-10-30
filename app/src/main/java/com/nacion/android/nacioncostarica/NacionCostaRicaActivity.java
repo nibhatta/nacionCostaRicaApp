@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import com.nacion.android.nacioncostarica.commons.SharedPreferencesManager;
 import com.nacion.android.nacioncostarica.models.LeftMenu;
 import com.nacion.android.nacioncostarica.models.Site;
+import com.nacion.android.nacioncostarica.views.base.activity.BaseActivity;
 import com.nacion.android.nacioncostarica.views.content.ContentActivity;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
@@ -51,8 +52,9 @@ import com.nacion.android.nacioncostarica.views.video.VideoActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NacionCostaRicaActivity extends FragmentActivity implements MainView {
+public class NacionCostaRicaActivity extends BaseActivity implements MainView {
     private static int tabsCount;
+    private int boardIdSelected;
     private List<NacionFragment> fragments;
     private CoverPagerAdapter coverPagerAdapter;
     private ImageButton sectionsImageButton;
@@ -61,17 +63,9 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     private ReadJSONFeedTask jsonAsyncTask;
     private JSONReader jsonReader = new JSONReaderImpl();
     private JSONFeed jsonFeed = new JSONFeedImpl();
-    protected ActionBarDrawerToggle drawerToggle;
-    protected DrawerLayout drawerLayout;
-    protected ListView leftList;
-    protected ListView rightList;
-    protected float lastTranslate = 0.0f;
-    protected LeftMenu leftMenu;
-    protected ViewPager mainViewPager;
-    protected SharedPreferencesManager preferences;
-    protected FragmentManager mainFragmentManager;
-    protected MainPresenter presenter;
-    protected Site site;
+    private ViewPager mainViewPager;
+    private MainPresenter presenter;
+    private Site site;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,13 +255,17 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
     @Override
     protected void onResume() {
         super.onResume();
-        startAsyncTask();
+        if(site == null){
+            startAsyncTask();
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        startAsyncTask();
+        if(site == null) {
+            startAsyncTask();
+        }
     }
 
     @Override
@@ -281,9 +279,11 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
 
     @Override
     public void showContentActivityFromViewHolder(String argSectionTitle, int argArticleId){
+        Globals globals = (Globals)getApplication();
+        globals.setMainPresenter(presenter);
         Intent intent = new Intent(NacionCostaRicaActivity.this, ContentActivity.class);
-        intent.putExtra("argSectionTitle", argSectionTitle);
-        intent.putExtra("argArticleId", argArticleId);
+        intent.putExtra("sectionTitle", argSectionTitle);
+        intent.putExtra("articleId", argArticleId);
         startActivity(intent);
     }
 
@@ -304,6 +304,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
             int index = getFragmentIndexByCode(boardId);
             mainViewPager.setCurrentItem(index);
             closeLeftMenu();
+            boardIdSelected = boardId;
         }
     }
 
@@ -348,35 +349,30 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
 
     @Override
     public void addItemToMainMenu(int position){
-        leftMenu.addItemToMainMenu(position);
-        storeMenuChanges();
+        super.addItemToMainMenu(position);
     }
 
     @Override
     public void addMenuToNotification(String name) {
-        leftMenu.addItemToNotifications(name);
-        storeMenuChanges();
+        super.addMenuToNotification(name);
     }
 
     @Override
     public void removeMenuFromNotification(String name) {
-        leftMenu.removeItemFromNotifications(name);
-        storeMenuChanges();
+        super.removeMenuFromNotification(name);
     }
 
     @Override
     public void removeItemFromMainMenu(int position){
-        leftMenu.removeItemFromMainMenu(position);
-        storeMenuChanges();
+        super.removeItemFromMainMenu(position);
     }
 
     @Override
     public void removeItemFromMainMenu(String name){
-        leftMenu.removeItemFromMainMenu(name);
-        storeMenuChanges();
+        super.removeItemFromMainMenu(name);
     }
 
-    protected void createDrawerLayout(){
+    private void createDrawerLayout(){
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         leftList = (ListView) findViewById(R.id.left_drawer);
         rightList = (ListView) findViewById(R.id.right_drawer);
@@ -409,45 +405,6 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         };
 
         drawerLayout.setDrawerListener(drawerToggle);
-    }
-
-    protected void closeLeftMenu(){
-        if(drawerLayout != null && drawerLayout.isDrawerOpen(leftList)){
-            drawerLayout.closeDrawer(leftList);
-        }
-    }
-
-    protected void storeMenuChanges(){
-        String jsonString = leftMenu.getJSONArrayObject().toString();
-        preferences.putMenu(jsonString);
-    }
-
-    protected void showRightDrawLayout() {
-        if(drawerLayout != null && rightList != null){
-            if(drawerLayout.isDrawerOpen(leftList)){
-                drawerLayout.closeDrawer(leftList);
-            }
-            drawerLayout.openDrawer(rightList);
-        }
-    }
-
-    protected void showLeftDrawLayout() {
-        if(drawerLayout != null && leftList != null){
-            if(drawerLayout.isDrawerOpen(rightList)){
-                drawerLayout.closeDrawer(rightList);
-            }
-            drawerLayout.openDrawer(leftList);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            showLeftDrawLayout();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public static int getTabsCount() {

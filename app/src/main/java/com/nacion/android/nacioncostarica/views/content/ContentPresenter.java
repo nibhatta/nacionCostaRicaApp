@@ -14,8 +14,16 @@ import java.util.List;
 public interface ContentPresenter {
     Site getSite();
     void setSite(Site argSite);
-    List<ArticleContentItemList> getArticleContentFromView(int argArticleId);
+    void goToLeftSubMenuFromMenuOnTouchListener();
+    void backLeftMenuFromMenuOnClickListener();
+    void addItemToMainMenuFromSubMenuView(int position);
+    void removeItemFromMainMenuSubMenuView(int position);
+    void removeItemFromMainMenuSubMenuView(String name);
+    void goToSectionFromAdapter(int boardId);
+    void addMenuToNotificationsFromMenuView(String name);
+    void removeMenuFromNotificationsFromMenuView(String name);
     boolean articleNotExistsFromView(int argArticleId);
     Fonts getFonts();
     Context getContextFromContentActivity();
+    List<ArticleContentItemList> getArticleContentFromView(int argArticleId);
 }

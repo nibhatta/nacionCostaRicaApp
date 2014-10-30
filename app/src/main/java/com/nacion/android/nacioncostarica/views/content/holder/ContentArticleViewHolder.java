@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Created by Gustavo Matarrita on 08/10/2014.
  */
-public class ArticleContentViewHolder extends ViewHolderBase{
+public class ContentArticleViewHolder extends ViewHolderBase{
     private ImageView image;
     private TextView title;
     private TextView info;
@@ -44,7 +44,7 @@ public class ArticleContentViewHolder extends ViewHolderBase{
     private ContentPresenter presenter;
     private Fonts fonts;
 
-    public ArticleContentViewHolder(ContentPresenter argPresenter){
+    public ContentArticleViewHolder(ContentPresenter argPresenter){
         presenter = argPresenter;
         Context context = presenter.getContextFromContentActivity();
         fonts = Fonts.getInstance(context);

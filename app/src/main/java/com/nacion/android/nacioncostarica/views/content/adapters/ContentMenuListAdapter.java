@@ -1,4 +1,4 @@
-package com.nacion.android.nacioncostarica.views.home.adapters;
+package com.nacion.android.nacioncostarica.views.content.adapters;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
@@ -9,20 +9,24 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.nacion.android.nacioncostarica.R;
+import com.nacion.android.nacioncostarica.models.Menu;
+import com.nacion.android.nacioncostarica.views.content.ContentPresenter;
+import com.nacion.android.nacioncostarica.views.content.holder.ContentMenuViewHolder;
+import com.nacion.android.nacioncostarica.views.content.listeners.ContentSubMenuOnClickListener;
+import com.nacion.android.nacioncostarica.views.home.adapters.HomeListView;
 import com.nacion.android.nacioncostarica.views.home.holder.MenuViewHolder;
 import com.nacion.android.nacioncostarica.views.home.listeners.MenuOnTouchListener;
 import com.nacion.android.nacioncostarica.views.home.listeners.SubMenuOnClickListener;
 import com.nacion.android.nacioncostarica.views.main.MainPresenter;
-import com.nacion.android.nacioncostarica.models.Menu;
 
 import java.util.List;
 
 /**
  * Created by Gustavo Matarrita on 22/09/2014.
  */
-public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView {
+public class ContentMenuListAdapter extends ArrayAdapter<Menu> implements HomeListView {
     private static final int VIEWS_TYPE_COUNT = 3;
-    private MainPresenter presenter;
+    private ContentPresenter presenter;
     private LayoutInflater inflater;
     private Context context;
     private FragmentManager fragmentManager;
@@ -30,7 +34,7 @@ public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView 
     private ViewGroup parentReferences;
     private List<Menu> menuList;
 
-    public MenuListAdapter(Context context, List<Menu> argContents, FragmentManager argFragmentManager) {
+    public ContentMenuListAdapter(Context context, List<Menu> argContents, FragmentManager argFragmentManager) {
         super(context, R.layout.menu_list_item, argContents);
         this.context = context;
         menuList = argContents;
@@ -46,11 +50,11 @@ public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView 
         this.parentDrawerLayout = parentDrawerLayout;
     }
 
-    public MainPresenter getPresenter() {
+    public ContentPresenter getPresenter() {
         return presenter;
     }
 
-    public void setPresenter(MainPresenter presenter) {
+    public void setPresenter(ContentPresenter presenter) {
         this.presenter = presenter;
     }
 
@@ -59,10 +63,10 @@ public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView 
         this.parentReferences = parent;
         Menu itemList = getItem(position);
         int codeType = getItemViewType(position);
-        MenuViewHolder holder;
+        ContentMenuViewHolder holder;
 
         if(convertView == null){
-            holder = new MenuViewHolder(presenter);
+            holder = new ContentMenuViewHolder(presenter);
             switch(codeType) {
                 case Menu.HEADER:
                     convertView = inflater.inflate(R.layout.header_menu_list_item, null);
@@ -78,15 +82,14 @@ public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView 
 
                 case Menu.SUB_MENU:
                     convertView = inflater.inflate(R.layout.submenu_list_item, null);
-                    SubMenuOnClickListener subMenuListener = new SubMenuOnClickListener(presenter);
+                    ContentSubMenuOnClickListener subMenuListener = new ContentSubMenuOnClickListener(presenter);
                     convertView.setOnClickListener(subMenuListener);
                     holder.setReferencesForSubMenuView(convertView);
                     break;
             }
             convertView.setTag(holder);
-
         }else{
-            holder = (MenuViewHolder)convertView.getTag();
+            holder = (ContentMenuViewHolder)convertView.getTag();
         }
 
         setHolderViewValuesByCodeType(holder, itemList, codeType, position);
@@ -94,7 +97,7 @@ public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView 
         return convertView;
     }
 
-    private void setHolderViewValuesByCodeType(MenuViewHolder argHolder, Menu argItem, int argCodeType, int argPosition){
+    private void setHolderViewValuesByCodeType(ContentMenuViewHolder argHolder, Menu argItem, int argCodeType, int argPosition){
         switch(argCodeType){
             case Menu.HEADER:
                 argHolder.setValuesForHeaderView(argItem);

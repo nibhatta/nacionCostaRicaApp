@@ -35,7 +35,6 @@ public class MenuOnTouchListener implements View.OnTouchListener{
     private ToggleButton notificationToggleButton;
     private DrawerLayout parentDrawerLayout;
     private ViewGroup parentReferences;
-    private MainPresenter presenter;
 
     public MenuOnTouchListener(DrawerLayout parentDrawerLayout, ViewGroup parentReferences){
         this.parentDrawerLayout = parentDrawerLayout;
@@ -149,13 +148,5 @@ public class MenuOnTouchListener implements View.OnTouchListener{
                 }
             });
         }
-    }
-
-    public MainPresenter getPresenter() {
-        return presenter;
-    }
-
-    public void setPresenter(MainPresenter presenter) {
-        this.presenter = presenter;
     }
 }

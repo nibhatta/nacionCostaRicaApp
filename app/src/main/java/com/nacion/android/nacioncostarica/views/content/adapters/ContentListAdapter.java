@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.views.content.ContentPresenter;
-import com.nacion.android.nacioncostarica.views.content.holder.ArticleContentViewHolder;
+import com.nacion.android.nacioncostarica.views.content.holder.ContentArticleViewHolder;
 import com.nacion.android.nacioncostarica.models.ArticleContentItemList;
 import com.nacion.android.nacioncostarica.models.Cover;
 
@@ -47,9 +47,9 @@ public class ContentListAdapter extends ArrayAdapter<ArticleContentItemList> imp
     public View getView(int position, View convertView, ViewGroup parent) {
         ArticleContentItemList itemList = getItem(position);
         int codeType = getItemViewType(position);
-        ArticleContentViewHolder holder;
+        ContentArticleViewHolder holder;
         if(convertView == null){
-            holder = new ArticleContentViewHolder(presenter);
+            holder = new ContentArticleViewHolder(presenter);
             switch(codeType){
                 case NacionConstants.ARTICLE_HIGHLIGHT_CODE:
                     if(isAGallery(itemList)) {
@@ -79,7 +79,7 @@ public class ContentListAdapter extends ArrayAdapter<ArticleContentItemList> imp
             }
             convertView.setTag(holder);
         }else{
-            holder = (ArticleContentViewHolder)convertView.getTag();
+            holder = (ContentArticleViewHolder)convertView.getTag();
         }
 
         setHolderViewValuesByCodeType(holder, itemList, codeType);
@@ -96,7 +96,7 @@ public class ContentListAdapter extends ArrayAdapter<ArticleContentItemList> imp
         return article != null && article.getType() != null && article.getType().equals(NacionConstants.PGL);
     }
 
-    private void setHolderViewValuesByCodeType(ArticleContentViewHolder holder, ArticleContentItemList item, int codeType){
+    private void setHolderViewValuesByCodeType(ContentArticleViewHolder holder, ArticleContentItemList item, int codeType){
         switch(codeType){
             case NacionConstants.ARTICLE_HIGHLIGHT_CODE:
                 if(isAGallery(item)) {

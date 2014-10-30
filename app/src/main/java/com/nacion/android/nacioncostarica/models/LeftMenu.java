@@ -18,7 +18,7 @@ import java.util.Map;
  * Created by Gustavo Matarrita on 20/10/2014.
  */
 public class LeftMenu {
-    private List<Menu> menus;
+    private static List<Menu> menus;
     private Context context;
     private SharedPreferencesManager preferences;
 

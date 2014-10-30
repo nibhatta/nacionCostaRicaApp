@@ -38,6 +38,46 @@ public class ContentPresenterImpl implements ContentPresenter {
     }
 
     @Override
+    public void goToLeftSubMenuFromMenuOnTouchListener() {
+        contentView.goToLeftSubMenu();
+    }
+
+    @Override
+    public void backLeftMenuFromMenuOnClickListener() {
+        contentView.backLeftMenu();
+    }
+
+    @Override
+    public void addItemToMainMenuFromSubMenuView(int position){
+        contentView.addItemToMainMenu(position);
+    }
+
+    @Override
+    public void removeItemFromMainMenuSubMenuView(int position){
+        contentView.removeItemFromMainMenu(position);
+    }
+
+    @Override
+    public void removeItemFromMainMenuSubMenuView(String name){
+        contentView.removeItemFromMainMenu(name);
+    }
+
+    @Override
+    public void goToSectionFromAdapter(int boardId) {
+        contentView.goToSection(boardId);
+    }
+
+    @Override
+    public void addMenuToNotificationsFromMenuView(String name) {
+        contentView.addMenuToNotification(name);
+    }
+
+    @Override
+    public void removeMenuFromNotificationsFromMenuView(String name) {
+        contentView.removeMenuFromNotification(name);
+    }
+
+    @Override
     public Fonts getFonts() {
         return contentView.getFontsFromChildrenViews();
     }
