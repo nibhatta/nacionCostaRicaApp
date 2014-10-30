@@ -1,22 +1,17 @@
 package com.nacion.android.nacioncostarica.views.home.holder;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
-import com.nacion.android.nacioncostarica.gui.textView.SectionTextCreator;
-import com.nacion.android.nacioncostarica.gui.textView.SummaryTextCreator;
-import com.nacion.android.nacioncostarica.gui.textView.TitleTextCreator;
+import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
+import com.nacion.android.nacioncostarica.gui.textView.TextCreator;
 import com.nacion.android.nacioncostarica.models.Image;
-import com.nacion.android.nacioncostarica.models.Module;
 import com.nacion.android.nacioncostarica.views.base.holders.ViewHolderBase;
 import com.nacion.android.nacioncostarica.views.home.adapters.GalleryVideoPagerAdapter;
 import com.nacion.android.nacioncostarica.views.home.adapters.HomeListAdapter;
@@ -44,38 +39,39 @@ public class HomeViewHolder extends ViewHolderBase{
     private TextView viewPagerSection;
     private ViewPager viewPager;
     private HomeListPresenter presenter;
-    private TitleTextCreator titleCreator;
-    private SummaryTextCreator summaryCreator;
-    private SectionTextCreator sectionCreator;
+    private Fonts fonts;
 
     public HomeViewHolder(HomeListPresenter argPresenter){
         presenter = argPresenter;
         Context context = presenter.getContextFromMainActivity();
-        titleCreator = new TitleTextCreator(context);
-        summaryCreator = new SummaryTextCreator(context);
-        sectionCreator = new SectionTextCreator(context);
+        fonts = Fonts.getInstance(context);
     }
 
     public void setReferencesForArticleView(View view){
         image = (ImageView)view.findViewById(R.id.articleImageView);
         section = (TextView)view.findViewById(R.id.articleSectionTextView);
-        summary = summaryCreator
-                .buildText((TextView)view.findViewById(R.id.articleSummaryTextView))
-                .withTimesNewRoman();
+        summary = new TextCreator
+                .Builder((TextView)view.findViewById(R.id.articleSummaryTextView))
+                .size(12)
+                .typeface(fonts.OPEN_SANS_REGULAR)
+                .build();
     }
 
-    public void setValuesForArticleView(ContentItemList argItem){
-        Image imageModel = argItem.getImage();
-        if(imageModel != null) {
+    public void setValuesForArticleView(ContentItemList item){
+        Image imageModel = item.getImage();
+        if(imageExists(item.getImage())) {
+            image.setVisibility(View.VISIBLE);
             String url = imageModel.getPhoneUrl();
             downloadImage(url, image);
+        }else{
+            image.setVisibility(View.GONE);
         }
 
-        section.setText(getSectionString(argItem));
-        summary.setText(argItem.getSummary());
+        section.setText(getSectionString(item));
+        summary.setText(item.getSummary());
 
-        final String section = argItem.getSection();
-        final int articleId = argItem.getId();
+        final String section = item.getSection();
+        final int articleId = item.getId();
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,9 +83,11 @@ public class HomeViewHolder extends ViewHolderBase{
     public void setReferencesForHighlightView(View argView){
         image = (ImageView)argView.findViewById(R.id.moduleImageView);
         summary = (TextView)argView.findViewById(R.id.moduleSummaryTextView);
-        title = titleCreator
-                .buildText((TextView) argView.findViewById(R.id.moduleTitleTextView))
-                .withAdeleBold();
+        title = new TextCreator
+                .Builder((TextView) argView.findViewById(R.id.moduleTitleTextView))
+                .size(21)
+                .typeface(fonts.ADELE_BOLD)
+                .build();
     }
 
     public void setValuesForHighlightView(ContentItemList argItem){
@@ -126,12 +124,16 @@ public class HomeViewHolder extends ViewHolderBase{
 
     public void setReferencesForVideoGalleryView(View view){
         viewPager = (ViewPager)view.findViewById(R.id.videoGalleryViewPager);
-        viewPagerTitle = titleCreator
-                .buildText((TextView)view.findViewById(R.id.videoTitleTextView))
-                .withAdeleBold();
-        viewPagerSection = sectionCreator
-                .buildText((TextView)view.findViewById(R.id.sectionVideoTextView))
-                .withOpenSansRegular();
+        viewPagerTitle = new TextCreator
+                .Builder((TextView)view.findViewById(R.id.videoTitleTextView))
+                .size(21)
+                .typeface(fonts.ADELE_BOLD)
+                .build();
+        viewPagerSection = new TextCreator
+                .Builder((TextView)view.findViewById(R.id.sectionVideoTextView))
+                .size(11)
+                .typeface(fonts.TIMES_NEW_ROMAN)
+                .build();
 
     }
 

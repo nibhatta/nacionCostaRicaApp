@@ -19,7 +19,6 @@
                 android:background="@android:color/black"/>
 
             <TextView
-                style="@style/SectionOpenSansBoldWhiteFont"
                 android:id="@+id/sectionVideoTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,7 +38,6 @@
             android:gravity="center">
 
             <TextView
-                style="@style/TitleAdelleSemiBoldWhiteFont"
                 android:id="@+id/videoTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/video_title_video_gallery_phone"

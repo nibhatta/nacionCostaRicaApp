@@ -5,7 +5,6 @@
     android:orientation="vertical">
 
     <TextView
-        style="@style/SectionTabletOpenSemiBoldFont"
         android:id="@+id/moduleLastHourTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +26,6 @@
         android:scaleType="centerCrop"/>
 
     <TextView
-        style="@style/SectionTabletOpenSemiBoldFont"
         android:id="@+id/moduleSectionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,7 +33,6 @@
         android:textAllCaps="true"/>
 
     <TextView
-        style="@style/TitleTabletAdelleExtraBoldFont"
         android:id="@+id/moduleTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,7 +40,6 @@
         />
 
     <TextView
-        style="@style/SummaryTabletOpenSansRegularFont"
         android:id="@+id/moduleSummaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -29,7 +29,6 @@
             android:paddingRight="10dp">
 
             <TextView
-                style="@style/SectionOpenSansFont"
                 android:id="@+id/relatedSectionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,7 +36,6 @@
                 android:textSize="@dimen/title_article_size"/>
 
             <TextView
-                style="@style/SummaryTimesNewRomanRegularFont"
                 android:id="@+id/relatedSummaryTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

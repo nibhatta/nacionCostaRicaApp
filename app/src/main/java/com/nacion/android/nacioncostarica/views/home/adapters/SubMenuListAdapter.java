@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.views.home.holder.SubMenuViewHolder;
-import com.nacion.android.nacioncostarica.main.MainPresenter;
+import com.nacion.android.nacioncostarica.views.main.MainPresenter;
 import com.nacion.android.nacioncostarica.models.Menu;
 
 import java.util.List;

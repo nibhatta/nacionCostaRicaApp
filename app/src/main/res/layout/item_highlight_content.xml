@@ -45,7 +45,6 @@
         android:padding="@dimen/content_padding">
 
         <TextView
-            style="@style/SectionOpenSansFont"
             android:id="@+id/authorPhotoContentTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,18 +53,15 @@
             />
 
         <TextView
-            style="@style/SectionOpenSansFont"
             android:id="@+id/dateLongFormatContentTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dummy_date_long_format"
             android:gravity="left"
             android:textStyle="bold"
-            android:layout_marginTop="@dimen/margin_separate"
-            android:textSize="@dimen/font_date_phone"/>
+            android:layout_marginTop="@dimen/margin_separate"/>
 
         <TextView
-            style="@style/TitleAdelleBoldFont"
             android:id="@+id/titleContentTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,7 +71,6 @@
             />
 
         <TextView
-            style="@style/SectionOpenSansFont"
             android:id="@+id/authorNewsContentTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

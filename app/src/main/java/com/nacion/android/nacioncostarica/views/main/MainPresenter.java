@@ -1,8 +1,12 @@
-package com.nacion.android.nacioncostarica.main;
+package com.nacion.android.nacioncostarica.views.main;
 
 import android.content.Context;
 
+import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
+import com.nacion.android.nacioncostarica.models.ArticleContentItemList;
 import com.nacion.android.nacioncostarica.models.Site;
+
+import java.util.List;
 
 /**
  * Created by Gustavo Matarrita on 22/09/2014.
@@ -19,5 +23,5 @@ public interface MainPresenter {
     void goToSectionFromAdapter(int boardId);
     void addMenuToNotificationsFromMenuView(String name);
     void removeMenuFromNotificationsFromMenuView(String name);
-    Context getContext();
+    Context getContextFromMainActivity();
 }

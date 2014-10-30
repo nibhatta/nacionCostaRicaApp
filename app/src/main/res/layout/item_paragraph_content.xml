@@ -6,7 +6,6 @@
     android:padding="@dimen/content_padding">
 
     <TextView
-        style="@style/BodyMagaBookFont"
         android:id="@+id/bodyContentTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

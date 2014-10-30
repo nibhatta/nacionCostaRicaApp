@@ -7,7 +7,6 @@
     android:paddingRight="@dimen/content_padding_highlight_tablet">
 
     <TextView
-        style="@style/BodyMagaBookFont"
         android:id="@+id/bodyContentTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

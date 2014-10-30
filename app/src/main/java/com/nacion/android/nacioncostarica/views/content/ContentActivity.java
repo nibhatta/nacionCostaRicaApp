@@ -30,8 +30,8 @@ public class ContentActivity extends FragmentActivity implements ContentView{
     private TextView sectionTitleTextView;
     private ListView contentListView;
     private int articleId;
-    private ContentPresenter presenter;
     private Context context;
+    protected ContentPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

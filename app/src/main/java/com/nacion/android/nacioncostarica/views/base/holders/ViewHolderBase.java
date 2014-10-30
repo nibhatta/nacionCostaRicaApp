@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
+import com.nacion.android.nacioncostarica.models.Image;
 import com.nacion.android.nacioncostarica.tasks.ImageDownloaderTask;
 
 import java.text.SimpleDateFormat;
@@ -32,5 +33,9 @@ public abstract class ViewHolderBase {
         }else{
             task.execute(argUrl);
         }
+    }
+
+    public boolean imageExists(Image image){
+        return(image != null && image.getPhoneUrl() != null && !image.getPhoneUrl().isEmpty());
     }
 }

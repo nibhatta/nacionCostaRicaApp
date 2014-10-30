@@ -38,9 +38,8 @@
             android:id="@+id/articleNewsImageView"
             android:layout_width="0dp"
             android:layout_height="@dimen/image_height_article"
-            android:src="@drawable/module"
             android:layout_weight="1"
-            android:scaleType="fitXY"/>
+            android:scaleType="centerCrop"/>
 
 
     </LinearLayout>

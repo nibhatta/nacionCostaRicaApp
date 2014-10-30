@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.nacion.android.nacioncostarica.R;
-import com.nacion.android.nacioncostarica.main.MainPresenter;
+import com.nacion.android.nacioncostarica.views.main.MainPresenter;
 
 /**
  * Created by Gustavo Matarrita on 15/10/2014.

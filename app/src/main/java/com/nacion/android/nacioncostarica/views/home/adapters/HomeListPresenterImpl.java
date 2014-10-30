@@ -3,7 +3,7 @@ package com.nacion.android.nacioncostarica.views.home.adapters;
 import android.content.Context;
 
 import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
-import com.nacion.android.nacioncostarica.main.MainView;
+import com.nacion.android.nacioncostarica.views.main.MainView;
 
 /**
  * Created by Gustavo Matarrita on 22/09/2014.

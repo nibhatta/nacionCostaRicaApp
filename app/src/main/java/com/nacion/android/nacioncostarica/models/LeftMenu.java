@@ -1,9 +1,10 @@
 package com.nacion.android.nacioncostarica.models;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.nacion.android.nacioncostarica.commons.SharedPreferencesManager;
-import com.nacion.android.nacioncostarica.main.MainPresenter;
+import com.nacion.android.nacioncostarica.views.main.MainPresenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,12 +19,12 @@ import java.util.Map;
  */
 public class LeftMenu {
     private List<Menu> menus;
-    private MainPresenter presenter;
+    private Context context;
     private SharedPreferencesManager preferences;
 
-    public LeftMenu(MainPresenter presenter){
-        this.presenter = presenter;
-        preferences = SharedPreferencesManager.getPreferences(this.presenter.getContext());
+    public LeftMenu(Context context){
+        this.context = context;
+        preferences = SharedPreferencesManager.getPreferences(context);
     }
 
     public void setMenus(Map<String, String> boardNamesMap){

@@ -9,9 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.R;
-import com.nacion.android.nacioncostarica.gui.textView.SectionTextCreator;
-import com.nacion.android.nacioncostarica.gui.textView.SummaryTextCreator;
-import com.nacion.android.nacioncostarica.gui.textView.TitleTextCreator;
+import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
+import com.nacion.android.nacioncostarica.gui.textView.TextCreator;
 import com.nacion.android.nacioncostarica.views.content.ContentPresenter;
 import com.nacion.android.nacioncostarica.views.content.adapters.ContentImageGalleryPagerAdapter;
 import com.nacion.android.nacioncostarica.views.content.adapters.WeightImageGalleryPagerAdapter;
@@ -43,16 +42,12 @@ public class ArticleContentViewHolder extends ViewHolderBase{
     private TextView section;
     private ViewPager viewPager;
     private ContentPresenter presenter;
-    private TitleTextCreator titleCreator;
-    private SummaryTextCreator summaryCreator;
-    private SectionTextCreator sectionCreator;
+    private Fonts fonts;
 
     public ArticleContentViewHolder(ContentPresenter argPresenter){
         presenter = argPresenter;
         Context context = presenter.getContextFromContentActivity();
-        titleCreator = new TitleTextCreator(context);
-        summaryCreator = new SummaryTextCreator(context);
-        sectionCreator = new SectionTextCreator(context);
+        fonts = Fonts.getInstance(context);
     }
 
     public void setReferencesForParagraphView(View argView){
@@ -67,9 +62,11 @@ public class ArticleContentViewHolder extends ViewHolderBase{
 
     public void setReferencesForHighlightView(View argView){
         image = (ImageView)argView.findViewById(R.id.moduleImageView);
-        title = titleCreator
-                .buildText((TextView)argView.findViewById(R.id.titleContentTextView))
-                .withAdeleBold();
+        title = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.titleContentTextView))
+                .typeface(fonts.ADELE_BOLD)
+                .size(21)
+                .build();
         author = (TextView)argView.findViewById(R.id.authorNewsContentTextView);
         photoAuthor = (TextView)argView.findViewById(R.id.authorPhotoContentTextView);
         info = (TextView)argView.findViewById(R.id.infoTextView);
@@ -104,9 +101,11 @@ public class ArticleContentViewHolder extends ViewHolderBase{
 
     public void setReferencesForHighlightImageGalleryView(View argView){
         viewPager = (ViewPager)argView.findViewById(R.id.imageGalleryViewPager);
-        title = titleCreator
-                .buildText((TextView)argView.findViewById(R.id.titleContentTextView))
-                .withAdeleBold();
+        title = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.titleContentTextView))
+                .size(21)
+                .typeface(fonts.ADELE_BOLD)
+                .build();
         author = (TextView)argView.findViewById(R.id.authorNewsContentTextView);
         photoAuthor = (TextView)argView.findViewById(R.id.authorPhotoContentTextView);
         info = (TextView)argView.findViewById(R.id.infoTextView);
@@ -160,12 +159,13 @@ public class ArticleContentViewHolder extends ViewHolderBase{
     }
 
     public void setReferencesForWeightImageGalleryView(View argView){
-        viewPager = (ViewPager)argView.findViewById(R.id.imageGalleryViewPager);
-        title = titleCreator
-                .buildText((TextView)argView.findViewById(R.id.imageTitleTextView))
-                .withAdeleRegular();
+        viewPager = (ViewPager)argView.findViewById(R.id.bodyImageGalleryViewPager);
+        title = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.imageTitleTextView))
+                .size(21)
+                .typeface(fonts.ADELE_BOLD)
+                .build();
     }
-
 
     public void setValuesForWeightImageGalleryView(ArticleContentItemList article, FragmentManager fragmentManager){
 

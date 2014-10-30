@@ -6,9 +6,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.R;
-import com.nacion.android.nacioncostarica.gui.textView.SectionTextCreator;
-import com.nacion.android.nacioncostarica.gui.textView.SummaryTextCreator;
-import com.nacion.android.nacioncostarica.gui.textView.TitleTextCreator;
+import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
+import com.nacion.android.nacioncostarica.gui.textView.TextCreator;
 import com.nacion.android.nacioncostarica.views.base.holders.ViewHolderBase;
 import com.nacion.android.nacioncostarica.views.home.adapters.HomeListPresenter;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
@@ -22,30 +21,35 @@ public class GridViewHolder extends ViewHolderBase{
     private TextView section;
     private TextView summary;
     private HomeListPresenter presenter;
-    private TitleTextCreator titleCreator;
-    private SummaryTextCreator summaryCreator;
-    private SectionTextCreator sectionCreator;
+    private TextCreator titleCreator;
+    private Fonts fonts;
 
     public GridViewHolder(HomeListPresenter argPresenter){
         presenter = argPresenter;
         Context context = presenter.getContextFromMainActivity();
-        titleCreator = new TitleTextCreator(context);
-        summaryCreator = new SummaryTextCreator(context);
-        sectionCreator = new SectionTextCreator(context);
+        fonts = Fonts.getInstance(context);
     }
 
     public void setComponentsReferences(View argView){
         image = (ImageView)argView.findViewById(R.id.moduleNewsImageView);
-        title = titleCreator
-                .buildText((TextView)argView.findViewById(R.id.moduleNewsTitleTextView))
-                .withAdeleRegular();
+        title = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.moduleNewsTitleTextView))
+                .typeface(fonts.ADELE_BOLD)
+                .size(21)
+                .build();
     }
 
-    public void setValues(ContentItemList argItem){
-        String url = argItem.getImage().getPhoneUrl();
-        downloadImage(url, image);
-        title.setText(argItem.getTitle());
-        setStartContextActivityEvent(argItem);
+    public void setValues(ContentItemList item){
+        if(imageExists(item.getImage())) {
+            image.setVisibility(View.VISIBLE);
+            String url = item.getImage().getPhoneUrl();
+            downloadImage(url, image);
+        }else{
+            image.setVisibility(View.GONE);
+        }
+
+        title.setText(item.getTitle());
+        setStartContextActivityEvent(item);
     }
 
     public void setComponentsReferencesForArticleGrid(View argView){

@@ -1,13 +1,19 @@
-package com.nacion.android.nacioncostarica.main;
+package com.nacion.android.nacioncostarica.views.main;
 
 import android.content.Context;
 
+import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
+import com.nacion.android.nacioncostarica.models.Article;
+import com.nacion.android.nacioncostarica.models.ArticleContentItemList;
 import com.nacion.android.nacioncostarica.models.Site;
+import com.nacion.android.nacioncostarica.views.content.ContentView;
+
+import java.util.List;
 
 /**
  * Created by Gustavo Matarrita on 22/09/2014.
  */
-public class MainPresenterImpl implements MainPresenter{
+public class MainPresenterImpl implements MainPresenter {
     private MainView mainView;
     private Site site;
 
@@ -71,7 +77,7 @@ public class MainPresenterImpl implements MainPresenter{
     }
 
     @Override
-    public Context getContext() {
+    public Context getContextFromMainActivity() {
         return mainView.getContext();
     }
 }

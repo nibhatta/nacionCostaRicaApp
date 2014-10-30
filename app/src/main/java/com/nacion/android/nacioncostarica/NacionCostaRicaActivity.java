@@ -3,7 +3,6 @@ package com.nacion.android.nacioncostarica;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -26,6 +25,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.nacion.android.nacioncostarica.commons.SharedPreferencesManager;
+import com.nacion.android.nacioncostarica.models.LeftMenu;
+import com.nacion.android.nacioncostarica.models.Site;
 import com.nacion.android.nacioncostarica.views.content.ContentActivity;
 import com.nacion.android.nacioncostarica.constants.NacionConstants;
 import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
@@ -35,14 +36,12 @@ import com.nacion.android.nacioncostarica.views.home.adapters.HomeListForTabletA
 import com.nacion.android.nacioncostarica.views.home.adapters.HomeListPresenterImpl;
 import com.nacion.android.nacioncostarica.views.home.adapters.MenuListAdapter;
 import com.nacion.android.nacioncostarica.views.home.adapters.SubMenuListAdapter;
-import com.nacion.android.nacioncostarica.main.MainPresenter;
-import com.nacion.android.nacioncostarica.main.MainPresenterImpl;
-import com.nacion.android.nacioncostarica.main.MainView;
+import com.nacion.android.nacioncostarica.views.main.MainPresenter;
+import com.nacion.android.nacioncostarica.views.main.MainPresenterImpl;
+import com.nacion.android.nacioncostarica.views.main.MainView;
 import com.nacion.android.nacioncostarica.models.Board;
 import com.nacion.android.nacioncostarica.models.ContentItemList;
-import com.nacion.android.nacioncostarica.models.LeftMenu;
 import com.nacion.android.nacioncostarica.models.Menu;
-import com.nacion.android.nacioncostarica.models.Site;
 import com.nacion.android.nacioncostarica.useCases.JSONFeed;
 import com.nacion.android.nacioncostarica.useCases.JSONFeedImpl;
 import com.nacion.android.nacioncostarica.useCases.JSONReader;
@@ -52,27 +51,27 @@ import com.nacion.android.nacioncostarica.views.video.VideoActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NacionCostaRicaActivity extends FragmentActivity implements MainView{
+public class NacionCostaRicaActivity extends FragmentActivity implements MainView {
     private static int tabsCount;
-    private ViewPager mainViewPager;
-    private MainPresenter presenter;
     private List<NacionFragment> fragments;
     private CoverPagerAdapter coverPagerAdapter;
     private ImageButton sectionsImageButton;
     private ImageButton settingsImageButton;
-    private FragmentManager mainFragmentManager;
-    private ActionBarDrawerToggle drawerToggle;
-    private DrawerLayout drawerLayout;
     private ProgressBar progressBar;
-    private ListView leftList;
-    private ListView rightList;
-    private float lastTranslate = 0.0f;
     private ReadJSONFeedTask jsonAsyncTask;
-    private Site site;
-    private LeftMenu leftMenu;
     private JSONReader jsonReader = new JSONReaderImpl();
     private JSONFeed jsonFeed = new JSONFeedImpl();
-    private SharedPreferencesManager preferences;
+    protected ActionBarDrawerToggle drawerToggle;
+    protected DrawerLayout drawerLayout;
+    protected ListView leftList;
+    protected ListView rightList;
+    protected float lastTranslate = 0.0f;
+    protected LeftMenu leftMenu;
+    protected ViewPager mainViewPager;
+    protected SharedPreferencesManager preferences;
+    protected FragmentManager mainFragmentManager;
+    protected MainPresenter presenter;
+    protected Site site;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,43 +110,6 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
             actionBar.setCustomView(customView);
             actionBar.setDisplayShowCustomEnabled(true);
         }
-    }
-
-    private void createDrawerLayout(){
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        leftList = (ListView) findViewById(R.id.left_drawer);
-        rightList = (ListView) findViewById(R.id.right_drawer);
-
-        leftMenu = new LeftMenu(presenter);
-        leftMenu.setMenus(site.getBoardNames());
-
-        List<Menu> menus = leftMenu.getMainMenu();
-
-        MenuListAdapter adapter = new MenuListAdapter(this, menus, mainFragmentManager);
-        adapter.setPresenter(presenter);
-        adapter.setParentDrawerLayout(drawerLayout);
-        leftList.setAdapter(adapter);
-        rightList.setAdapter(adapter);
-
-
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_launcher, 0, 0){
-            public void onDrawerSlide(View drawerView, float slideOffset){
-                int moveDirection = drawerView.equals(leftList) ? 1 : -1;
-                float moveWidth = drawerView.equals(leftList) ? (leftList.getWidth() * slideOffset) : (rightList.getWidth() * slideOffset);
-                float moveFactor = moveDirection * moveWidth;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-                    mainViewPager.setTranslationX(moveFactor);
-                }else{
-                    TranslateAnimation anim = new TranslateAnimation(lastTranslate, moveFactor, 0.0f, 0.0f);
-                    anim.setDuration(0);
-                    anim.setFillAfter(true);
-                    mainViewPager.startAnimation(anim);
-                    lastTranslate = moveFactor;
-                }
-            }
-        };
-
-        drawerLayout.setDrawerListener(drawerToggle);
     }
 
     private static boolean isTablet(Context context) {
@@ -356,12 +318,6 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         return find;
     }
 
-    private void closeLeftMenu(){
-        if(drawerLayout != null && drawerLayout.isDrawerOpen(leftList)){
-            drawerLayout.closeDrawer(leftList);
-        }
-    }
-
     @Override
     public Context getContext() {
         return getApplicationContext();
@@ -414,18 +370,59 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         storeMenuChanges();
     }
 
-    private void storeMenuChanges(){
-        String jsonString = leftMenu.getJSONArrayObject().toString();
-        preferences.putMenu(jsonString);
-    }
-
     @Override
     public void removeItemFromMainMenu(String name){
         leftMenu.removeItemFromMainMenu(name);
         storeMenuChanges();
     }
 
-    public void showRightDrawLayout() {
+    protected void createDrawerLayout(){
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        leftList = (ListView) findViewById(R.id.left_drawer);
+        rightList = (ListView) findViewById(R.id.right_drawer);
+
+        leftMenu = new LeftMenu(getApplicationContext());
+        leftMenu.setMenus(site.getBoardNames());
+        List<Menu> menus = leftMenu.getMainMenu();
+
+        MenuListAdapter adapter = new MenuListAdapter(this, menus, mainFragmentManager);
+        adapter.setPresenter(presenter);
+        adapter.setParentDrawerLayout(drawerLayout);
+        leftList.setAdapter(adapter);
+        rightList.setAdapter(adapter);
+
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_launcher, 0, 0){
+            public void onDrawerSlide(View drawerView, float slideOffset){
+                int moveDirection = drawerView.equals(leftList) ? 1 : -1;
+                float moveWidth = drawerView.equals(leftList) ? (leftList.getWidth() * slideOffset) : (rightList.getWidth() * slideOffset);
+                float moveFactor = moveDirection * moveWidth;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+                    mainViewPager.setTranslationX(moveFactor);
+                }else{
+                    TranslateAnimation anim = new TranslateAnimation(lastTranslate, moveFactor, 0.0f, 0.0f);
+                    anim.setDuration(0);
+                    anim.setFillAfter(true);
+                    mainViewPager.startAnimation(anim);
+                    lastTranslate = moveFactor;
+                }
+            }
+        };
+
+        drawerLayout.setDrawerListener(drawerToggle);
+    }
+
+    protected void closeLeftMenu(){
+        if(drawerLayout != null && drawerLayout.isDrawerOpen(leftList)){
+            drawerLayout.closeDrawer(leftList);
+        }
+    }
+
+    protected void storeMenuChanges(){
+        String jsonString = leftMenu.getJSONArrayObject().toString();
+        preferences.putMenu(jsonString);
+    }
+
+    protected void showRightDrawLayout() {
         if(drawerLayout != null && rightList != null){
             if(drawerLayout.isDrawerOpen(leftList)){
                 drawerLayout.closeDrawer(leftList);
@@ -434,7 +431,7 @@ public class NacionCostaRicaActivity extends FragmentActivity implements MainVie
         }
     }
 
-    public void showLeftDrawLayout() {
+    protected void showLeftDrawLayout() {
         if(drawerLayout != null && leftList != null){
             if(drawerLayout.isDrawerOpen(rightList)){
                 drawerLayout.closeDrawer(rightList);

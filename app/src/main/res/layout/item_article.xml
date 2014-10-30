@@ -29,15 +29,12 @@
             android:paddingRight="10dp">
 
             <TextView
-                style="@style/SectionOpenSansFont"
                 android:id="@+id/articleSectionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/dummy_text_date"
-                android:textSize="@dimen/title_article_size"/>
+                android:text="@string/dummy_text_date"/>
 
             <TextView
-                style="@style/SummaryTimesNewRomanRegularFont"
                 android:id="@+id/articleSummaryTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

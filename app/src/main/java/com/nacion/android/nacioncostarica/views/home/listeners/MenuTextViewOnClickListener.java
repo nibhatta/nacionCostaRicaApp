@@ -2,7 +2,7 @@ package com.nacion.android.nacioncostarica.views.home.listeners;
 
 import android.view.View;
 
-import com.nacion.android.nacioncostarica.main.MainPresenter;
+import com.nacion.android.nacioncostarica.views.main.MainPresenter;
 
 /**
  * Created by Gustavo Matarrita on 20/10/2014.

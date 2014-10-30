@@ -9,9 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.R;
-import com.nacion.android.nacioncostarica.gui.textView.SectionTextCreator;
-import com.nacion.android.nacioncostarica.gui.textView.SummaryTextCreator;
-import com.nacion.android.nacioncostarica.gui.textView.TitleTextCreator;
+import com.nacion.android.nacioncostarica.gui.fonts.Fonts;
+import com.nacion.android.nacioncostarica.gui.textView.TextCreator;
 import com.nacion.android.nacioncostarica.views.base.holders.ViewHolderBase;
 import com.nacion.android.nacioncostarica.views.home.adapters.GalleryVideoPagerAdapter;
 import com.nacion.android.nacioncostarica.views.home.adapters.HomeSpecialDataGridAdapter;
@@ -48,16 +47,12 @@ public class HomeTabletViewHolder extends ViewHolderBase{
     private ViewPager viewPager;
     private GridView gridView;
     private HomeListPresenter presenter;
-    private TitleTextCreator titleCreator;
-    private SummaryTextCreator summaryCreator;
-    private SectionTextCreator sectionCreator;
+    private Fonts fonts;
 
     public HomeTabletViewHolder(HomeListPresenter argPresenter){
         presenter = argPresenter;
         Context context = presenter.getContextFromMainActivity();
-        titleCreator = new TitleTextCreator(context);
-        summaryCreator = new SummaryTextCreator(context);
-        sectionCreator = new SectionTextCreator(context);
+        fonts = Fonts.getInstance(context);
     }
 
     public void setReferencesForArticleView(View argView){
@@ -72,8 +67,11 @@ public class HomeTabletViewHolder extends ViewHolderBase{
     }
 
     public void setReferencesForSpecialDataView(View argView){
-        title = titleCreator
-                .buildText((TextView)argView.findViewById(R.id.specialDataTitleTextView)).withAdeleBold();
+        title = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.specialDataTitleTextView))
+                .size(20)
+                .typeface(fonts.ADELE_BOLD)
+                .build();
 
         gridView = (GridView)argView.findViewById(R.id.specialDataGridView);
     }
@@ -83,18 +81,23 @@ public class HomeTabletViewHolder extends ViewHolderBase{
         title.setText(contentModule.getTitle());
         List<Content> items = argItem.getModule().getContents();
         HomeSpecialDataGridAdapter homeSpecialDataGridAdapter = new HomeSpecialDataGridAdapter(argContext, items);
+        homeSpecialDataGridAdapter.setPresenter(presenter);
         gridView.setAdapter(homeSpecialDataGridAdapter);
     }
 
     public void setReferencesForBBlockView(View argView){
         b1ImageView = (ImageView)argView.findViewById(R.id.blockB1ImageView);
-        b1TextView = titleCreator
-                .buildText((TextView)argView.findViewById(R.id.blockB1TextView))
-                .withAdeleSemiBold();
+        b1TextView = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.blockB1TextView))
+                .size(20)
+                .typeface(fonts.ADELE_BOLD)
+                .build();
         b2ImageView = (ImageView)argView.findViewById(R.id.blockB2ImageView);
-        b2TextView = titleCreator
-                .buildText((TextView)argView.findViewById(R.id.blockB2TextView))
-                .withAdeleBold();
+        b2TextView = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.blockB2TextView))
+                .size(20)
+                .typeface(fonts.ADELE_BOLD)
+                .build();
         b3ImageView = (ImageView)argView.findViewById(R.id.blockB3ImageView);
     }
 
@@ -114,15 +117,21 @@ public class HomeTabletViewHolder extends ViewHolderBase{
 
     public void setReferencesForApproachView(View argView){
         image = (ImageView)argView.findViewById(R.id.approachImageView);
-        section = sectionCreator
-                .buildText((TextView)argView.findViewById(R.id.approachSectionTextView))
-                .withOpenSansRegular();
-        title = titleCreator
-                .buildText((TextView)argView.findViewById(R.id.approachTitleTextView))
-                .withAdeleBold();
-        summary = summaryCreator
-                .buildText((TextView)argView.findViewById(R.id.approachSummaryTextView))
-                .withTimesNewRoman();
+        section = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.approachSectionTextView))
+                .size(18)
+                .typeface(fonts.OPEN_SANS_REGULAR)
+                .build();
+        title = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.approachTitleTextView))
+                .size(20)
+                .typeface(fonts.ADELE_BOLD)
+                .build();
+        summary = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.approachSummaryTextView))
+                .size(13)
+                .typeface(fonts.TIMES_NEW_ROMAN)
+                .build();
         approachTextView = (TextView)argView.findViewById(R.id.approachTextView);
     }
 
@@ -147,15 +156,21 @@ public class HomeTabletViewHolder extends ViewHolderBase{
 
     public void setReferencesForHighlightView(View argView){
         image = (ImageView)argView.findViewById(R.id.moduleImageView);
-        section = sectionCreator
-                .buildText((TextView)argView.findViewById(R.id.moduleSectionTextView))
-                .withOpenSansRegular();
-        title = titleCreator
-                .buildText((TextView)argView.findViewById(R.id.moduleTitleTextView))
-                .withAdeleExtraBold();
-        summary = summaryCreator
-                .buildText((TextView)argView.findViewById(R.id.moduleSummaryTextView))
-                .withOpenSansRegular();
+        section = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.moduleSectionTextView))
+                .size(18)
+                .typeface(fonts.OPEN_SANS_REGULAR)
+                .build();
+        title = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.moduleTitleTextView))
+                .size(20)
+                .typeface(fonts.ADELE_BOLD)
+                .build();
+        summary = new TextCreator
+                .Builder((TextView)argView.findViewById(R.id.moduleSummaryTextView))
+                .size(13)
+                .typeface(fonts.TIMES_NEW_ROMAN)
+                .build();
         gridView = (GridView)argView.findViewById(R.id.moduleGridView);
     }
 

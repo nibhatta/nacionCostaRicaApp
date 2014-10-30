@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.views.base.holders.ViewHolderBase;
-import com.nacion.android.nacioncostarica.main.MainPresenter;
+import com.nacion.android.nacioncostarica.views.main.MainPresenter;
 import com.nacion.android.nacioncostarica.models.Menu;
 
 /**

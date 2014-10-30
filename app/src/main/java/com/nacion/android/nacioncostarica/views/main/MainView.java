@@ -1,4 +1,4 @@
-package com.nacion.android.nacioncostarica.main;
+package com.nacion.android.nacioncostarica.views.main;
 
 import android.content.Context;
 
@@ -17,9 +17,9 @@ public interface MainView {
     void updateViewFromModel();
     void showContentActivityFromViewHolder(String section, int articleId);
     void showVideoActivityFromViewHolder();
-    Fonts getFontsFromChildrenViews();
     void goToSection(int boardId);
     Context getContext();
     void addMenuToNotification(String name);
     void removeMenuFromNotification(String name);
+    Fonts getFontsFromChildrenViews();
 }

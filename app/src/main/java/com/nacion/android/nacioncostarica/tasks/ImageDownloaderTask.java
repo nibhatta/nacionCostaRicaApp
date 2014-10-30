@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.nacion.android.nacioncostarica.commons.BufferedImageManager;
@@ -19,8 +20,8 @@ public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
     private WeakReference imageViewReference;
     private BufferedImageManager buffer = BufferedImageManager.getInstance();
 
-    public ImageDownloaderTask(ImageView argImageView){
-        imageViewReference = new WeakReference(argImageView);
+    public ImageDownloaderTask(ImageView imageView){
+        imageViewReference = new WeakReference(imageView);
     }
 
     @Override
@@ -44,14 +45,14 @@ public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     @Override
-    protected void onPostExecute(Bitmap argBitmap) {
+    protected void onPostExecute(Bitmap bitmap) {
         if(isCancelled()){
-            argBitmap = null;
+            bitmap = null;
         }
         if(imageViewReference != null){
             ImageView imageView = (ImageView)imageViewReference.get();
-            if(argBitmap != null && imageView != null){
-                imageView.setImageBitmap(argBitmap);
+            if(bitmap != null && imageView != null){
+                imageView.setImageBitmap(bitmap);
             }
         }
     }
