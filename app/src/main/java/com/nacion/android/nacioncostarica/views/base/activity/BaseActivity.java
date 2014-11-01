@@ -53,6 +53,11 @@ public abstract class BaseActivity extends FragmentActivity{
         storeMenuChanges();
     }
 
+    public void reorderMenuFromMainMenu(int origin, int end){
+        leftMenu.changeOrder(origin, end);
+        storeMenuChanges();
+    }
+
     protected void closeLeftMenu(){
         if(drawerLayout != null && drawerLayout.isDrawerOpen(leftList)){
             drawerLayout.closeDrawer(leftList);

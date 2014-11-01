@@ -60,6 +60,7 @@ public class MenuViewHolder extends ViewHolderBase{
 
     public void setValuesForMenuView(final int position, final MenuListAdapter listAdapter, final Menu menu){
         title.setText(menu.getName());
+
         MenuTextViewOnClickListener listener = new MenuTextViewOnClickListener(presenter, menu.getBoardId());
         title.setOnClickListener(listener);
 
@@ -72,7 +73,6 @@ public class MenuViewHolder extends ViewHolderBase{
                 presenter.removeItemFromMainMenuSubMenuView(menu.getName());
             }
         });
-
 
         if(menu.isNotification()) {
             notificationToggleButton.setChecked(true);

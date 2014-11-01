@@ -20,6 +20,7 @@ public interface MainView {
     void goToSection(int boardId);
     void addMenuToNotification(String name);
     void removeMenuFromNotification(String name);
+    void reorderMenuFromMainMenu(int origin, int end);
     Context getContext();
     Fonts getFontsFromChildrenViews();
 }

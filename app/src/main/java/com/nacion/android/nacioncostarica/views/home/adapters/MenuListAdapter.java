@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.nacion.android.nacioncostarica.R;
 import com.nacion.android.nacioncostarica.views.home.holder.MenuViewHolder;
@@ -57,6 +59,7 @@ public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         this.parentReferences = parent;
+
         Menu itemList = getItem(position);
         int codeType = getItemViewType(position);
         MenuViewHolder holder;
@@ -71,20 +74,18 @@ public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView 
 
                 case Menu.MENU:
                     convertView = inflater.inflate(R.layout.menu_list_item, null);
-                    MenuOnTouchListener listener = new MenuOnTouchListener(parentDrawerLayout, parent);
-                    convertView.setOnTouchListener(listener);
+                    convertView.setOnTouchListener(new MenuOnTouchListener(parentDrawerLayout, parent, position));
                     holder.setReferencesForMenuView(convertView);
                     break;
 
                 case Menu.SUB_MENU:
                     convertView = inflater.inflate(R.layout.submenu_list_item, null);
-                    SubMenuOnClickListener subMenuListener = new SubMenuOnClickListener(presenter);
-                    convertView.setOnClickListener(subMenuListener);
+                    convertView.setOnClickListener(new SubMenuOnClickListener(presenter));
                     holder.setReferencesForSubMenuView(convertView);
                     break;
             }
             convertView.setTag(holder);
-
+            convertView.setId(position);
         }else{
             holder = (MenuViewHolder)convertView.getTag();
         }
@@ -119,6 +120,8 @@ public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView 
         return item.getTypeCode();
     }
 
+
+
     public List<Menu> getMenuList() {
         return menuList;
     }
@@ -126,4 +129,8 @@ public class MenuListAdapter extends ArrayAdapter<Menu> implements HomeListView 
     public void setMenuList(List<Menu> menuList) {
         this.menuList = menuList;
     }
+
+
+
+
 }

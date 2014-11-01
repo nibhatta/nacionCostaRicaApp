@@ -77,6 +77,11 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
+    public void reorderMenuFromMainMenu(int origin, int end){
+        mainView.reorderMenuFromMainMenu(origin, end);
+    }
+
+    @Override
     public Context getContextFromMainActivity() {
         return mainView.getContext();
     }

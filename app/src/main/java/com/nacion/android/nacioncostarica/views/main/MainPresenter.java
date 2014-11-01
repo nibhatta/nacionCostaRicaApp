@@ -23,5 +23,6 @@ public interface MainPresenter {
     void goToSectionFromAdapter(int boardId);
     void addMenuToNotificationsFromMenuView(String name);
     void removeMenuFromNotificationsFromMenuView(String name);
+    void reorderMenuFromMainMenu(int origin, int end);
     Context getContextFromMainActivity();
 }

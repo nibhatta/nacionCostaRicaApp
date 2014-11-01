@@ -75,7 +75,7 @@ public class ContentMenuListAdapter extends ArrayAdapter<Menu> implements HomeLi
 
                 case Menu.MENU:
                     convertView = inflater.inflate(R.layout.menu_list_item, null);
-                    MenuOnTouchListener listener = new MenuOnTouchListener(parentDrawerLayout, parent);
+                    MenuOnTouchListener listener = new MenuOnTouchListener(parentDrawerLayout, parent, position);
                     convertView.setOnTouchListener(listener);
                     holder.setReferencesForMenuView(convertView);
                     break;

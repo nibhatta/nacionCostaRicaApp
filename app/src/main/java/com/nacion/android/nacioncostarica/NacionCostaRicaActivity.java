@@ -10,14 +10,12 @@ import android.os.Bundle;
 
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
@@ -37,6 +35,7 @@ import com.nacion.android.nacioncostarica.views.home.adapters.HomeListForTabletA
 import com.nacion.android.nacioncostarica.views.home.adapters.HomeListPresenterImpl;
 import com.nacion.android.nacioncostarica.views.home.adapters.MenuListAdapter;
 import com.nacion.android.nacioncostarica.views.home.adapters.SubMenuListAdapter;
+import com.nacion.android.nacioncostarica.views.home.listeners.MenuOnDragListener;
 import com.nacion.android.nacioncostarica.views.main.MainPresenter;
 import com.nacion.android.nacioncostarica.views.main.MainPresenterImpl;
 import com.nacion.android.nacioncostarica.views.main.MainView;
@@ -372,6 +371,11 @@ public class NacionCostaRicaActivity extends BaseActivity implements MainView {
         super.removeItemFromMainMenu(name);
     }
 
+    @Override
+    public void reorderMenuFromMainMenu(int origin, int end){
+        super.reorderMenuFromMainMenu(origin, end);
+    }
+
     private void createDrawerLayout(){
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         leftList = (ListView) findViewById(R.id.left_drawer);
@@ -385,6 +389,8 @@ public class NacionCostaRicaActivity extends BaseActivity implements MainView {
         adapter.setPresenter(presenter);
         adapter.setParentDrawerLayout(drawerLayout);
         leftList.setAdapter(adapter);
+        leftList.setOnDragListener(new MenuOnDragListener(leftList, presenter));
+
         rightList.setAdapter(adapter);
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_launcher, 0, 0){

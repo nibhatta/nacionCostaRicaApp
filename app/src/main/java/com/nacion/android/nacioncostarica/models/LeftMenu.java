@@ -19,6 +19,7 @@ import java.util.Map;
  */
 public class LeftMenu {
     private static List<Menu> menus;
+    private static List<Menu> mainMenu;
     private Context context;
     private SharedPreferencesManager preferences;
 
@@ -51,7 +52,7 @@ public class LeftMenu {
     }
 
     public List<Menu> getMainMenu(){
-        List<Menu> mainMenu = new ArrayList<Menu>();
+        mainMenu = new ArrayList<Menu>();
         mainMenu.add(Menu.createMainMenuHeader());
         for(Menu menu : menus){
             if(menu.isMain()) {
@@ -103,6 +104,46 @@ public class LeftMenu {
         if(menu != null){
             menu.setNotification(false);
         }
+    }
+
+    public void changeOrder(int origin, int end){
+        if(origin < end){
+            fromMinorToMayorIndex(origin, end);
+        }else{
+            fromMayorToMinorIndex(origin, end);
+        }
+    }
+
+    private void fromMinorToMayorIndex(int origin, int end){
+        List<Menu> temp = new ArrayList<Menu>();
+        int size = mainMenu.size();
+        for(int i = 0; i <= end; i++){
+            if(i != origin){
+                temp.add(mainMenu.get(i));
+            }
+        }
+        temp.add(mainMenu.get(origin));
+        int sizeTemp = temp.size();
+        for(int i = sizeTemp; i < size; i++){
+            temp.add(mainMenu.get(i));
+        }
+        mainMenu = temp;
+    }
+
+    private void fromMayorToMinorIndex(int origin, int end){
+        List<Menu> temp = new ArrayList<Menu>();
+        int size = mainMenu.size();
+        for(int i = 0; i <= end; i++){
+            temp.add(mainMenu.get(i));
+        }
+        temp.add(mainMenu.get(origin));
+        int sizeTemp = temp.size();
+        for(int i = sizeTemp; i < size; i++){
+            if(i != origin) {
+                temp.add(mainMenu.get(i));
+            }
+        }
+        mainMenu = temp;
     }
 
     private Menu searchMenuByName(String name){

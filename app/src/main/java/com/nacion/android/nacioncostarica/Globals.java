@@ -13,6 +13,7 @@ public class Globals extends Application{
     private Site site;
     private Fonts fonts;
     private MainPresenter mainPresenter;
+    private int startPosition;
 
     public Site getSite() {
         return site;
@@ -36,5 +37,13 @@ public class Globals extends Application{
 
     public void setMainPresenter(MainPresenter mainPresenter) {
         this.mainPresenter = mainPresenter;
+    }
+
+    public int getStartPosition() {
+        return startPosition;
+    }
+
+    public void setStartPosition(int startPosition) {
+        this.startPosition = startPosition;
     }
 }

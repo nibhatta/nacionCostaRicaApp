@@ -3,12 +3,15 @@ package com.nacion.android.nacioncostarica.views.home.listeners;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -18,8 +21,8 @@ import com.nacion.android.nacioncostarica.views.main.MainPresenter;
 /**
  * Created by Gustavo Matarrita on 15/10/2014.
  */
-public class MenuOnTouchListener implements View.OnTouchListener{
-
+public class MenuOnTouchListener extends MenuListener implements View.OnTouchListener{
+    private final static int LONG_PRESS_TIME = 500;
     private final static int SWIPE_DURATION = 250;
     private final static int MIN_DISTANCE = 20;
     private final static int RIGHT_EDGE = 0;
@@ -27,6 +30,8 @@ public class MenuOnTouchListener implements View.OnTouchListener{
     private final static int COMPLETE_ALPHA = 1;
     private final static int START_X = 0;
 
+    private final Handler handler = new Handler();
+    private int position;
     private float downX;
     private float upX;
     private float endX;
@@ -36,7 +41,10 @@ public class MenuOnTouchListener implements View.OnTouchListener{
     private DrawerLayout parentDrawerLayout;
     private ViewGroup parentReferences;
 
-    public MenuOnTouchListener(DrawerLayout parentDrawerLayout, ViewGroup parentReferences){
+    private static Runnable longPressed;
+
+    public MenuOnTouchListener(DrawerLayout parentDrawerLayout, ViewGroup parentReferences, int position){
+        this.position = position;
         this.parentDrawerLayout = parentDrawerLayout;
         this.parentReferences = parentReferences;
     }
@@ -47,16 +55,31 @@ public class MenuOnTouchListener implements View.OnTouchListener{
         menuTextView = (TextView) view.findViewById(R.id.menuIdTextView);
         deleteImageView = (ImageView)view.findViewById(R.id.deleteImageView);
         notificationToggleButton = (ToggleButton)view.findViewById(R.id.notificationToggleButton);
-        float deltaX = 0;
-        float deltaXAbs = 0;
+        float deltaX = 0, deltaXAbs = 0;
+        long timeDown = 0, timeUp = 0;
+        boolean stealFromChildren = true;
 
         switch(motionEvent.getAction()){
             case MotionEvent.ACTION_DOWN:
+                Log.e(MenuOnTouchListener.class.getName(), "=====> ACTION DOWN");
                 disableParentsView();
                 downX = motionEvent.getX();
+
+                longPressed = new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e(MenuOnTouchListener.class.getName(), "=====> Position: " + position);
+                        View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+                        view.startDrag(null, shadowBuilder, ((ListView)parentReferences).getItemAtPosition(position), 0);
+                        setStartPosition(position);
+                    }
+                };
+                handler.postDelayed(longPressed, LONG_PRESS_TIME);
+
                 break;
 
             case MotionEvent.ACTION_CANCEL:
+                Log.e(MenuOnTouchListener.class.getName(), "=====> ACTION CANCEL");
                 enableParentsView();
                 view.setAlpha(COMPLETE_ALPHA);
                 view.setTranslationX(START_X);
@@ -72,6 +95,7 @@ public class MenuOnTouchListener implements View.OnTouchListener{
                 break;
 
             case MotionEvent.ACTION_UP:
+                Log.e(MenuOnTouchListener.class.getName(), "=====> ACTION UP");
                 disableParentsView();
                 upX = motionEvent.getX();
                 deltaX = downX - upX;
@@ -84,14 +108,15 @@ public class MenuOnTouchListener implements View.OnTouchListener{
                         setViewWhenIsFromRightToLeft();
                     }
                 }else{
-                    return false;
+                    stealFromChildren = false;
                 }
                 setAnimationOnEnd(view);
                 break;
-        default:
-            return false;
+            default:
+                stealFromChildren = false;
+                break;
         }
-        return true;
+        return stealFromChildren;
     }
 
     private void disableParentsView(){
